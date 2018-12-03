@@ -1,0 +1,43 @@
+<br><br><br><br>
+<div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-5">
+    <h1>Resultados del Test</h1>
+  </div>
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
+          <tr>
+            <th>Numero del neonato</th>
+            <th>Fecha Calculo</th>
+            <th>Nombre y/o Apellido Materno</th>
+            <th>Cat. Edad Gestional</th>
+            <th>Cat. Peso</th>
+            <th>Cat. Peso para Edad Gestional</th>
+            <th>Cat. Apgar</th>
+            <th>Cat. Tipo Parto</th>
+            <th>Cat. Comorbilidades</th>
+            <th>Score Bebe Total</th>
+            <th>Cat. Riesgo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let neonato of neonatos">
+            <td>{{neonato.id}}</td>
+            <td>{{neonato.fechaCalculo}}</td>
+            <td>{{neonato.nombreApellido}}</td>
+            <td>{{neonato.catEdadGestional}}</td>
+            <td>{{neonato.catPeso}}</td>
+            <td>{{neonato.catPesoEdadGestional}}</td>
+            <td>{{neonato.catApgar}}</td>
+            <td>{{neonato.catTipoParto}}</td>
+            <td>{{neonato.catComorbilidades}}</td>
+            <td>{{neonato.scoreTotal}}</td>
+            <td>{{neonato.catRiesgo}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<br><br><br><br>

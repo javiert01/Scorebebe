@@ -1,0 +1,44 @@
+<div class="container">
+  <h1 >Llena todos los campos en el formulario para registrarte</h1>
+<div class="col-lg-12">
+<div class="row">
+      <form>
+      <div class="col-sm-12">
+      <form (ngSubmit)="registerUser(myForm); myForm.reset()" #myForm="ngForm">
+      <div class="row">
+        <div class="col-sm-6 form-group">
+        <label>Nombre y Apellido</label>
+        <input [(ngModel)]="registerUserData.nombre" type="text" placeholder="Ingrese su Nombre y Apellido.." class="form-control" name="nombre">
+        </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 form-group">
+            <label>Institucion</label>
+            <input [(ngModel)]="registerUserData.institucion" type="text" placeholder="Ingrese la institución a la que pertenece" class="form-control" name="institucion">
+            </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                <label>Email</label>
+                <input [(ngModel)]="registerUserData.email" type="email" placeholder="Ingrese su email" class="form-control" name="email">
+                </div>
+                  </div>	
+          <div class="row">
+      <div class="col-sm-6 form-group">
+        <label>Nombre de Usuario</label>
+            <input [(ngModel)]="registerUserData.username" type="text" placeholder="Ingrese su nombre de Usuario.." class="form-control" name="username">
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <label>Contraseña</label>
+            <input [(ngModel)]="registerUserData.password" type="password" placeholder="Ingrese su Contraseña.." class="form-control" name="password">
+      </div>
+    </div>
+        <div class="center-btn"><button class="btn btn-success" type="submit">Aceptar</button></div>
+          </form>	
+        </div>
+      </form> 
+      </div>
+</div>
+</div>
