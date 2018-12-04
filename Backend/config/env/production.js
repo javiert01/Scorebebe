@@ -48,7 +48,7 @@ module.exports = {
     ***************************************************************************/
     default: {
       adapter: require('sails-mysql'),
-      url: 'mysql://scorebebe:Scorebb018!@localhost:3306/scorebebedata',
+      url: 'mysql://scorebebe:Scorebb018!@162.144.5.62:3306/scorebebedata',
       // adapter: 'sails-mysql',
       // url: 'mysql://user:password@host:port/database',
       //--------------------------------------------------------------------------

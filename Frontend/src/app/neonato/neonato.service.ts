@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class NeonatoService {
 
-    urlServidor = 'http://66.96.147.96'
+    urlServidor = 'http://181.199.39.194'
     constructor(private http: HttpClient) {
     }
 

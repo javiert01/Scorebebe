@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthService {
 
-    private urlServidor = 'http://66.96.147.96'
+    private urlServidor = 'http://181.199.39.194'
   private _registerUrl = this.urlServidor+':1337/usuario/signup';
   private _loginUrl = this.urlServidor+':1337/usuario/login';
 
