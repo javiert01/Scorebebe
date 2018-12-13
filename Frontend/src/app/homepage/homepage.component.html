@@ -1,64 +1,93 @@
-<div  class="ivan-custom-wrapper theme_default "  style="padding-top: 0px;padding-bottom: 0px;margin-top: 0px;margin-bottom: 0px;">
-  <div data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid vc_column-gap-35">
-<div class="vc_col-sm-12 wpb_column vc_column_container "  data-wow-delay="0ms">
-<div class="wpb_wrapper">
-    <div class="wpb_single_image wpb_content_element vc_align_center">
-		
-        <figure class="wpb_wrapper vc_figure">
-          <div class="vc_single_image-wrapper   vc_box_border_grey"><img width="1400" height="150" src="http://optimussocial.com/clientes/scorebebe/wp-content/uploads/2018/12/logos-header.jpg" class="vc_single_image-img attachment-full" alt="" srcset="http://optimussocial.com/clientes/scorebebe/wp-content/uploads/2018/12/logos-header.jpg 1400w, http://optimussocial.com/clientes/scorebebe/wp-content/uploads/2018/12/logos-header-480x51.jpg 480w, http://optimussocial.com/clientes/scorebebe/wp-content/uploads/2018/12/logos-header-768x82.jpg 768w, http://optimussocial.com/clientes/scorebebe/wp-content/uploads/2018/12/logos-header-1200x129.jpg 1200w, http://optimussocial.com/clientes/scorebebe/wp-content/uploads/2018/12/logos-header-780x84.jpg 780w, http://optimussocial.com/clientes/scorebebe/wp-content/uploads/2018/12/logos-header-880x94.jpg 880w" sizes="(max-width: 1400px) 100vw, 1400px" /></div>
-        </figure>
+<div class="cont-logos">
+    <div class="container">
+      <div class="col-md-12">
+      <img src="http://scorebebe.com/img/logos-header.jpg">
       </div>
-</div> <!-- END .wpb_wrapper -->
-</div> <!-- END  wpb_column vc_column_container  -->
-</div><div class="vc_row-full-width vc_clearfix"></div></div><div  class="ivan-custom-wrapper theme_default "  style="padding-top: 0px;padding-bottom: 0px;margin-top: 0px;margin-bottom: 0px;"><div data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid banner vc_custom_1543522466265 vc_column-gap-35">
-<div class="vc_col-sm-6 wpb_column vc_column_container "  data-wow-delay="0ms">
-<div class="wpb_wrapper">
-  
-<div class="wpb_text_column wpb_content_element ">
-<div class="wpb_wrapper">
-  <h2>SCORE BEBÉ</h2>
-<p>Versión preliminar</p>
-<p><a [routerLink]="['/login']">comenzar evaluación</a></p>
+    </div>
+  </div>
 
-</div>
-</div>
+  <div class="banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>SCORE BEBÉ</h2>
+          <p>Versión preliminar</p>
+          <p *ngIf="!_authService.loggedIn()"><a [routerLink]="'/login'">Login</a></p>
+          <p *ngIf="!_authService.loggedIn()"><a [routerLink]="'/signup'">Registrarse</a></p>
+          <p *ngIf="_authService.loggedIn()"><a [routerLink]="'/test'">Comenzar Test</a></p>
+        </div>
+        <div class="col-md-6">
+          
+        </div>
+      </div>
+    </div>
+  </div>
 
-</div> <!-- END .wpb_wrapper -->
-</div> <!-- END  wpb_column vc_column_container  -->
 
-<div class="vc_col-sm-6 wpb_column vc_column_container "  data-wow-delay="0ms">
-<div class="wpb_wrapper">
-  
-</div> <!-- END .wpb_wrapper -->
-</div> <!-- END  wpb_column vc_column_container  -->
-</div><div class="vc_row-full-width vc_clearfix"></div></div>
-<div  class="ivan-custom-wrapper theme_default "  style="padding-top: 0px;padding-bottom: 0px;margin-top: 0px;margin-bottom: 0px;">
-<div data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid intro vc_custom_1543522541588 vc_column-gap-35">
-<div class="vc_col-sm-2 wpb_column vc_column_container "  data-wow-delay="0ms">
-<div class="wpb_wrapper">
-  
-</div> <!-- END .wpb_wrapper -->
-</div> <!-- END  wpb_column vc_column_container  -->
 
-<div class="vc_col-sm-8 wpb_column vc_column_container "  data-wow-delay="0ms">
-<div class="wpb_wrapper">
-  
-<div class="wpb_text_column wpb_content_element ">
-<div class="wpb_wrapper">
-    <p>El <strong>Score Bebé</strong> es una puntuación numérica que permite estimar el riesgo de muerte neonatal en el Ecuador. Este cuestionario le ayudará a medir el riesgo potencial de eventos adversos neonatales.</p>
-    <p>Sus respuestas y la puntuación del Score Bebé servirán para facilitar la categorización del riesgo (riesgo bajo, moderado, alto y muy alto) y adecuar las intervenciones más apropiadas y oportunas para el beneficio del neonato.”<br />
-    “El personal de salud debe manejar a los neonatos tal y como señalan las normas de atención neonatal vigentes</p>
+  <div class="intro">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8">
+                <p>El <strong>Score Bebé</strong> es una puntuación numérica que permite estimar el riesgo de muerte neonatal en el Ecuador. Este cuestionario le ayudará a medir el riesgo potencial de eventos adversos neonatales.</p>
+<p>Sus respuestas y la puntuación del Score Bebé servirán para facilitar la categorización del riesgo (riesgo bajo, moderado, alto y muy alto) y adecuar las intervenciones más apropiadas y oportunas para el beneficio del neonato.”<br>
+“El personal de salud debe manejar a los neonatos tal y como señalan las normas de atención neonatal vigentes</p>
 <p><span style="color: #069efd;">Para más detalle consulte en: www.salud.gob.ec</span></p>
-
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="instrucciones">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>INSTRUCCIONES</h3>
+        </div>
+        <div class="col-md-8">
+          <p>Para llenar el cuestionario haga clic en cada pregunta que se presenta a continuación, y marque con una marca (X) en la casilla que mejor describa el estado actual del neonato. Al finalizar, podrá visualizar el puntaje total del Score Bebé, su categoría de riesgo y sugerencias de manejo.”</p>
+<p>“Antes de empezar, recuerde percentilar el peso del neonato, de acuerdo a su sexo y edad gestacional, utilizando las curvas y tablas del siguiente link:</p>
+<a href="https://drive.google.com/drive/folders/1wOcAP2ERGm6dM_sfNdDXuMGGohA93ypZ?usp=sharing" target="_blank" rel="noopener">clic aquí</a>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-
-</div> <!-- END .wpb_wrapper -->
-</div> <!-- END  wpb_column vc_column_container  -->
-
-<div class="vc_col-sm-2 wpb_column vc_column_container "  data-wow-delay="0ms">
-<div class="wpb_wrapper">
+  <div id="all-site-wrapper" class="hfeed site">
   
-</div> <!-- END .wpb_wrapper -->
-</div> <!-- END  wpb_column vc_column_container  -->
-</div><div class="vc_row-full-width vc_clearfix"></div></div>
+    <a href="#" id="back-top">
+      <i class="fa fa-angle-up " style=""></i>
+    </a>
+      
+          <div class="negative-push"></div>
+      
+      
+    <div class="title-wrapper-divider blog-version"></div>		
+      
+    <div class="">
+      <div class="container">
+  
+        
+          <div class="row">
+  
+            <div class="col-xs-12 col-sm-12 col-md-12 site-main" role="main">
+  
+              
+    
+      
+  <article id="post-13" class="post-13 page type-page status-publish hentry">
+    <div class="entry-content">
+      <!--separacion-->
+
+        
+
+</div><!-- .entry-content -->
+</article><!-- #post-## -->		
+    
+              
+          </div>
+
+        </div>
+
+      
+    </div>
+  </div>
+</div>

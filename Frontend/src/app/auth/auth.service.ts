@@ -6,9 +6,9 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthService {
 
-    private urlServidor = 'http://181.199.39.194'
-  private _registerUrl = this.urlServidor+':1337/usuario/signup';
-  private _loginUrl = this.urlServidor+':1337/usuario/login';
+    private urlServidor = 'https://scorebebe.herokuapp.com/'
+  private _registerUrl = this.urlServidor+'usuario/signup';
+  private _loginUrl = this.urlServidor+'usuario/login';
 
   constructor(private http: HttpClient, private _router: Router) { }
 
@@ -33,11 +33,11 @@ export class AuthService {
   }
 
   getUserData(username: string) {
-    return this.http.get<any>(this.urlServidor+':1337/usuario/' + username);
+    return this.http.get<any>(this.urlServidor+'usuario/' + username);
   }
 
   getUserDataRol(rol: string) {
-    return this.http.get<any>(this.urlServidor+':1337/usuario/' + rol);
+    return this.http.get<any>(this.urlServidor+'usuario/' + rol);
   }
 
   getToken() {
@@ -45,11 +45,11 @@ export class AuthService {
   }
 
   getUsuarios() {
-    return this.http.get<any>(this.urlServidor+':1337/usuario');
+    return this.http.get<any>(this.urlServidor+'usuario');
   }
 
   setUsuarioActivo(username) {
-    return this.http.patch(this.urlServidor+':1337/usuario/actualizaractivo', username);
+    return this.http.patch(this.urlServidor+'usuario/actualizaractivo', username);
   }
 
 }

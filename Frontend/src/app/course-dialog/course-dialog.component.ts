@@ -9,12 +9,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 export class CourseDialogComponent implements OnInit {
 
   categoria: string;
-  descripcion: string;
+  id: number;
   puntaje: number;
 
   constructor(private dialogRef: MatDialogRef<CourseDialogComponent>, @Inject(MAT_DIALOG_DATA) data) { 
     this.categoria = data.categoria;
-    this.descripcion = data.descripcion;
+    this.id = data.id;
     this.puntaje = data.puntaje;
   }
 

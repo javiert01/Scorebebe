@@ -10,15 +10,23 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class NeonatoService {
 
-    urlServidor = 'http://181.199.39.194'
+    urlServidor = 'https://scorebebe.herokuapp.com/'
     constructor(private http: HttpClient) {
     }
 
     addNeonato (neonato: Neonato) {
-        return this.http.post(this.urlServidor+':1337/neonato', neonato);
+        return this.http.post(this.urlServidor+'neonato', neonato);
     }
 
     getNeonatos(){
-        return this.http.get<any>(this.urlServidor+':1337/neonato');
+        return this.http.get<any>(this.urlServidor+'neonato');
+      }
+
+      getNeonatoIngresado(){
+          return this.http.get<any>(this.urlServidor+'neonato/ultimoneonatoingresado');
+      }
+
+      getNeonatoIdUsuario(id: number){
+        return this.http.get<any>(this.urlServidor+'neonato/neonatousuario/'+id.toString())
       }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
@@ -21,6 +21,9 @@ export class NeonatoComponent implements OnInit {
   neonato: Neonato;
   userName = localStorage.getItem('username');
   userID;
+  neonatoID;
+  @ViewChild('instrucciones') public instrucciones:ElementRef;
+
 
   constructor(private dialog: MatDialog, private neonatoService: NeonatoService, private authService: AuthService) { }
 
@@ -35,12 +38,35 @@ export class NeonatoComponent implements OnInit {
       'parto': new FormControl('parto1'),
       'comor': new FormControl ('comor1')
     });
+    this.userName = localStorage.getItem('username');
 
     this.authService.getUserData(this.userName)
     .subscribe(
-      (response) => this.userID = response.id
+      (response) => {
+        this.userID = response.id;
+        this.userID = this.addLeadingZero(this.userID,8)
+      }
     );
   }
+
+  addLeadingZero(x, pad){
+    let contador = 1;
+    let numero = x;
+    if(x > 10) {
+      while(numero > 11){
+        numero = numero - 10;
+        contador++;
+      }
+      x = x - (9 * contador);
+    }
+    let s = String(x);
+    while (s.length < (pad || 2)) {s = "0" + s;}
+    return s;
+  }
+
+  moveToStructure():void {
+    this.instrucciones.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
+}
 
   showTestResult() {
     let score = 0;
@@ -201,9 +227,20 @@ export class NeonatoComponent implements OnInit {
       this.categoria = 'D';
       this.descripcion = 'Riesgo bajo'
     }
-
-    this.openDialog();
-    this.crearNeonato()
+    this.crearNeonato();
+    this.neonatoService.getNeonatoIngresado()
+    .subscribe((
+      response => {
+        console.log(response);
+        this.neonatoID = response.id;
+      }
+    ));
+    setTimeout(
+      () => {
+        this.openDialog();
+      }, 1000);
+    
+    
   }
 
   getCurrentDate() {
@@ -229,13 +266,14 @@ export class NeonatoComponent implements OnInit {
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
+    this.neonatoID = this.addLeadingZero(this.neonatoID, 8);
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.height = '200px';
     dialogConfig.width = '400px';
     dialogConfig.data = {
       categoria: this.categoria,
-      descripcion: this.descripcion,
+      id: this.neonatoID,
       puntaje: this.total
     }
     this.dialog.open(CourseDialogComponent, dialogConfig);

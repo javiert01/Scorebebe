@@ -25,6 +25,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { ActivarUsuariosComponent } from './activar-usuarios/activar-usuarios.component';
 import { ResultadosTestComponent } from './resultados-test/resultados-test.component';
+import { SelectedDirective } from './shared/selected.directive';
 
 
 
@@ -42,6 +43,7 @@ import { ResultadosTestComponent } from './resultados-test/resultados-test.compo
     AdminpageComponent,
     ActivarUsuariosComponent,
     ResultadosTestComponent,
+    SelectedDirective
   ],
   imports: [
     BrowserModule,

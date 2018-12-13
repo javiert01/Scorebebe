@@ -1,3 +1,28 @@
+	
+  <div id="all-site-wrapper" class="hfeed site">
+  
+    <a href="#" id="back-top">
+      <i class="fa fa-angle-up " style=""></i>
+    </a>
+      
+          <div class="negative-push"></div>
+      
+      
+    <div class="title-wrapper-divider blog-version"></div>		
+      
+    <div class="iv-layout content-wrapper content-full  no-title-wrapper">
+      <div class="container">
+  
+        
+          <div class="row">
+  
+            <div class="col-xs-12 col-sm-12 col-md-12 site-main" role="main">
+  
+              
+    
+      
+  <article id="post-13" class="post-13 page type-page status-publish hentry">
+    <div class="entry-content">
 <br><br><br><br>
 <div class="row">
   <div class="col-md-3">
@@ -6,6 +31,19 @@
     <h1>Resultados del Test</h1>
   </div>
 </div>
+</div>
+<div>
+  <div class="row">
+    <div class="col-md-1">Filtrar por usuario</div>
+      <div class="col-md-6">
+        <select (change)="onGetUserId($event.target.value)">
+          <option value="0">Ninguno</option>
+          <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{usuario.username}}</option>
+        </select>
+        </div>
+        <div class="col-md-4"><button class="btn btn-primary" (click)="getNeonatosId()">Aceptar</button></div>
+    </div>
+    <br><br>
 <div class="row">
     <table class="table">
         <thead>
@@ -25,19 +63,52 @@
         </thead>
         <tbody>
           <tr *ngFor="let neonato of neonatos">
-            <td>{{neonato.id}}</td>
+            <td>{{addLeadingZero(neonato.id, 8)}}</td>
             <td>{{neonato.fechaCalculo}}</td>
             <td>{{neonato.nombreApellido}}</td>
-            <td>{{neonato.catEdadGestional}}</td>
-            <td>{{neonato.catPeso}}</td>
-            <td>{{neonato.catPesoEdadGestional}}</td>
-            <td>{{neonato.catApgar}}</td>
-            <td>{{neonato.catTipoParto}}</td>
-            <td>{{neonato.catComorbilidades}}</td>
+            <td>{{cambiarNombreCatEdad(neonato.catEdadGestional)}}</td>
+            <td>{{cambiarNombreCatPeso(neonato.catPeso)}}</td>
+            <td>{{cambiarNombreCatPesoEdad(neonato.catPesoEdadGestional)}}</td>
+            <td>{{cambiarNombreCatApgar(neonato.catApgar)}}</td>
+            <td>{{cambiarNombreTipoParto(neonato.catTipoParto)}}</td>
+            <td>{{cambiarNombreComorbilidad(neonato.catComorbilidades)}}</td>
             <td>{{neonato.scoreTotal}}</td>
             <td>{{neonato.catRiesgo}}</td>
           </tr>
         </tbody>
       </table>
 </div>
+<div class="row">
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-10">
+    <h1>Gráfico por número de neonatos en cada categoría</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-2">Categoría</div>
+  <div class="col-md-4">Número de neonatos</div>
+</div>
+<div class="row" *ngFor="let categoria of categorias">
+  <div class="col-md-2"></div>
+  <div class="col-md-2">{{categoria}}</div>
+  <div class="col-md-8">
+    <div class="chart">
+      <div [ngStyle]="{'width': getNumeroNeonatosCat(categoria)*10 }">{{getNumeroNeonatosCat(categoria)}}</div>
+  </div>
+</div>
+</div>
 <br><br><br><br>
+</div><!-- .entry-content -->
+</article><!-- #post-## -->		
+    
+              
+          </div>
+
+        </div>
+
+      
+    </div>
+  </div>
+</div>
