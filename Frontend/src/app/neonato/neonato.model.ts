@@ -5,6 +5,18 @@ export class Neonato {
     public nombreApellido: string;
   
     public  fechaCalculo: string;
+
+    public fechaNacimiento: string;
+
+    public sexo: string;
+
+    public edadGestional: number;
+
+    public peso: number;
+
+    public factoresRiesgo: boolean;
+
+    public nivelAtencion: string;
   
     public  catEdadGestional: number;
   

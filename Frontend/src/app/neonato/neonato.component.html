@@ -50,262 +50,582 @@
     </div>
   </div>
 </div>
-<div class="cont-formulario">
+
+<form [formGroup]="scoreBebeTest" (ngSubmit)="viewForm()" class="formTest">
+<div class="formulario-sb">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-8">
+            
+          <div class="row">
+              <div class="col-md-12">
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="sexo">
+                  <option value="femenino">Sexo Femenino</option>
+                  <option value="masculino">Sexo Masculino</option>
+                </select><br>
+                <input type="text" class="form-control" name="fechaNacimiento" formControlName = "fechaNacimiento" type="date" placeholder="Fecha de nacimiento"><br>
+
+                <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido" placeholder="Apellido Materno Neonato"><br>
+                <input type="text" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
+                <input type="text" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="nivelAtencion">
+                  <option  value="primero">Primer Nivel de Atención</option>
+                  <option  value="segundo">Segundo Nivel de Atención</option>
+                  <option  value="tercero">Tercer Nivel de Atención</option>
+                </select>
+              </div> 
+            </div><br>
+
+            
+
+              <div class="continuar">
+                <a href="#">continuar</a>
+              </div>
+
+      </div><!-- col-md-8 -->
+    </div><!-- row -->
+  </div><!-- container -->
+</div><!-- container-form -->
+<!-- antes de empezar uno -->
+
+
+<div class="formulario-sb">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8 antesde">
+
+            <h4>Antes de empezar, haga click, seleccione cada característica o antecedente que el neonato presente:</h4>
+
+            <div class="form-group">
+              <h5>Factores de riesgo inminente para el neonato que requieren estabilización inmediata y/o transferencia urgente:</h5><br>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente1" value="factorRiesgoInminente1" formControlName="factorRiesgoInminente">
+                  <label class="form-check-label" for="factorRiesgoInminente1">
+                    El niño respira débilmente o su color de piel es azulado o tiene una baja frecuencia cardí­aca y un pobre tono muscular o sus reflejos débiles o convulsiona.
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente2" value="factorRiesgoInminente2" formControlName="factorRiesgoInminente"> 
+                  <label class="form-check-label" for="factorRiesgoInminente2">
+                    Tiene alteración de los signos vitales
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente3" value="factorRiesgoInminente3" formControlName="factorRiesgoInminente">
+                  <label class="form-check-label" for="factorRiesgoInminente3">
+                    Se encuentra ictérico
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente4" value="factorRiesgoInminente4" formControlName="factorRiesgoInminente">
+                  <label class="form-check-label" for="factorRiesgoInminente4">
+                     Hipoglucemia
+                  </label>
+                </div>
+
+                <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente5" value="factorRiesgoInminente5" formControlName="factorRiesgoInminente">
+                    <label class="form-check-label" for="factorRiesgoInminente5">
+                      Vomita todo lo que come
+                    </label>
+                  </div>
+                </div><!-- form group -->                 
+
+                <div class="continuar">
+                  <a href="#">continuar</a>
+                </div>
+
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
+
+
+  <!-- fin antes de empezar uno -->
+
+<!-- antes de empezar dos -->
+
+
+  <div class="formulario-sb">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8 antesde">
+
+            <div class="form-group">
+              <h5>Factores que podrí­an incrementar el riesgo:</h5><br>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa1" value="factorRiesgoIncrementa1" formControlName="factorRiesgoIncrementa">
+                  <label class="form-check-label" for="factorRiesgoIncrementa1">
+                     Madre tuvo oligohidramnios o hidrorrea mayor o igual a 18 horas
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa2" value="factorRiesgoIncrementa2" formControlName="factorRiesgoIncrementa"> 
+                  <label class="form-check-label" for="factorRiesgoIncrementa2">
+                    Madre tuvo polihidramnios
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa3" value="factorRiesgoIncrementa3" formControlName="factorRiesgoIncrementa">
+                  <label class="form-check-label" for="factorRiesgoIncrementa3">
+                    Madre diabética
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa4" value="factorRiesgoIncrementa4" formControlName="factorRiesgoIncrementa">
+                  <label class="form-check-label" for="factorRiesgoIncrementa4">
+                    Madre preeclámptica/eclámptica
+                  </label>
+                </div>
+
+                <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa5" value="factorRiesgoIncrementa5" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa5">
+                      Madre tuvo IVU en el embarazo
+                    </label>
+                  </div>
+
+                  <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa6" value="factorRiesgoIncrementa6" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa6">
+                      Madre tuvo cultivo positivo para Streptococcus
+                    </label>
+                  </div>
+
+                  <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa7" value="factorRiesgoIncrementa7" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa7">
+                      Tuvo sufrimiento fetal agudo
+                    </label>
+                  </div>
+
+                  <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa8" value="factorRiesgoIncrementa8" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa8">
+                      Niño de sexo masculino
+                    </label>
+                  </div>
+
+                  <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa9" value="factorRiesgoIncrementa9" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa9">
+                      Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)
+                    </label>
+                  </div>
+
+                  <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa10" value="factorRiesgoIncrementa10" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa10">
+                      Parto en domicilio o por personal no entrenado
+                    </label>
+                  </div>
+
+                  <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa11" value="factorRiesgoIncrementa11" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa11">
+                      Ningún control prenatal
+                    </label>
+                  </div>
+
+                  <div class="form-check">  
+                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa12" value="factorRiesgoIncrementa12" formControlName="factorRiesgoIncrementa">
+                    <label class="form-check-label" for="factorRiesgoIncrementa12">
+                      Es producto de un embarazo múltiple
+                    </label>
+                  </div>
+
+
+
+                </div><!-- form group -->                 
+
+                <div class="continuar">
+                  <a href="#">continuar</a>
+                </div>
+
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
+
+
+<!-- fin antes de empezar dos -->
+
+<!-- antes de empezar tres -->
+
+
+  <div class="formulario-sb">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8 antesde">
+
+            <div class="form-group">
+              <h5>Factores que podrían reducir el riesgo del neonato:</h5><br>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoReduce" id="factorRiesgoReduce1" value="factorRiesgoReduce1" formControlName="factorRiesgoReduce">
+                  <label class="form-check-label" for="factorRiesgoReduce1">
+                      Es prematuro y recibió dosis completa de maduración pulmonar
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoReduce" id="factorRiesgoReduce2" value="factorRiesgoReduce2" formControlName="factorRiesgoReduce"> 
+                  <label class="form-check-label" for="factorRiesgoReduce2">
+                    Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="factorRiesgoReduce" id="factorRiesgoReduce3" value="factorRiesgoReduce3" formControlName="factorRiesgoReduce">
+                  <label class="form-check-label" for="factorRiesgoReduce3">
+                   Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio
+                  </label>
+                </div>
+
+                </div><!-- form group -->                 
+
+                <div class="continuar">
+                  <a href="#">continuar</a>
+                </div>
+
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
+
+
+<!-- fin antes de empezar tres -->
+
+
+
+<!-- pregunta numero uno -->
+
+
+  <div class="formulario-sb">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
 
-    <form [formGroup]="scoreBebeTest" (ngSubmit)="showTestResult()" class="formTest"  >
-    <div class="row">
-              <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="form-control" formControlName="fechaCalculo" name="fechaCalculo">
-              </div>
-            </div><br>
-
-            <h3>Clasificación clínica de la edad gestacional.</h3>
-            <div class="form-group">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="edad" id="edad1" value="edad1" formControlName="edad">
-                <label class="form-check-label" for="edad1">
-                  Extremadamente prematuro (< 28 semanas),n(%)
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="edad" id="edad2" value="edad2" formControlName="edad"> 
-                <label class="form-check-label" for="edad2">
-                  Muy prematuro (28 a < 32 semanas), n (%)
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="edad" id="edad3" value="edad3" formControlName="edad">
-                <label class="form-check-label" for="edad3">
-                  Prematuro moderado (32 a < 37 semanas), n (%)
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="edad" id="edad4" value="edad4" formControlName="edad">
-                <label class="form-check-label" for="edad4">
-                  A término temprano (37 a < 39 semanas), n (%)
-                </label>
-              </div>
-
-              <div class="form-check">  
-                  <input class="form-check-input" type="radio" name="edad" id="edad5" value="edad5" formControlName="edad">
-                  <label class="form-check-label" for="edad5">
-                    A término completo (39 a < 41 semanas), n (%)
+              <h3>Clasificación clí­nica de la edad gestacional.</h3>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edad" id="edad1" value="edad1" formControlName="edad">
+                  <label class="form-check-label" for="edad1">
+                    Extremadamente prematuro (< 28 semanas)
                   </label>
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="edad" id="edad6" value="edad6" formControlName="edad">
-                  <label class="form-check-label" for="edad6">
-                    Post término (≥ 41 semanas), n (%)
-                  </label>
-                </div>
-              </div><!-- form group -->
-
-              <!-- pregunta dos -->
-
-              <h3>peso al nacer</h3>
-              <div class="form-group">
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="peso" id="peso1" value="peso1" formControlName="peso">
-                <label class="form-check-label" for="peso1">
-                  < 750 g al nacer
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="peso" id="peso2" value="peso2" formControlName="peso">
-                <label class="form-check-label" for="peso2">
-                  750 a < 1000 g al nacer
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="peso" id="peso3" value="peso3" formControlName="peso">
-                <label class="form-check-label" for="peso3">
-                  1000 a < 1500g al nacer
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="peso" id="peso4" value="peso4" formControlName="peso">
-                <label class="form-check-label" for="peso4">
-                  1500 a < 2500g al nacer
-                </label>
-              </div>
-
-              <div class="form-check">  
-                  <input class="form-check-input" type="radio" name="peso" id="peso5" value="peso5" formControlName="peso">
-                  <label class="form-check-label" for="peso5">
-                    2500 a < 4000g al nacer
+                  <input class="form-check-input" type="radio" name="edad" id="edad2" value="edad2" formControlName="edad"> 
+                  <label class="form-check-label" for="edad2">
+                    Muy prematuro (28 a < 32 semanas)
                   </label>
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="peso" id="peso6" value="peso6" formControlName="peso">
-                  <label class="form-check-label" for="peso6">
-                    4000 o más g al nacer
+                  <input class="form-check-input" type="radio" name="edad" id="edad3" value="edad3" formControlName="edad">
+                  <label class="form-check-label" for="edad3">
+                    Prematuro moderado (32 a < 37 semanas)
                   </label>
                 </div>
-              </div><!-- form group -->
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edad" id="edad4" value="edad4" formControlName="edad">
+                  <label class="form-check-label" for="edad4">
+                    A término temprano (37 a < 39 semanas)
+                  </label>
+                </div>
+
+                <div class="form-check">  
+                    <input class="form-check-input" type="radio" name="edad" id="edad5" value="edad5" formControlName="edad">
+                    <label class="form-check-label" for="edad5">
+                      A término completo (39 a < 41 semanas)
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="edad" id="edad6" value="edad6" formControlName="edad">
+                    <label class="form-check-label" for="edad6">
+                      Post término (>= 41 semanas)
+                    </label>
+                  </div>
+                </div><!-- form group -->
+
+                <div class="continuar">
+                  <a href="#">continuar</a>
+                </div>
+
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
 
 
-              <!-- pregunta tres -->
+<!-- pregunta numero uno -->
+
+<!-- pregunta numero dos -->
+
+<div class="formulario-sb">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            
+           <h3>peso al nacer</h3>
+                <div class="form-group">
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="peso" id="peso1" value="peso1" formControlName="peso">
+                  <label class="form-check-label" for="peso1">
+                    < 750 g al nacer
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="peso" id="peso2" value="peso2" formControlName="peso">
+                  <label class="form-check-label" for="peso2">
+                    750 a < 1000 g al nacer
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="peso" id="peso3" value="peso3" formControlName="peso">
+                  <label class="form-check-label" for="peso3">
+                    1000 a < 1500g al nacer
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="peso" id="peso4" value="peso4" formControlName="peso">
+                  <label class="form-check-label" for="peso4">
+                    1500 a < 2500g al nacer
+                  </label>
+                </div>
+
+                <div class="form-check">  
+                    <input class="form-check-input" type="radio" name="peso" id="peso5" value="peso5" formControlName="peso">
+                    <label class="form-check-label" for="peso5">
+                      2500 a < 4000g al nacer
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="peso" id="peso6" value="peso6" formControlName="peso">
+                    <label class="form-check-label" for="peso6">
+                      4000 o más g al nacer
+                    </label>
+                  </div>
+                </div><!-- form group -->
+
+                <div class="continuar">
+                  <a href="#">continuar</a>
+                </div>
+
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
+
+<!-- fin pregunta numero dos -->
+
+<!-- pregunta numero tres -->
+
+<div class="formulario-sb">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            
+            <h3>Centil de peso al nacer para edad gestacional</h3>
+            <div class="calcula">
+                  <a href="#">Calcula el peso aquí­</a>
+                </div><br>
+                <div class="form-group">
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="centil" id="centil1" value="centil1" formControlName="centil">
+                  <label class="form-check-label" for="centil1">
+                    Percentil 5 al 95
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="centil" id="centil2" value="centil2" formControlName="centil">
+                  <label class="form-check-label" for="centil2">
+                    < Percentil 5
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="centil" id="centil3" value="centil3" formControlName="centil">
+                  <label class="form-check-label" for="centil3">
+                    > Percentil 95
+                  </label>
+                </div>
+
+                </div><!-- form group -->
+
+                <div class="continuar">
+                  <a href="#">continuar</a>
+                </div>
+
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
+
+<!-- fin pregunta numero tres -->
 
 
-              <h3>Centil de peso al nacer para edad gestacional</h3>
-              <div class="form-group">
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="centil" id="centil1" value="centil1" formControlName="centil">
-                <label class="form-check-label" for="centil1">
-                  Percentil 5 al 95
-                </label>
-              </div>
+<!-- pregunta numero cuatro -->
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="centil" id="centil2" value="centil2" formControlName="centil">
-                <label class="form-check-label" for="centil2">
-                  < Percentil 5
-                </label>
-              </div>
+<div class="formulario-sb">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            
+           <h3>Apgar a los 5'</h3>
+                <div class="form-group">
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="centil" id="centil3" value="centil3" formControlName="centil">
-                <label class="form-check-label" for="centil3">
-                  > Percentil 95
-                </label>
-              </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="apgar" id="apgar1" value="apgar1" formControlName="apgar">
+                  <label class="form-check-label" for="apgar1">
+                    Tranquilizante (7 a 10), n (%)
+                  </label>
+                </div>
 
-              </div><!-- form group -->
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="apgar" id="apgar2" value="apgar2" formControlName="apgar">
+                  <label class="form-check-label" for="apgar2">
+                    Moderado (4 a 6), n (%)
+                  </label>
+                </div>
 
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="apgar" id="apgar3" value="apgar3" formControlName="apgar">
+                  <label class="form-check-label" for="apgar3">
+                    Bajo (0 a 3), n (%)
+                  </label>
+                </div>
 
+                </div><!-- form group -->
 
-              <!-- pregunta cuatro -->
+                <div class="continuar">
+                  <a href="#">continuar</a>
+                </div>
 
-              <h3>Apgar a los 5'</h3>
-              <div class="form-group">
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="apgar" id="apgar1" value="apgar1" formControlName="apgar">
-                <label class="form-check-label" for="apgar1">
-                  Tranquilizante (7 a 10), n (%)
-                </label>
-              </div>
+<!-- fin pregunta numero cuatro -->
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="apgar" id="apgar2" value="apgar2" formControlName="apgar">
-                <label class="form-check-label" for="apgar2">
-                  Moderado (4 a 6), n (%)
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="apgar" id="apgar3" value="apgar3" formControlName="apgar">
-                <label class="form-check-label" for="apgar3">
-                  Bajo (0 a 3), n (%)
-                </label>
-              </div>
-
-              </div><!-- form group -->
-
-
-
-              <!-- pregunta cinco -->
-
-
-              <h3>Tipo de parto</h3>
+<div class="formulario-sb">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-8">
+          
+          <h3>Tipo de Parto</h3>
               <div class="form-group">
 
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="parto" id="parto1" value="parto1" formControlName="parto">
                 <label class="form-check-label" for="parto1">
-                  Parto vaginal eutocico
+                 Cesárea
                 </label>
               </div>
 
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="parto" id="parto2" value="parto2" formControlName="parto">
                 <label class="form-check-label" for="parto2">
-                  Parto distoco vaginal
+                  Parto vaginal eutocico
                 </label>
               </div>
 
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="parto" id="parto3" value="parto3" formControlName="parto">
                 <label class="form-check-label" for="parto3">
-                Cesárea electiva  
+                  Parto distoco vaginal
                 </label>
               </div>
-
               </div><!-- form group -->
 
-
-               <!-- pregunta seis -->
-
-
-              <h3>Comorbilidades</h3>
-              <div class="form-group">
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="comor" id="comor1" value="comor1" formControlName="comor">
-                <label class="form-check-label" for="comor1">
-                 Trastornos relacionados con la asfixia
-                </label>
+   <div class="continuar">
+                <a href="#">continuar</a>
               </div>
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="comor" id="comor2" value="comor2" formControlName="comor">
-                <label class="form-check-label" for="comor2">
-                 Malformaciones
-                </label>
-              </div>
+      </div><!-- col-md-8 -->
+    </div><!-- row -->
+  </div><!-- container -->
+</div><!-- container-form -->
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="comor" id="comor3" value="comor3" formControlName="comor">
-                <label class="form-check-label" for="comor3">
-                 Enfermedades relacionadas con la prematuridad
-                </label>
-              </div>
 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="comor" id="comor4" value="comor4" formControlName="comor">
-                <label class="form-check-label" for="comor4">
-                  Enfermedades infecciosas
-                </label>
-              </div>
 
-              <div class="form-check">  
-                  <input class="form-check-input" type="radio" name="comor" id="comor5" value="comor5" formControlName="comor">
-                  <label class="form-check-label" for="comor5">
-                    Cualquier otro trastorno no clasificado en categorías anteriores
+
+<!-- pregunta numero cinco -->
+
+<div class="formulario-sb">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            
+            <h3>Comorbilidades</h3>
+                <div class="form-group">
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="comor" id="comor1" value="comor1" formControlName="comor">
+                  <label class="form-check-label" for="comor1">
+                   Trastornos relacionados con la asfixia
                   </label>
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="comor" id="comor6" value="comor6" formControlName="comor">
-                  <label class="form-check-label" for="comor6">
-                    Sin comorbilidades todavía
+                  <input class="form-check-input" type="radio" name="comor" id="comor2" value="comor2" formControlName="comor">
+                  <label class="form-check-label" for="comor2">
+                   Malformaciones
                   </label>
                 </div>
-              </div><!-- form group -->
 
-    <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
-    <span class="help-block" *ngIf="!scoreBebeTest.valid">Recuerda llenar el nombre materno del neonato en la parte superior para poder ver el resultado</span>
-          </form>
-        </div><!--col-->
-      </div><!--row-->
-    </div><!--container-->
-  </div>
-  <div id="all-site-wrapper" class="hfeed site">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="comor" id="comor3" value="comor3" formControlName="comor">
+                  <label class="form-check-label" for="comor3">
+                   Enfermedades relacionadas con la prematuridad
+                  </label>
+                </div>
 
-</div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="comor" id="comor4" value="comor4" formControlName="comor">
+                  <label class="form-check-label" for="comor4">
+                    Enfermedades infecciosas
+                  </label>
+                </div>
+
+                <div class="form-check">  
+                    <input class="form-check-input" type="radio" name="comor" id="comor5" value="comor5" formControlName="comor">
+                    <label class="form-check-label" for="comor5">
+                      Cualquier otro trastorno no clasificado en categorías anteriores
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="comor" id="comor6" value="comor6" formControlName="comor">
+                    <label class="form-check-label" for="comor6">
+                      Sin comorbilidades todavía
+                    </label>
+                  </div>
+                </div><!-- form group -->
+
+      <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
+
+        </div><!-- col-md-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- container-form -->
+
+<!-- fin pregunta numero cinco -->
+</form>

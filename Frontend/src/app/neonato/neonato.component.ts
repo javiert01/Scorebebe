@@ -29,8 +29,15 @@ export class NeonatoComponent implements OnInit {
 
   ngOnInit() {
     this.scoreBebeTest = new FormGroup({
+      'sexo': new FormControl('masculino'),
+      'fechaNacimiento': new FormControl(null),
       'nombreApellido': new FormControl(null, Validators.required),
-      'fechaCalculo': new FormControl(this.getCurrentDate()),
+      'pesoNacimiento': new FormControl(null),
+      'edadGestional': new FormControl(null),
+      'nivelAtencion': new FormControl('primero'),
+      'factorRiesgoInminente': new FormControl(false),
+      'factorRiesgoIncrementa': new FormControl(false),
+      'factorRiesgoReduce': new FormControl(false),
       'edad': new FormControl('edad1'),
       'peso': new FormControl('peso1'),
       'centil': new FormControl('centil1'),
@@ -47,6 +54,10 @@ export class NeonatoComponent implements OnInit {
         this.userID = this.addLeadingZero(this.userID,8)
       }
     );
+  }
+
+  viewForm(){
+    console.log(this.scoreBebeTest);
   }
 
   addLeadingZero(x, pad){
@@ -70,60 +81,59 @@ export class NeonatoComponent implements OnInit {
 
   showTestResult() {
     let score = 0;
-    const coeficiente = 3;
 
     switch(this.scoreBebeTest.get('edad').value) {
       case 'edad1':
-      score = 1.0;
-      this.total = score * coeficiente;
+      score = 15;
+      this.total = score;
       break;
       case 'edad2':
-      score = 0.86993
-      this.total = score * coeficiente;
+      score = 13
+      this.total = score;
       break;
       case 'edad3':
-      score = 0.82705;
-      this.total = score * coeficiente;
+      score = 12;
+      this.total = score;
       break;
       case 'edad4':
-      score = 0.76828;
-      this.total = score * coeficiente;
+      score = 11;
+      this.total = score;
       break;
       case 'edad5':
-      score = 0.78451;
-      this.total = score * coeficiente;
+      score = 12;
+      this.total = score;
       break;
       case 'edad6':
-      score = 0.93737;
-      this.total = score * coeficiente;
+      score = 14;
+      this.total = score;
       break;
       default:
       break;
     }
     switch(this.scoreBebeTest.get('peso').value) {
       case 'peso1':
-      score = 1.0;
-      this.total = this.total + (score * coeficiente);
+      score = 15;
+      this.total = this.total + (score);
       break;
       case 'peso2':
-      score = 0.82946;
-      this.total = this.total + (score * coeficiente);
+      score = 12;
+      this.total = this.total + (score);
       break;
       case 'peso3':
-      score = 0.78473;
-      this.total = this.total + (score * coeficiente);
+      score = 12;
+      this.total = this.total + (score);
       break;
       case 'peso4':
-      score = 0.87666;
-      this.total = this.total + (score * coeficiente);
+      score = 11;
+      this.total = this.total + (score);
       break;
       case 'peso5':
-      score = 0.91240;
-      this.total = this.total + (score * coeficiente);
+      score = 11;
+      this.total = this.total + (score);
       break;
       case 'peso6':
-      score = 0.79316;
-      this.total = this.total + (score * coeficiente);
+      score = 12;
+      this.total = this.total + (score);
       break;
       default:
       break;
@@ -131,16 +141,16 @@ export class NeonatoComponent implements OnInit {
 
     switch(this.scoreBebeTest.get('centil').value) {
       case 'centil1':
-      score = 1.0;
-      this.total = this.total + (score * coeficiente);
+      score = 15;
+      this.total = this.total + (score);
       break;
       case 'centil2':
-      score = 1.11808;
-      this.total = this.total + (score * coeficiente);
+      score = 17;
+      this.total = this.total + (score);
       break;
       case 'centil3':
-      score = 0.95414;
-      this.total = this.total + (score * coeficiente);
+      score = 14;
+      this.total = this.total + (score);
       break;
       default:
       break;
@@ -148,16 +158,16 @@ export class NeonatoComponent implements OnInit {
 
     switch(this.scoreBebeTest.get('apgar').value) {
       case 'apgar1':
-      score = 1.0
-      this.total = this.total + (score * coeficiente);
+      score = 15
+      this.total = this.total + (score);
       break;
       case 'apgar2':
-      score = 1.24861
-      this.total = this.total + (score * coeficiente);
+      score = 19
+      this.total = this.total + (score);
       break;
       case 'apgar3':
-      score = 2.30867
-      this.total = this.total + (score * coeficiente);
+      score = 35
+      this.total = this.total + (score);
       break;
       default:
       break;
@@ -166,20 +176,16 @@ export class NeonatoComponent implements OnInit {
 
     switch(this.scoreBebeTest.get('parto').value) {
       case 'parto1':
-      score = 1.0
-      this.total = this.total + (score * coeficiente);
+      score = 15
+      this.total = this.total + (score);
       break;
       case 'parto2':
-      score = 1.13613
-      this.total = this.total + (score * coeficiente);
+      score = 15
+      this.total = this.total + (score);
       break;
       case 'parto3':
-      score = 0.83775
-      this.total = this.total + (score * coeficiente);
-      break;
-      case 'parto4':
-      score = 0.93283
-      this.total = this.total + (score * coeficiente);
+      score = 19
+      this.total = this.total + (score);
       break;
       default:
       break;
@@ -187,40 +193,40 @@ export class NeonatoComponent implements OnInit {
 
     switch(this.scoreBebeTest.get('comor').value) {
       case 'comor1':
-      score = 1.0
-      this.total = this.total + (score * coeficiente);
+      score = 15
+      this.total = this.total + (score);
       break;
       case 'comor2':
-      score = 0.92668
-      this.total = this.total + (score * coeficiente);
+      score = 14
+      this.total = this.total + (score);
       break;
       case 'comor3':
-      score = 0.85989
-      this.total = this.total + (score * coeficiente);
+      score = 13
+      this.total = this.total + (score);
       break;
       case 'comor4':
-      score = 0.57650
-      this.total = this.total + (score * coeficiente);
+      score = 9
+      this.total = this.total + (score);
       break;
       case 'comor5':
-      score = 0.74698
-      this.total = this.total + (score * coeficiente);
+      score = 11
+      this.total = this.total + (score);
       break;
       case 'comor6':
       score = 0
-      this.total = this.total + (score * coeficiente);
+      this.total = this.total + (score);
       break;
       default:
       break;
     }
 
-    if (this.total >= 15.3) {
+    if (this.total >= 77) {
       this.categoria = 'A';
       this.descripcion = 'Riesgo muy alto'
-    } else if(this.total >= 14.5) {
+    } else if(this.total >= 72) {
       this.categoria = 'B';
       this.descripcion = 'Riesgo alto'
-    } else if (this.total >= 12.6) {
+    } else if (this.total >= 64) {
       this.categoria = 'C';
       this.descripcion = 'Riesgo moderado'
     } else {
@@ -282,7 +288,13 @@ export class NeonatoComponent implements OnInit {
   crearNeonato() {
     this.neonato = {
       nombreApellido: this.scoreBebeTest.get('nombreApellido').value,  
-      fechaCalculo: this.scoreBebeTest.get('fechaCalculo').value,
+      fechaCalculo: this.getCurrentDate(),
+      sexo: this.scoreBebeTest.get('sexo').value,
+      fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
+      edadGestional: this.scoreBebeTest.get('edadGestional').value,
+      nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,
+      factoresRiesgo: this.scoreBebeTest.get('factorRiesgoInminente').value,
+      peso: this.scoreBebeTest.get('pesoNacimiento').value,
       catEdadGestional: this.scoreBebeTest.get('edad').value,
       catPeso: this.scoreBebeTest.get('peso').value,
       catPesoEdadGestional: this.scoreBebeTest.get('centil').value,
