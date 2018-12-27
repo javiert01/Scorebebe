@@ -14,7 +14,11 @@ export class Neonato {
 
     public peso: number;
 
-    public factoresRiesgo: boolean;
+    public factorRiesgoInminente: boolean;
+
+    public factorRiesgoAumenta: boolean;
+
+    public factorRiesgoReduce: boolean;
 
     public nivelAtencion: string;
   

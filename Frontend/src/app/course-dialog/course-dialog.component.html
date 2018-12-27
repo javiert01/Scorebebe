@@ -1,10 +1,9 @@
 <h2 mat-dialog-title>Resultados del Test</h2>
 <mat-dialog-content>
-  <strong>Número de neonato:</strong> {{id}}
-  <br>
-  <strong>Puntaje:</strong> {{puntaje}}
-  <br>
-  <strong>Categoría:</strong> {{categoria}}
+    Neonato RN <strong>{{nombreApellido}}</strong>
+    , número <strong>{{id}}</strong>
+    , tiene categoría de riesgo <strong>{{categoria}}</strong>
+     lo que corresponde a un riesgo <strong> {{riesgo}} </strong>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button class="mat-raised-button"(click)="close()">Cerrar</button>

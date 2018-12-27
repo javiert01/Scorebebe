@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class NeonatoService {
 
     urlServidor = 'https://scorebebe.herokuapp.com/'
+    //urlServidor = 'http://localhost:1337/'
     constructor(private http: HttpClient) {
     }
 

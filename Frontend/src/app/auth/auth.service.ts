@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
     private urlServidor = 'https://scorebebe.herokuapp.com/'
+    //private urlServidor = 'http://localhost:1337/'
   private _registerUrl = this.urlServidor+'usuario/signup';
   private _loginUrl = this.urlServidor+'usuario/login';
 

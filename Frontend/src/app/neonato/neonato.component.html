@@ -51,23 +51,25 @@
   </div>
 </div>
 
-<form [formGroup]="scoreBebeTest" (ngSubmit)="viewForm()" class="formTest">
-<div class="formulario-sb">
+<form [formGroup]="scoreBebeTest" (ngSubmit)="showTestResult()" class="formTest">
+<div class="formulario-sb" *ngIf="showFormulario[0]" @formularioState>
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-8">
             
           <div class="row">
               <div class="col-md-12">
+                <p>Sexo:</p>
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="sexo">
-                  <option value="femenino">Sexo Femenino</option>
-                  <option value="masculino">Sexo Masculino</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="masculino">Masculino</option>
                 </select><br>
+                <p>Fecha de Nacimiento:</p>
                 <input type="text" class="form-control" name="fechaNacimiento" formControlName = "fechaNacimiento" type="date" placeholder="Fecha de nacimiento"><br>
-
                 <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido" placeholder="Apellido Materno Neonato"><br>
                 <input type="text" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
                 <input type="text" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
+                <p>Nivel de atención:</p>
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="nivelAtencion">
                   <option  value="primero">Primer Nivel de Atención</option>
                   <option  value="segundo">Segundo Nivel de Atención</option>
@@ -75,11 +77,12 @@
                 </select>
               </div> 
             </div><br>
-
-            
-
-              <div class="continuar">
-                <a href="#">continuar</a>
+            <span *ngIf="!scoreBebeTest.valid" class="help-block">Recuerde llenar todos los campos para continuar</span>
+            <div class="continuar" *ngIf="!scoreBebeTest.valid">
+                <a>continuar</a>
+              </div>
+              <div class="continuar" *ngIf="scoreBebeTest.valid">
+                <a (click)="continueFormulario(0)"  >continuar</a>
               </div>
 
       </div><!-- col-md-8 -->
@@ -89,7 +92,7 @@
 <!-- antes de empezar uno -->
 
 
-<div class="formulario-sb">
+<div class="formulario-sb" *ngIf="showFormulario[1]" @formularioState>
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
@@ -132,10 +135,14 @@
                       Vomita todo lo que come
                     </label>
                   </div>
-                </div><!-- form group -->                 
+                </div><!-- form group --> 
+                
+                <div class="continuar">
+                    <a (click)="returnFormulario(1)">regresar</a>
+                  </div>
 
                 <div class="continuar">
-                  <a href="#">continuar</a>
+                  <a (click)="continueFormulario(1)">continuar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -149,7 +156,7 @@
 <!-- antes de empezar dos -->
 
 
-  <div class="formulario-sb">
+  <div class="formulario-sb" *ngIf="showFormulario[2]" @formularioState>
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
@@ -243,9 +250,11 @@
 
 
                 </div><!-- form group -->                 
-
                 <div class="continuar">
-                  <a href="#">continuar</a>
+                    <a (click)="returnFormulario(2)">regresar</a>
+                  </div>
+                <div class="continuar">
+                  <a (click)="continueFormulario(2)">continuar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -259,7 +268,7 @@
 <!-- antes de empezar tres -->
 
 
-  <div class="formulario-sb">
+  <div class="formulario-sb" *ngIf="showFormulario[3]" @formularioState>
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
@@ -288,9 +297,11 @@
                 </div>
 
                 </div><!-- form group -->                 
-
                 <div class="continuar">
-                  <a href="#">continuar</a>
+                    <a (click)="returnFormulario(3)">regresar</a>
+                  </div>
+                <div class="continuar">
+                  <a (click)="continueFormulario(3)">continuar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -306,7 +317,7 @@
 <!-- pregunta numero uno -->
 
 
-  <div class="formulario-sb">
+  <div class="formulario-sb" *ngIf="showFormulario[4]" @formularioState>
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -355,9 +366,11 @@
                     </label>
                   </div>
                 </div><!-- form group -->
-
                 <div class="continuar">
-                  <a href="#">continuar</a>
+                    <a (click)="returnFormulario(4)">regresar</a>
+                  </div>
+                <div class="continuar">
+                  <a (click)="continueFormulario(4)">continuar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -370,7 +383,7 @@
 
 <!-- pregunta numero dos -->
 
-<div class="formulario-sb">
+<div class="formulario-sb" @formularioState *ngIf="showFormulario[5]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -420,9 +433,11 @@
                     </label>
                   </div>
                 </div><!-- form group -->
-
                 <div class="continuar">
-                  <a href="#">continuar</a>
+                    <a (click)="returnFormulario(5)">regresar</a>
+                  </div>
+                <div class="continuar">
+                  <a (click)="continueFormulario(5)">continuar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -434,7 +449,7 @@
 
 <!-- pregunta numero tres -->
 
-<div class="formulario-sb">
+<div class="formulario-sb" @formularioState *ngIf="showFormulario[6]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -467,9 +482,11 @@
                 </div>
 
                 </div><!-- form group -->
-
                 <div class="continuar">
-                  <a href="#">continuar</a>
+                    <a (click)="returnFormulario(6)">regresar</a>
+                  </div>
+                <div class="continuar">
+                  <a (click)="continueFormulario(6)">continuar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -483,7 +500,7 @@
 
 <!-- pregunta numero cuatro -->
 
-<div class="formulario-sb">
+<div class="formulario-sb" @formularioState *ngIf="showFormulario[7]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -513,9 +530,11 @@
                 </div>
 
                 </div><!-- form group -->
-
                 <div class="continuar">
-                  <a href="#">continuar</a>
+                    <a (click)="returnFormulario(7)">regresar</a>
+                  </div>
+                <div class="continuar">
+                  <a (click)="continueFormulario(7)">continuar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -525,7 +544,7 @@
 
 <!-- fin pregunta numero cuatro -->
 
-<div class="formulario-sb">
+<div class="formulario-sb" @formularioState *ngIf="showFormulario[8]">
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-8">
@@ -554,9 +573,11 @@
                 </label>
               </div>
               </div><!-- form group -->
-
+              <div class="continuar">
+                  <a (click)="returnFormulario(8)">regresar</a>
+                </div>
    <div class="continuar">
-                <a href="#">continuar</a>
+                <a (click)="continueFormulario(8)">continuar</a>
               </div>
 
       </div><!-- col-md-8 -->
@@ -569,7 +590,7 @@
 
 <!-- pregunta numero cinco -->
 
-<div class="formulario-sb">
+<div class="formulario-sb" @formularioState *ngIf="showFormulario[9]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -619,8 +640,11 @@
                     </label>
                   </div>
                 </div><!-- form group -->
-
+                <div class="continuar">
+                    <a (click)="returnFormulario(9)">regresar</a>
+                  </div>          
       <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
+      <button type="button" (click)="crearPDF()" >Descargar PDF</button>
 
         </div><!-- col-md-8 -->
       </div><!-- row -->
