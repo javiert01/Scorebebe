@@ -29,6 +29,9 @@ export class NeonatoComponent implements OnInit {
   neonatoID;
   showFormulario = [];
   mensaje = false;
+  mostrarInstrucciones = false;
+  mostrarFormulario = false;
+  mostrarDesc = true;
   @ViewChild('instrucciones') public instrucciones:ElementRef;
 
 
@@ -80,6 +83,16 @@ export class NeonatoComponent implements OnInit {
   returnFormulario(index){
     this.showFormulario[index] = false;
     this.showFormulario[index - 1] = true;
+  }
+
+  showInstrucciones(){
+    this.mostrarDesc = false;
+    this.mostrarInstrucciones = true; 
+  }
+
+  showForm(){
+    this.mostrarInstrucciones = false;
+    this.mostrarFormulario = true;
   }
 
   addLeadingZero(x, pad){

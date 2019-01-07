@@ -6,13 +6,14 @@
     </div>
   </div>
 
+  <div *ngIf="mostrarDesc">
   <div class="banner">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <h2>SCORE BEBÉ</h2>
           <p>Versión preliminar</p>
-          <p><a (click)="moveToStructure()">comenzar evaluación</a></p>
+          <p><a (click)="showInstrucciones()">Iniciar</a></p>
         </div>
         <div class="col-md-6">
           
@@ -35,8 +36,9 @@
       </div>
     </div>
   </div>
+</div>
 <!--contenedor-->
-<div class="instrucciones"  #instrucciones id="instrucciones">
+<div class="instrucciones"  #instrucciones id="instrucciones" *ngIf="mostrarInstrucciones">
     <div class="container">
       <div class="row">
         <div class="col-md-4">
@@ -48,10 +50,16 @@
 <a href="https://drive.google.com/drive/folders/1wOcAP2ERGm6dM_sfNdDXuMGGohA93ypZ?usp=sharing" target="_blank" rel="noopener">clic aquí</a>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-8">
+        <a (click)="showForm()" style="cursor:pointer;">comenzar evaluación</a>
+      </div>
+    </div>
   </div>
 </div>
 
-<form [formGroup]="scoreBebeTest" (ngSubmit)="showTestResult()" class="formTest">
+<form [formGroup]="scoreBebeTest" (ngSubmit)="showTestResult()" class="formTest" *ngIf="mostrarFormulario">
 <div class="formulario-sb" *ngIf="showFormulario[0]" @formularioState>
   <div class="container">
     <div class="row justify-content-md-center">
@@ -456,7 +464,7 @@
             
             <h3>Centil de peso al nacer para edad gestacional</h3>
             <div class="calcula">
-                  <a href="#">Calcula el peso aquí­</a>
+                  <a href="http://intergrowth21.ndog.ox.ac.uk/es/ManualEntry" target="_blank">Calcula el peso aquí­</a>
                 </div><br>
                 <div class="form-group">
 
