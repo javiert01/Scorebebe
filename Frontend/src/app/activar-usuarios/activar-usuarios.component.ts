@@ -12,7 +12,7 @@ export class ActivarUsuariosComponent implements OnInit {
 
   usuarios : Usuario[];
   
-  constructor(private authService: AuthService, private http:Http) { }
+  constructor(public authService: AuthService, private http:Http) { }
 
   ngOnInit() {
     this.authService.getUsuarios().subscribe(

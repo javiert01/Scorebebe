@@ -25,6 +25,9 @@ export class CourseDialogComponent implements OnInit {
   factorRiesgoIncrementa;
   factorRiesgoReduce;
   nivelAtencion;
+  factoresRiesgoInminente;
+  factoresRiesgoAumenta;
+  factoresRiesgoReduce;
 
   constructor(private dialogRef: MatDialogRef<CourseDialogComponent>, @Inject(MAT_DIALOG_DATA) data) { 
     this.categoria = data.categoria;
@@ -43,12 +46,22 @@ export class CourseDialogComponent implements OnInit {
     this.factorRiesgoIncrementa = data.factorRiesgoIncrementa;
     this.factorRiesgoReduce = data.factorRiesgoReduce;
     this.nivelAtencion = data.nivelAtencion;
+    this.factoresRiesgoInminente = data.factoresRiesgoInminente;
+    this.factoresRiesgoAumenta = data.factoresRiesgoAumenta;
+    this.factoresRiesgoReduce = data.factoresRiesgoReduce;
   }
 
   ngOnInit() {
+    console.log(this.factoresRiesgoAumenta);
+    console.log(this.factorRiesgoIncrementa);
+    console.log(this.factoresRiesgoInminente);
+    console.log(this.factorRiesgoInminente);
+    console.log(this.factoresRiesgoReduce);
+    console.log(this.factorRiesgoReduce);
   }
 
   crearPDF() {
+    let inicioTexto = 70;
     let doc = new jsPDF();
     let imgHeaderData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA2YAAABvCAYAAACHMtOrAAAAAXNSR0IArs4'+
                         'c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAMHHSURBVHhe7J0FgBVV+8alTGw/E7u7' +
@@ -71,65 +84,102 @@ export class CourseDialogComponent implements OnInit {
                         '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'
     doc.setFontSize(24);
     doc.addImage(imgHeaderData, 'png', 15, 10, 180, 20);
-    doc.text("Informe Neonato", 75, 50);
+    doc.text("Informe del Neonato", 75, 50);
     doc.setFontSize(11);
-    doc.text("Neonato "+this.nombreApellido+" nacido el "+this.fechaNacimiento+", de "+this.edadGestional+" semanas de edad gestacional, con un peso de "+this.pesoNacimiento+" gramos,",15,70);
-    doc.text("lo que equivale a un "+this.centil+" de peso para la edad gestacional.",15,75);
-    doc.text("- Nace por "+this.parto, 15,85);
-    doc.text("- Con un apgar "+this.apgar+" a los 5 minutos", 15,90);
-    doc.text("- Y desarrolla la siguiente comorbilidad: "+this.comor, 15,95);
-    doc.text("- Le corresponde una categoría de riesgo "+this.categoria+" lo que quiere decir riesgo "+this.riesgo+" de eventos adversos",15,100);
-    doc.text("neonatales.",15,105);
     doc.setFontStyle("bold");
-    doc.text("Intervención",15,115);
+    doc.text("Descripción del caso:", 15,inicioTexto);
+    doc.setFontStyle("normal");
+    doc.text("Neonato de apellido materno "+this.nombreApellido+" nacido el "+this.fechaNacimiento+", de "+this.edadGestional+" semanas de edad gestacional, con ",15,inicioTexto += 10);
+    doc.text("un peso de "+this.pesoNacimiento+" gramos, lo que equivale a un "+this.centil+" de peso para la edad gestacional.",15,inicioTexto += 5);
+    doc.text("- Nace por "+this.parto, 15,inicioTexto += 5);
+    doc.text("- Con un Apgar "+this.apgar+" a los 5 minutos", 15,inicioTexto += 5);
+    doc.text("- Y desarrolla la siguiente comorbilidad: "+this.comor, 15,inicioTexto += 5);
+    doc.setFontStyle("bold");
+    doc.text("Resultado del Score Bebé:",15,inicioTexto += 10);
+    doc.setFontStyle("normal");
+    doc.text("Tiene un puntaje de "+this.puntaje+" y le corresponde una categoría de riesgo "+this.categoria+" lo que quiere decir riesgo "+this.riesgo,15,inicioTexto += 10);
+    doc.text("de eventos adversos neonatales.",15,inicioTexto += 5);
+    doc.setFontStyle("bold");
+    doc.text("Intervención",15,inicioTexto +=10);
     doc.setFontStyle("normal");
     if(this.factorRiesgoInminente || this.factorRiesgoIncrementa || this.factorRiesgoReduce){
-      doc.text("Debe estabilizar inmediatamente y/o activar la gestión de la transferencia, conforme su nivel de atención",15,120);
-      doc.text("("+this.nivelAtencion+").",15,125);
+      doc.text("Debe estabilizar inmediatamente y/o activar la gestión de la transferencia, considerando el acróstico ",15,inicioTexto += 5);
+      doc.text("\"R.E.F.I.E.R.A.\", conforme su nivel de atención ("+this.nivelAtencion+" nivel).",15,inicioTexto += 5);
+      doc.text("Recuerde que el riesgo del neonato podría afectarse por:",15,inicioTexto += 10);
+      doc.setFontStyle("bold");
+      doc.text("Factores de riesgo inminente (que amenazan la vida del neonato):",15, inicioTexto +=10);
+      doc.setFontStyle("normal");
+      if(this.factoresRiesgoInminente.length > 0){
+        for(let i = 0; i<this.factoresRiesgoInminente.length; i++) {
+          doc.text("- "+this.factoresRiesgoInminente[i],15, inicioTexto +=5);
+        }
+      }else {
+        doc.text("- No tiene",15, inicioTexto += 5);
+      }
+      doc.setFontStyle("bold");
+      doc.text("Agravantes de riesgo (que pudieran incrementar el riesgo del neonato):",15, inicioTexto +=10);
+      doc.setFontStyle("normal");
+      if(this.factoresRiesgoAumenta.length > 0){
+        for(let i = 0; i<this.factoresRiesgoAumenta.length; i++) {
+          doc.text("- "+this.factoresRiesgoAumenta[i],15, inicioTexto +=5);
+        }
+      }else {
+        doc.text("- No tiene",15, inicioTexto += 5);
+      }
+      doc.setFontStyle("bold");
+      doc.text("Alicientes de riesgo (que pudieran reducir el riesgo del neonato):",15, inicioTexto +=10);
+      doc.setFontStyle("normal");
+      if(this.factoresRiesgoReduce.length > 0){
+        for(let i = 0; i<this.factoresRiesgoReduce.length; i++) {
+          doc.text("- "+this.factoresRiesgoReduce[i],15, inicioTexto +=5);
+        }
+      }else {
+        doc.text("- No tiene",15, inicioTexto += 5);
+      }
     } else {
-      doc.text("No tiene factores de riesgo, y en vista de que Usted se encuentra en el nivel "+this.nivelAtencion+" le corresponde:",15,120);
+      doc.text("No tiene factores de riesgo, y en vista de que Usted se encuentra en el "+this.nivelAtencion+" nivel, le corresponde:",15,inicioTexto += 5);
       switch(this.categoria) {
         case 'A':
-        if(this.nivelAtencion === 'primero' || this.nivelAtencion === 'segundo') {
-          doc.text("A: primer nivel o segundo nivel: estabilización utilizando las normas del MSP y transferencia a cuidados ",15,125);
-          doc.text("intensivos neonatales",15,130)
+        if(this.nivelAtencion === 'primer' || this.nivelAtencion === 'segundo') {
+          doc.text("A: primer nivel o segundo nivel: estabilización utilizando las normas del MSP y transferencia a cuidados ",15,inicioTexto += 5);
+          doc.text("intensivos neonatales",15, inicioTexto += 5);
         } else {
-          doc.text("A: tercer nivel: ingreso a cuidados intensivos neonatales",15,125);
+          doc.text("A: tercer nivel: ingreso a cuidados intensivos neonatales",15,inicioTexto += 5);
         }
         break;
         case 'B':
-        if(this.nivelAtencion === 'primero'){
-          doc.text("B: primer nivel: transferencia al siguiente nivel de atención acompañado por médico especialista ",15,125);
-          doc.text("en transporte neonatal",15,130);
+        if(this.nivelAtencion === 'primer'){
+          doc.text("B: primer nivel: transferencia al siguiente nivel de atención acompañado por médico especialista ",15,inicioTexto += 5);
+          doc.text("en transporte neonatal",15, inicioTexto += 5);
         }else if(this.nivelAtencion === 'segundo'){
-          doc.text("B: segundo nivel: considerar transferencia al siguiente nivel de atención, acompañado por especialista ",15,125);
-          doc.text("en transporte neonatal",15,130);
+          doc.text("B: segundo nivel: considerar transferencia al siguiente nivel de atención, acompañado por especialista ",15,inicioTexto += 5);
+          doc.text("en transporte neonatal",15, inicioTexto += 5);
         }else {
-          doc.text("B: tercer nivel: interconsulta a neonatología y considerar ingreso a cuidados intensivos neonatales",15,125);
+          doc.text("B: tercer nivel: interconsulta a neonatología y considerar ingreso a cuidados intensivos neonatales",15,inicioTexto += 5);
         }
         break;
         case 'C':
-        if(this.nivelAtencion === 'primero'){
-          doc.text("C: primer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,125);
-          doc.text(" brinde alta de calidad y control en 3 días",15,130);
+        if(this.nivelAtencion === 'primer'){
+          doc.text("C: primer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
+          doc.text(" brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
         }else if(this.nivelAtencion === 'segundo'){
-          doc.text("C: segundo nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,125);
-          doc.text("brinde alta de calidad y control en 3 días",15,130);
+          doc.text("C: segundo nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
+          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
         }else {
-          doc.text("C: tercer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,125);  
-          doc.text("brinde alta de calidad y control en 3 días",15,130);   
+          doc.text("C: tercer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);  
+          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);   
         }
         break;
         case 'D':
-        if(this.nivelAtencion === 'primero'){
-          doc.text("D: primer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,125);
-          doc.text("brinde alta de calidad y control en 3 días",15,130);
+        if(this.nivelAtencion === 'primer'){
+          doc.text("D: primer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
+          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
         }else if(this.nivelAtencion === 'segundo'){
-          doc.text("D: segundo nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,125);
-          doc.text("brinde alta de calidad y control en 3 días",15,130);
+          doc.text("D: segundo nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
+          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
         }else {
-          doc.text("D: tercer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,125);
-          doc.text("brinde alta de calidad y control en 3 días",15,130);          
+          doc.text("D: tercer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
+          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);          
         }
         break;
         default:

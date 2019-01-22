@@ -1,4 +1,17 @@
-<div class="cont-logos">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0f5992;" *ngIf="authService.loggedIn()">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav ml-auto" style="font-size:18px; font-weight: bold;">
+      <li class="nav-item">
+        <a (click)="authService.logoutUser()">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="'/homepage'">Inicio</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="cont-logos" *ngIf="mostrarLogo">
     <div class="container">
       <div class="col-md-12">
       <img src="http://scorebebe.com/img/logos-header.jpg">
@@ -13,7 +26,7 @@
         <div class="col-md-6">
           <h2>SCORE BEBÉ</h2>
           <p>Versión preliminar</p>
-          <p><a (click)="showInstrucciones()">Iniciar</a></p>
+          <p><a (click)="showIntro()" style="cursor: pointer;">Iniciar</a></p>
         </div>
         <div class="col-md-6">
           
@@ -21,22 +34,28 @@
       </div>
     </div>
   </div>
+</div>
 
 
 
-  <div class="intro">
+  <div class="intro" *ngIf="mostrarIntro">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
                 <p>El <strong>Score Bebé</strong> es una puntuación numérica que permite estimar el riesgo de muerte neonatal en el Ecuador. Este cuestionario le ayudará a medir el riesgo potencial de eventos adversos neonatales.</p>
-<p>Sus respuestas y la puntuación del Score Bebé servirán para facilitar la categorización del riesgo (riesgo bajo, moderado, alto y muy alto) y adecuar las intervenciones más apropiadas y oportunas para el beneficio del neonato.”<br>
-“El personal de salud debe manejar a los neonatos tal y como señalan las normas de atención neonatal vigentes</p>
-<p><span style="color: #069efd;">Para más detalle consulte en: www.salud.gob.ec</span></p>
+<p>Sus respuestas y la puntuación del Score Bebé servirán para facilitar la categorización del riesgo (riesgo bajo, moderado, alto y muy alto) y adecuar las intervenciones más apropiadas y oportunas para el beneficio del neonato.<br>
+El personal de salud debe manejar a los neonatos tal y como señalan las normas de atención neonatal vigentes.</p>
+<p><span style="color: #069efd;">Para revisar las normativas de atención infantil vigentes, consulte:  <a href="https://www.salud.gob.ec" target="_blank">www.salud.gob.ec</a></span></p>
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-md-8">
+          <p (click)="showInstrucciones()" style="color: #069efd; cursor: pointer"><strong>Siguiente</strong></p>
         </div>
       </div>
     </div>
   </div>
-</div>
+
 <!--contenedor-->
 <div class="instrucciones"  #instrucciones id="instrucciones" *ngIf="mostrarInstrucciones">
     <div class="container">
@@ -45,9 +64,7 @@
           <h3>INSTRUCCIONES</h3>
         </div>
         <div class="col-md-8">
-          <p>Para llenar el cuestionario haga clic en cada pregunta que se presenta a continuación, y marque con una marca (X) en la casilla que mejor describa el estado actual del neonato. Al finalizar, podrá visualizar el puntaje total del Score Bebé, su categoría de riesgo y sugerencias de manejo.”</p>
-<p>“Antes de empezar, recuerde percentilar el peso del neonato, de acuerdo a su sexo y edad gestacional, utilizando las curvas y tablas del siguiente link:</p>
-<a href="https://drive.google.com/drive/folders/1wOcAP2ERGm6dM_sfNdDXuMGGohA93ypZ?usp=sharing" target="_blank" rel="noopener">clic aquí</a>
+          <p>Para llenar el cuestionario haga clic en cada pregunta que se presenta a continuación, y marque con una marca (X) en la casilla que mejor describa el estado actual del neonato. Al finalizar, podrá visualizar el puntaje total del Score Bebé, su categoría de riesgo y sugerencias de manejo.</p>
       </div>
     </div>
     <div class="row">
@@ -60,7 +77,7 @@
 </div>
 
 <form [formGroup]="scoreBebeTest" (ngSubmit)="showTestResult()" class="formTest" *ngIf="mostrarFormulario">
-<div class="formulario-sb" *ngIf="showFormulario[0]" @formularioState>
+<div class="formulario-sb" *ngIf="showFormulario[0]"  style="height: 100%;">
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-8">
@@ -75,13 +92,13 @@
                 <p>Fecha de Nacimiento:</p>
                 <input type="text" class="form-control" name="fechaNacimiento" formControlName = "fechaNacimiento" type="date" placeholder="Fecha de nacimiento"><br>
                 <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido" placeholder="Apellido Materno Neonato"><br>
-                <input type="text" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
-                <input type="text" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
+                <input type="number" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
+                <input type="number" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
                 <p>Nivel de atención:</p>
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="nivelAtencion">
-                  <option  value="primero">Primer Nivel de Atención</option>
+                  <option  value="primer">Primer Nivel de Atención</option>
                   <option  value="segundo">Segundo Nivel de Atención</option>
-                  <option  value="tercero">Tercer Nivel de Atención</option>
+                  <option  value="tercer">Tercer Nivel de Atención</option>
                 </select>
               </div> 
             </div><br>
@@ -92,6 +109,10 @@
               <div class="continuar" *ngIf="scoreBebeTest.valid">
                 <a (click)="continueFormulario(0)"  >continuar</a>
               </div>
+              <div class="continuar">
+                <a (click)="showInstrucciones()"  >Regresar a Instrucciones</a>
+              </div>
+              
 
       </div><!-- col-md-8 -->
     </div><!-- row -->
@@ -100,7 +121,7 @@
 <!-- antes de empezar uno -->
 
 
-<div class="formulario-sb" *ngIf="showFormulario[1]" @formularioState>
+<div class="formulario-sb" *ngIf="showFormulario[1]" >
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
@@ -109,48 +130,21 @@
 
             <div class="form-group">
               <h5>Factores de riesgo inminente para el neonato que requieren estabilización inmediata y/o transferencia urgente:</h5><br>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente1" value="factorRiesgoInminente1" formControlName="factorRiesgoInminente">
-                  <label class="form-check-label" for="factorRiesgoInminente1">
-                    El niño respira débilmente o su color de piel es azulado o tiene una baja frecuencia cardí­aca y un pobre tono muscular o sus reflejos débiles o convulsiona.
+                <div class="form-check" formArrayName="factorRiesgoInminente" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoInminente.controls; let i = index">
+                  <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoInminente[i].id">
+                  <label class="form-check-label" [for]="factoresRiesgoInminente[i].id" >  
+                  {{factoresRiesgoInminente[i].value}}
                   </label>
                 </div>
+            </div>
 
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente2" value="factorRiesgoInminente2" formControlName="factorRiesgoInminente"> 
-                  <label class="form-check-label" for="factorRiesgoInminente2">
-                    Tiene alteración de los signos vitales
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente3" value="factorRiesgoInminente3" formControlName="factorRiesgoInminente">
-                  <label class="form-check-label" for="factorRiesgoInminente3">
-                    Se encuentra ictérico
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente4" value="factorRiesgoInminente4" formControlName="factorRiesgoInminente">
-                  <label class="form-check-label" for="factorRiesgoInminente4">
-                     Hipoglucemia
-                  </label>
-                </div>
-
-                <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoInminente" id="factorRiesgoInminente5" value="factorRiesgoInminente5" formControlName="factorRiesgoInminente">
-                    <label class="form-check-label" for="factorRiesgoInminente5">
-                      Vomita todo lo que come
-                    </label>
-                  </div>
-                </div><!-- form group --> 
                 
-                <div class="continuar">
-                    <a (click)="returnFormulario(1)">regresar</a>
-                  </div>
 
                 <div class="continuar">
                   <a (click)="continueFormulario(1)">continuar</a>
+                </div>
+                <div class="continuar">
+                  <a (click)="returnFormulario(1)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -164,105 +158,27 @@
 <!-- antes de empezar dos -->
 
 
-  <div class="formulario-sb" *ngIf="showFormulario[2]" @formularioState>
+  <div class="formulario-sb" *ngIf="showFormulario[2]" >
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
 
             <div class="form-group">
               <h5>Factores que podrí­an incrementar el riesgo:</h5><br>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa1" value="factorRiesgoIncrementa1" formControlName="factorRiesgoIncrementa">
-                  <label class="form-check-label" for="factorRiesgoIncrementa1">
-                     Madre tuvo oligohidramnios o hidrorrea mayor o igual a 18 horas
+                <div class="form-check" formArrayName="factorRiesgoIncrementa" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoIncrementa.controls; let i = index">
+                  <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoAumenta[i].id">
+                  <label class="form-check-label" [for]="factoresRiesgoAumenta[i].id">
+                     {{factoresRiesgoAumenta[i].value}}
                   </label>
                 </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa2" value="factorRiesgoIncrementa2" formControlName="factorRiesgoIncrementa"> 
-                  <label class="form-check-label" for="factorRiesgoIncrementa2">
-                    Madre tuvo polihidramnios
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa3" value="factorRiesgoIncrementa3" formControlName="factorRiesgoIncrementa">
-                  <label class="form-check-label" for="factorRiesgoIncrementa3">
-                    Madre diabética
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa4" value="factorRiesgoIncrementa4" formControlName="factorRiesgoIncrementa">
-                  <label class="form-check-label" for="factorRiesgoIncrementa4">
-                    Madre preeclámptica/eclámptica
-                  </label>
-                </div>
-
-                <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa5" value="factorRiesgoIncrementa5" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa5">
-                      Madre tuvo IVU en el embarazo
-                    </label>
-                  </div>
-
-                  <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa6" value="factorRiesgoIncrementa6" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa6">
-                      Madre tuvo cultivo positivo para Streptococcus
-                    </label>
-                  </div>
-
-                  <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa7" value="factorRiesgoIncrementa7" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa7">
-                      Tuvo sufrimiento fetal agudo
-                    </label>
-                  </div>
-
-                  <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa8" value="factorRiesgoIncrementa8" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa8">
-                      Niño de sexo masculino
-                    </label>
-                  </div>
-
-                  <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa9" value="factorRiesgoIncrementa9" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa9">
-                      Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)
-                    </label>
-                  </div>
-
-                  <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa10" value="factorRiesgoIncrementa10" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa10">
-                      Parto en domicilio o por personal no entrenado
-                    </label>
-                  </div>
-
-                  <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa11" value="factorRiesgoIncrementa11" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa11">
-                      Ningún control prenatal
-                    </label>
-                  </div>
-
-                  <div class="form-check">  
-                    <input class="form-check-input" type="checkbox" name="factorRiesgoIncrementa" id="factorRiesgoIncrementa12" value="factorRiesgoIncrementa12" formControlName="factorRiesgoIncrementa">
-                    <label class="form-check-label" for="factorRiesgoIncrementa12">
-                      Es producto de un embarazo múltiple
-                    </label>
-                  </div>
-
-
 
                 </div><!-- form group -->                 
-                <div class="continuar">
-                    <a (click)="returnFormulario(2)">regresar</a>
-                  </div>
+              
                 <div class="continuar">
                   <a (click)="continueFormulario(2)">continuar</a>
+                </div>
+                <div class="continuar">
+                  <a (click)="returnFormulario(2)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -276,40 +192,27 @@
 <!-- antes de empezar tres -->
 
 
-  <div class="formulario-sb" *ngIf="showFormulario[3]" @formularioState>
+  <div class="formulario-sb" *ngIf="showFormulario[3]" >
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
 
             <div class="form-group">
               <h5>Factores que podrían reducir el riesgo del neonato:</h5><br>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoReduce" id="factorRiesgoReduce1" value="factorRiesgoReduce1" formControlName="factorRiesgoReduce">
-                  <label class="form-check-label" for="factorRiesgoReduce1">
-                      Es prematuro y recibió dosis completa de maduración pulmonar
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoReduce" id="factorRiesgoReduce2" value="factorRiesgoReduce2" formControlName="factorRiesgoReduce"> 
-                  <label class="form-check-label" for="factorRiesgoReduce2">
-                    Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="factorRiesgoReduce" id="factorRiesgoReduce3" value="factorRiesgoReduce3" formControlName="factorRiesgoReduce">
-                  <label class="form-check-label" for="factorRiesgoReduce3">
-                   Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio
+                <div class="form-check" formArrayName="factorRiesgoReduce" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoReduce.controls; let i = index">
+                  <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoReduce[i].id">
+                  <label class="form-check-label" [for]="factoresRiesgoReduce[i].id">
+                      {{factoresRiesgoReduce[i].value}}
                   </label>
                 </div>
 
                 </div><!-- form group -->                 
-                <div class="continuar">
-                    <a (click)="returnFormulario(3)">regresar</a>
-                  </div>
+               
                 <div class="continuar">
                   <a (click)="continueFormulario(3)">continuar</a>
+                </div>
+                <div class="continuar">
+                  <a (click)="returnFormulario(3)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -325,7 +228,7 @@
 <!-- pregunta numero uno -->
 
 
-  <div class="formulario-sb" *ngIf="showFormulario[4]" @formularioState>
+  <div class="formulario-sb" *ngIf="showFormulario[4]" >
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -375,10 +278,10 @@
                   </div>
                 </div><!-- form group -->
                 <div class="continuar">
-                    <a (click)="returnFormulario(4)">regresar</a>
-                  </div>
-                <div class="continuar">
                   <a (click)="continueFormulario(4)">continuar</a>
+                </div>
+                <div class="continuar">
+                  <a (click)="returnFormulario(4)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -391,7 +294,7 @@
 
 <!-- pregunta numero dos -->
 
-<div class="formulario-sb" @formularioState *ngIf="showFormulario[5]">
+<div class="formulario-sb"  *ngIf="showFormulario[5]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -442,10 +345,10 @@
                   </div>
                 </div><!-- form group -->
                 <div class="continuar">
-                    <a (click)="returnFormulario(5)">regresar</a>
-                  </div>
-                <div class="continuar">
                   <a (click)="continueFormulario(5)">continuar</a>
+                </div>
+                <div class="continuar">
+                  <a (click)="returnFormulario(5)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -457,14 +360,14 @@
 
 <!-- pregunta numero tres -->
 
-<div class="formulario-sb" @formularioState *ngIf="showFormulario[6]">
+<div class="formulario-sb"  *ngIf="showFormulario[6]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
             
             <h3>Centil de peso al nacer para edad gestacional</h3>
             <div class="calcula">
-                  <a href="http://intergrowth21.ndog.ox.ac.uk/es/ManualEntry" target="_blank">Calcula el peso aquí­</a>
+                  <a href="http://intergrowth21.ndog.ox.ac.uk/es/ManualEntry" target="_blank">CALCULE EL PERCENTIL DEL PESO PARA LA EDAD GESTACIONAL AQUÍ</a>
                 </div><br>
                 <div class="form-group">
 
@@ -491,10 +394,10 @@
 
                 </div><!-- form group -->
                 <div class="continuar">
-                    <a (click)="returnFormulario(6)">regresar</a>
-                  </div>
-                <div class="continuar">
                   <a (click)="continueFormulario(6)">continuar</a>
+                </div>
+                <div class="continuar">
+                  <a (click)="returnFormulario(6)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -508,7 +411,7 @@
 
 <!-- pregunta numero cuatro -->
 
-<div class="formulario-sb" @formularioState *ngIf="showFormulario[7]">
+<div class="formulario-sb"  *ngIf="showFormulario[7]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -539,10 +442,10 @@
 
                 </div><!-- form group -->
                 <div class="continuar">
-                    <a (click)="returnFormulario(7)">regresar</a>
-                  </div>
-                <div class="continuar">
                   <a (click)="continueFormulario(7)">continuar</a>
+                </div>
+                <div class="continuar">
+                  <a (click)="returnFormulario(7)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -552,7 +455,7 @@
 
 <!-- fin pregunta numero cuatro -->
 
-<div class="formulario-sb" @formularioState *ngIf="showFormulario[8]">
+<div class="formulario-sb"  *ngIf="showFormulario[8]">
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-8">
@@ -570,22 +473,22 @@
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="parto" id="parto2" value="parto2" formControlName="parto">
                 <label class="form-check-label" for="parto2">
-                  Parto vaginal eutocico
+                  Parto vaginal eutócico
                 </label>
               </div>
 
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="parto" id="parto3" value="parto3" formControlName="parto">
                 <label class="form-check-label" for="parto3">
-                  Parto distoco vaginal
+                  Parto distócico vaginal
                 </label>
               </div>
               </div><!-- form group -->
-              <div class="continuar">
-                  <a (click)="returnFormulario(8)">regresar</a>
-                </div>
    <div class="continuar">
                 <a (click)="continueFormulario(8)">continuar</a>
+              </div>
+              <div class="continuar">
+                <a (click)="returnFormulario(8)">regresar</a>
               </div>
 
       </div><!-- col-md-8 -->
@@ -598,7 +501,7 @@
 
 <!-- pregunta numero cinco -->
 
-<div class="formulario-sb" @formularioState *ngIf="showFormulario[9]">
+<div class="formulario-sb"  *ngIf="showFormulario[9]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -644,15 +547,15 @@
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="comor" id="comor6" value="comor6" formControlName="comor">
                     <label class="form-check-label" for="comor6">
-                      Sin comorbilidades todavía
+                      Sin comorbilidades
                     </label>
                   </div>
                 </div><!-- form group -->
-                <div class="continuar">
-                    <a (click)="returnFormulario(9)">regresar</a>
-                  </div>          
+                      
       <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
-
+      <div class="continuar">
+        <a (click)="returnFormulario(9)">regresar</a>
+      </div> 
         </div><!-- col-md-8 -->
       </div><!-- row -->
     </div><!-- container -->

@@ -5,6 +5,43 @@ h1, h2,h3,h4,h5,h6{font-family: 'Montserrat', sans-serif;}
 
 p, span, li, strong, a, button, label{font-family: 'Montserrat', sans-serif;}
 
+nav {
+    background-color: #04a8fd!important;
+    background: #04a8fd!important;
+}
+.navbar {
+	padding: 5px 0px 0px;
+}
+
+.navbar ul {
+	width:100%;
+    text-align: right;
+    float: none;
+    height: auto;
+    padding: 0px;
+    display: block;
+}
+
+.navbar li {
+    font-family: 'Montserrat', sans-serif;
+    list-style: none;
+    margin-right: 1px;
+    display: inline-block;
+    float: none;
+}
+
+.navbar li a {
+    text-transform: uppercase;
+    font-size: 17px;
+    padding: 3px 10px;
+    /* background: #0b3169; */
+    font-weight: 500;
+    color: #fff;
+    border: 2px solid #fff;
+    float: left;
+    margin-left: 4px;
+    margin-right: 4px;
+}
 
 /*#####################################
 intro

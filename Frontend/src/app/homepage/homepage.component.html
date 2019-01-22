@@ -1,3 +1,13 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0f5992;" *ngIf="_authService.loggedIn()">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav ml-auto" style="font-size:18px; font-weight: bold;">
+      <li class="nav-item">
+        <a (click)="_authService.logoutUser()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 <div class="cont-logos">
     <div class="container">
       <div class="col-md-12">
@@ -22,35 +32,6 @@
       </div>
     </div>
   </div>
-
-
-
-  <div class="intro">
-    <div class="container">
-      <div class="row justify-content-md-center">
-        <div class="col-md-8">
-                <p>El <strong>Score Bebé</strong> es una puntuación numérica que permite estimar el riesgo de muerte neonatal en el Ecuador. Este cuestionario le ayudará a medir el riesgo potencial de eventos adversos neonatales.</p>
-<p>Sus respuestas y la puntuación del Score Bebé servirán para facilitar la categorización del riesgo (riesgo bajo, moderado, alto y muy alto) y adecuar las intervenciones más apropiadas y oportunas para el beneficio del neonato.”<br>
-“El personal de salud debe manejar a los neonatos tal y como señalan las normas de atención neonatal vigentes</p>
-<p><span style="color: #069efd;">Para más detalle consulte en: www.salud.gob.ec</span></p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="instrucciones">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h3>INSTRUCCIONES</h3>
-        </div>
-        <div class="col-md-8">
-          <p>Para llenar el cuestionario haga clic en cada pregunta que se presenta a continuación, y marque con una marca (X) en la casilla que mejor describa el estado actual del neonato. Al finalizar, podrá visualizar el puntaje total del Score Bebé, su categoría de riesgo y sugerencias de manejo.”</p>
-<p>“Antes de empezar, recuerde percentilar el peso del neonato, de acuerdo a su sexo y edad gestacional, utilizando las curvas y tablas del siguiente link:</p>
-<a href="https://drive.google.com/drive/folders/1wOcAP2ERGm6dM_sfNdDXuMGGohA93ypZ?usp=sharing" target="_blank" rel="noopener">clic aquí</a>
-      </div>
-    </div>
-  </div>
-</div>
   <div id="all-site-wrapper" class="hfeed site">
   
     <a href="#" id="back-top">
@@ -89,20 +70,6 @@
 
       
     </div>
-  </div>
-</div>
-<div id="contacto"  class="iv-layout footer footer-normal ">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-md-12 widget-col widget-col-1">
-        <div id="text-2" class="widget widget_text">			
-          <div class="textwidget">
-            <p><img class="aligncenter wp-image-48 size-full" src="img/logo-footer.jpg" alt="" width="1400" height="150" /></p>
-            <p>Para más detalles de la herramienta Score Bebé, contactarse con <a href="mailto:igduenase@puce.edu.ec" style="color:#000;">igduenase@puce.edu.ec</a></p>
-          </div>
-        </div>					
-      </div>	
-    </div>					
   </div>
 </div>
 <div class="iv-layout bottom-footer two-columns " style="height:20px;">

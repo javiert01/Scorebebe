@@ -20,7 +20,7 @@ export class NeonatoService {
     }
 
     getNeonatos(){
-        return this.http.get<any>(this.urlServidor+'neonato');
+        return this.http.get<any>(this.urlServidor+'neonato?limit=1000');
       }
 
       getNeonatoIngresado(){

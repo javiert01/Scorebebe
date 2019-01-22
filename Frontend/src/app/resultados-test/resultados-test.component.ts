@@ -16,7 +16,7 @@ export class ResultadosTestComponent implements OnInit {
   categorias = ['A','B','C','D'];
   idusuario;
   
-  constructor(private authService: AuthService, private neonatoService: NeonatoService) { }
+  constructor(public authService: AuthService, private neonatoService: NeonatoService) { }
 
   ngOnInit() {
     this.authService.getUsuarios().subscribe(

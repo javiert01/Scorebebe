@@ -1,4 +1,15 @@
-	
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0f5992;" *ngIf="authService.loggedIn()">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav ml-auto" style="font-size:18px; font-weight: bold;">
+      <li class="nav-item">
+        <a (click)="authService.logoutUser()">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="'/homepage'">Inicio</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div id="all-site-wrapper" class="hfeed site">
 
   <a href="#" id="back-top">

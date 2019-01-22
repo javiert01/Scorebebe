@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 import { NeonatoService } from './neonato.service';
@@ -19,7 +19,32 @@ import * as jsPDF from 'jspdf';
 export class NeonatoComponent implements OnInit {
 
   scoreBebeTest: FormGroup;
-
+  factoresRiesgoInminente = [
+    {id: 'factorRiesgoInminente1', value: 'El niño respira débilmente o su color de piel es azulado o tiene una baja frecuencia cardí­aca y un pobre tono muscular o sus reflejos débiles o convulsiona.'},
+    {id: 'factorRiesgoInminente2', value: 'Tiene alteración de los signos vitales'},
+    {id: 'factorRiesgoInminente3', value: 'Se encuentra ictérico'},
+    {id: 'factorRiesgoInminente4', value: 'Hipoglucemia'},
+    {id: 'factorRiesgoInminente5', value: 'Vomita todo lo que come'}
+  ];
+  factoresRiesgoAumenta = [
+    {id: 'factorRiesgoAumenta1' , value: 'Madre tuvo oligohidramnios o hidrorrea mayor o igual a 18 horas'},
+    {id: 'factorRiesgoAumenta2' , value: 'Madre tuvo polihidramnios'},
+    {id: 'factorRiesgoAumenta3' , value: 'Madre diabética'},
+    {id: 'factorRiesgoAumenta4' , value: 'Madre preeclámptica/eclámptica'},
+    {id: 'factorRiesgoAumenta5' , value: 'Madre tuvo IVU en el embarazo'},
+    {id: 'factorRiesgoAumenta6' , value: 'Madre tuvo cultivo positivo para Streptococcus'},
+    {id: 'factorRiesgoAumenta7' , value: 'Tuvo sufrimiento fetal agudo'},
+    {id: 'factorRiesgoAumenta8' , value: 'Niño de sexo masculino'},
+    {id: 'factorRiesgoAumenta9' , value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
+    {id: 'factorRiesgoAumenta10' , value: 'Parto en domicilio o por personal no entrenado'},
+    {id: 'factorRiesgoAumenta11' , value: 'Ningún control prenatal'},
+    {id: 'factorRiesgoAumenta12' , value: 'Es producto de un embarazo múltiple'}
+  ];
+  factoresRiesgoReduce = [
+    {id: 'factorRiesgoReduce1', value:'Es prematuro y recibió dosis completa de maduración pulmonar'},
+    {id: 'factorRiesgoReduce2', value:'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'},
+    {id: 'factorRiesgoReduce3', value:'Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio'}
+  ];
   total = 0;
   categoria = '';
   descripcion = '';
@@ -32,22 +57,29 @@ export class NeonatoComponent implements OnInit {
   mostrarInstrucciones = false;
   mostrarFormulario = false;
   mostrarDesc = true;
+  mostrarIntro = false;
+  mostrarLogo = true;
   @ViewChild('instrucciones') public instrucciones:ElementRef;
 
 
-  constructor(private dialog: MatDialog, private neonatoService: NeonatoService, private authService: AuthService) { }
+  constructor(private dialog: MatDialog, private neonatoService: NeonatoService, public authService: AuthService, private fb: FormBuilder) {
+    
+   }
 
   ngOnInit() {
+    const formControlsInminente = this.factoresRiesgoInminente.map(control => new FormControl(false));
+    const formControlsAumenta = this.factoresRiesgoAumenta.map(control => new FormControl(false));
+    const formControlsReduce = this.factoresRiesgoReduce.map(control => new FormControl(false));
     this.scoreBebeTest = new FormGroup({
       'sexo': new FormControl('masculino'),
       'fechaNacimiento': new FormControl(null , Validators.required),
       'nombreApellido': new FormControl(null, Validators.required),
       'pesoNacimiento': new FormControl(null , Validators.required),
       'edadGestional': new FormControl(null , Validators.required),
-      'nivelAtencion': new FormControl('primero'),
-      'factorRiesgoInminente': new FormControl(false),
-      'factorRiesgoIncrementa': new FormControl(false),
-      'factorRiesgoReduce': new FormControl(false),
+      'nivelAtencion': new FormControl('primer'),
+      'factorRiesgoInminente': new FormArray(formControlsInminente),
+      'factorRiesgoIncrementa': new FormArray(formControlsAumenta),
+      'factorRiesgoReduce': new FormArray(formControlsReduce),
       'edad': new FormControl('edad1'),
       'peso': new FormControl('peso1'),
       'centil': new FormControl('centil1'),
@@ -85,12 +117,21 @@ export class NeonatoComponent implements OnInit {
     this.showFormulario[index - 1] = true;
   }
 
-  showInstrucciones(){
+  showIntro(){
     this.mostrarDesc = false;
+    this.mostrarIntro = true;
+    
+  }
+
+  showInstrucciones(){
+    this.mostrarIntro = false;
+    this.mostrarFormulario = false;
+    this.mostrarLogo = true;
     this.mostrarInstrucciones = true; 
   }
 
   showForm(){
+    this.mostrarLogo = false;
     this.mostrarInstrucciones = false;
     this.mostrarFormulario = true;
   }
@@ -260,16 +301,16 @@ export class NeonatoComponent implements OnInit {
 
     if (this.total >= 77) {
       this.categoria = 'A';
-      this.descripcion = 'Riesgo muy alto'
+      this.descripcion = 'Riesgo alto (<=77 puntos)'
     } else if(this.total >= 72) {
       this.categoria = 'B';
-      this.descripcion = 'Riesgo alto'
+      this.descripcion = 'Riesgo moderado (72 a <77 puntos)'
     } else if (this.total >= 64) {
       this.categoria = 'C';
-      this.descripcion = 'Riesgo moderado'
+      this.descripcion = 'Riesgo bajo (64 a <72 puntos)'
     } else {
       this.categoria = 'D';
-      this.descripcion = 'Riesgo bajo'
+      this.descripcion = 'Riesgo muy bajo (<64 puntos)'
     }
     await this.crearNeonato();
     await this.neonatoService.getNeonatoIngresado()
@@ -292,10 +333,13 @@ export class NeonatoComponent implements OnInit {
     switch(centil){
       case 'centil1':
       nombreCentil = "percentil entre 5 y 95";
+      break;
       case 'centil2':
       nombreCentil = "percentil menor a 5";
+      break;
       case 'centil3':
       nombreCentil = "percentil mayor a 95";
+      break;
       default:
       break;
     }
@@ -304,13 +348,16 @@ export class NeonatoComponent implements OnInit {
 
   getNombreParto(parto) {
     let nombreParto = "";
-    switch(parto){
+    switch(String(parto)){
       case 'parto1':
       nombreParto = "Cesárea";
+      break;
       case 'parto2':
-      nombreParto = "Parto vaginal eutocico";
+      nombreParto = "Parto vaginal eutócico";
+      break;
       case 'parto3':
-      nombreParto = "Parto distoco vaginal";
+      nombreParto = "Parto distócico vaginal";
+      break;
       default:
       break;
     }
@@ -321,11 +368,14 @@ export class NeonatoComponent implements OnInit {
     let nombreApgar = "";
     switch(apgar){
       case 'apgar1':
-      nombreApgar = "Tranquilizante (7 a 10), n (%)";
+      nombreApgar = "Tranquilizante (7 a 10)";
+      break;
       case 'apgar2':
-      nombreApgar = "Moderado (4 a 6), n (%)";
+      nombreApgar = "Moderado (4 a 6)";
+      break;
       case 'apgar3':
-      nombreApgar = "Bajo (0 a 3), n (%)";
+      nombreApgar = "Bajo (0 a 3)";
+      break;
       default:
       break;
     }
@@ -337,16 +387,22 @@ export class NeonatoComponent implements OnInit {
     switch(comorbilidad){
       case 'comor1':
       nombreComorbilidad = "Trastornos relacionados con la asfixia";
+      break;
       case 'comor2':
       nombreComorbilidad = "Malformaciones";
+      break;
       case 'comor3':
       nombreComorbilidad = "Enfermedades relacionadas con la prematuridad";
+      break;
       case 'comor4':
       nombreComorbilidad = "Enfermedades infecciosas";
+      break;
       case 'comor5':
       nombreComorbilidad = "Cualquier otro trastorno no clasificado en categorías anteriores";
+      break;
       case 'comor6':
-      nombreComorbilidad = "(Sin comorbilidades todavía)";
+      nombreComorbilidad = "(Sin comorbilidades)";
+      break;
       default:
       break;
     }
@@ -394,9 +450,12 @@ export class NeonatoComponent implements OnInit {
       parto: this.getNombreParto(this.scoreBebeTest.get('parto').value),
       apgar: this.getApgar(this.scoreBebeTest.get('apgar').value),
       comor: this.getComorbilidad(this.scoreBebeTest.get('comor').value),
-      factorRiesgoInminente: this.scoreBebeTest.get('factorRiesgoInminente').value,
-      factorRiesgoIncrementa: this.scoreBebeTest.get('factorRiesgoIncrementa').value,
-      factorRiesgoReduce: this.scoreBebeTest.get('factorRiesgoReduce').value,
+      factorRiesgoInminente: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoInminente').value),
+      factorRiesgoIncrementa: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoIncrementa').value),
+      factorRiesgoReduce: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoReduce').value),
+      factoresRiesgoInminente: this.getFactoresRiesgoInmintente(),
+      factoresRiesgoAumenta: this.getFactoresRiesgoIncrementa(),
+      factoresRiesgoReduce: this.getFactoresRiesgoReduce(),
       nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,
     }
     this.dialog.open(CourseDialogComponent, dialogConfig);
@@ -406,16 +465,16 @@ export class NeonatoComponent implements OnInit {
     let nivelRiesgo = "";
     switch(categoria) {
       case 'A':
-      nivelRiesgo = 'muy alto';
-      break;
-      case 'B':
       nivelRiesgo = 'alto';
       break;
-      case 'C':
+      case 'B':
       nivelRiesgo = 'moderado';
       break;
-      case 'D':
+      case 'C':
       nivelRiesgo = 'bajo';
+      break;
+      case 'D':
+      nivelRiesgo = 'muy bajo';
       break;
       default:
       break;
@@ -431,9 +490,9 @@ export class NeonatoComponent implements OnInit {
       fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
       edadGestional: this.scoreBebeTest.get('edadGestional').value,
       nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,
-      factorRiesgoInminente: this.scoreBebeTest.get('factorRiesgoInminente').value,
-      factorRiesgoAumenta: this.scoreBebeTest.get('factorRiesgoIncrementa').value,
-      factorRiesgoReduce: this.scoreBebeTest.get('factorRiesgoReduce').value,
+      factorRiesgoInminente: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoInminente').value),
+      factorRiesgoAumenta: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoIncrementa').value),
+      factorRiesgoReduce: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoReduce').value),
       peso: this.scoreBebeTest.get('pesoNacimiento').value,
       catEdadGestional: this.scoreBebeTest.get('edad').value,
       catPeso: this.scoreBebeTest.get('peso').value,
@@ -450,6 +509,41 @@ export class NeonatoComponent implements OnInit {
       (response) => {
       console.log(response);
     });
+  }
+
+  getFactoresRiesgoIncrementa(){
+    const factoresRiesgoSeleccionados = this.scoreBebeTest.get('factorRiesgoIncrementa').value
+    .map((v, i) => v ? this.factoresRiesgoAumenta[i].value : null)
+    .filter(v => v !== null);
+
+   return factoresRiesgoSeleccionados;
+  }
+
+  getFactoresRiesgoInmintente(){
+    const factoresRiesgoSeleccionados = this.scoreBebeTest.get('factorRiesgoInminente').value
+    .map((v, i) => v ? this.factoresRiesgoInminente[i].value : null)
+    .filter(v => v !== null);
+
+    return factoresRiesgoSeleccionados;
+  }
+
+  getFactoresRiesgoReduce(){
+    const factoresRiesgoSeleccionados = this.scoreBebeTest.get('factorRiesgoReduce').value
+    .map((v, i) => v ? this.factoresRiesgoReduce[i].value : null)
+    .filter(v => v !== null);
+
+    return factoresRiesgoSeleccionados;
+  }
+
+  getTrueorFalse(factoresDeRiesgo){
+    let resultado = false;
+    for(let i = 0; i<factoresDeRiesgo.length; i++){
+      if(factoresDeRiesgo[i] === true ){
+        resultado = true;
+        break;
+      }
+    }
+    return resultado;
   }
 
 
