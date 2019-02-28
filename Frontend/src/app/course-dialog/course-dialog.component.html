@@ -1,9 +1,14 @@
 <h2 mat-dialog-title>Resultados del Test</h2>
-<mat-dialog-content>
+<mat-dialog-content *ngIf="!factorRiesgoInminente">
     Neonato RN <strong>{{nombreApellido}}</strong>
     , número <strong>{{id}}</strong>
     , tiene categoría de riesgo <strong>{{categoria}}</strong>
      lo que corresponde a un riesgo <strong> {{riesgo}} </strong>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="factorRiesgoInminente">
+    <strong>ATENCIÓN! </strong>Neonato RN <strong>{{nombreApellido}}</strong>
+    , número <strong>{{id}}</strong>
+    presenta una condición grave. Ver informe para más información.
 </mat-dialog-content>
 <mat-dialog-actions>
     <button class="mat-raised-button"(click)="close()">Cerrar</button>

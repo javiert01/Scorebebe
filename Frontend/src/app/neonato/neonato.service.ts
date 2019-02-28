@@ -16,7 +16,7 @@ export class NeonatoService {
     }
 
     addNeonato (neonato: Neonato) {
-        return this.http.post(this.urlServidor+'neonato', neonato);
+        return this.http.post<any>(this.urlServidor+'neonato', neonato);
     }
 
     getNeonatos(){

@@ -32,7 +32,7 @@ export class Neonato {
   
     public  catTipoParto: number;
   
-    public  catComorbilidades: number;
+    public  comorbilidades: number[];
   
     public  scoreTotal: number;
   

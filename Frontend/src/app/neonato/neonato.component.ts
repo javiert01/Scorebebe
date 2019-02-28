@@ -20,31 +20,50 @@ export class NeonatoComponent implements OnInit {
 
   scoreBebeTest: FormGroup;
   factoresRiesgoInminente = [
-    {id: 'factorRiesgoInminente1', value: 'El niño respira débilmente o su color de piel es azulado o tiene una baja frecuencia cardí­aca y un pobre tono muscular o sus reflejos débiles o convulsiona.'},
-    {id: 'factorRiesgoInminente2', value: 'Tiene alteración de los signos vitales'},
-    {id: 'factorRiesgoInminente3', value: 'Se encuentra ictérico'},
-    {id: 'factorRiesgoInminente4', value: 'Hipoglucemia'},
-    {id: 'factorRiesgoInminente5', value: 'Vomita todo lo que come'}
+    {id: 'factorRiesgoInminente1', value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'},
+    {id: 'factorRiesgoInminente2', value: 'Su color de piel es pálida, pletórica o azulada'},
+    {id: 'factorRiesgoInminente3', value: 'Tiene una frecuencia cardíaca alterada (<100 o >160 lpm)'},
+    {id: 'factorRiesgoInminente4', value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)'},
+    {id: 'factorRiesgoInminente5', value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)'},
+    {id: 'factorRiesgoInminente6', value: 'Tiene un pobre tono muscular o sus reflejos son débiles o convulsiona.'},
+    {id: 'factorRiesgoInminente7', value: 'Se encuentra ictérico antes de las 24 horas o después del cuarto día de vida.'},
+    {id: 'factorRiesgoInminente8', value: 'Hipoglucemia (<40mg/dL)'},
+    {id: 'factorRiesgoInminente9', value: 'Vomita todo lo que come'},
+    {id: 'factorRiesgoInminente10', value: 'Madre tuvo oligohidramnios, hidrorrea mayor o igual a 18 horas, fiebre o corioamnionitis o flujo genital fétido'},
+    {id: 'factorRiesgoInminente11', value: 'Reanimación neonatal con presión positiva o masaje cardiaco'},
+    {id: 'factorRiesgoInminente12', value: 'Malformaciones severas'},
+    {id: 'factorRiesgoInminente13', value: 'Lesiones severas debidas al parto'}
+
   ];
   factoresRiesgoAumenta = [
-    {id: 'factorRiesgoAumenta1' , value: 'Madre tuvo oligohidramnios o hidrorrea mayor o igual a 18 horas'},
-    {id: 'factorRiesgoAumenta2' , value: 'Madre tuvo polihidramnios'},
-    {id: 'factorRiesgoAumenta3' , value: 'Madre diabética'},
+    {id: 'factorRiesgoAumenta1' , value: 'Madre tuvo polihidramnios'},
+    {id: 'factorRiesgoAumenta2' , value: 'Madre diabética'},
     {id: 'factorRiesgoAumenta4' , value: 'Madre preeclámptica/eclámptica'},
-    {id: 'factorRiesgoAumenta5' , value: 'Madre tuvo IVU en el embarazo'},
-    {id: 'factorRiesgoAumenta6' , value: 'Madre tuvo cultivo positivo para Streptococcus'},
-    {id: 'factorRiesgoAumenta7' , value: 'Tuvo sufrimiento fetal agudo'},
-    {id: 'factorRiesgoAumenta8' , value: 'Niño de sexo masculino'},
-    {id: 'factorRiesgoAumenta9' , value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
-    {id: 'factorRiesgoAumenta10' , value: 'Parto en domicilio o por personal no entrenado'},
-    {id: 'factorRiesgoAumenta11' , value: 'Ningún control prenatal'},
-    {id: 'factorRiesgoAumenta12' , value: 'Es producto de un embarazo múltiple'}
+    {id: 'factorRiesgoAumenta5' , value: 'Madre fallece posterior al parto'},
+    {id: 'factorRiesgoAumenta6' , value: 'Madre tuvo IVU en el embarazo'},
+    {id: 'factorRiesgoAumenta7' , value: 'Madre tuvo cultivo positivo para Streptococcus'},
+    {id: 'factorRiesgoAumenta8' , value: 'Tuvo sufrimiento fetal agudo'},
+    {id: 'factorRiesgoAumenta9' , value: 'Niño de sexo masculino'},
+    {id: 'factorRiesgoAumenta10' , value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
+    {id: 'factorRiesgoAumenta11' , value: 'Madre VIH positiva o prueba indeterminada o criterios clínicos de SIDA o Madre con sífilis, tuberculosis o con discapacidad'},
+    {id: 'factorRiesgoAumenta12' , value: 'Parto en domicilio o por personal no entrenado'},
+    {id: 'factorRiesgoAumenta13' , value: 'Ningún control prenatal'},
+    {id: 'factorRiesgoAumenta14' , value: 'Reanimación neonatal sin presión positiva ni masaje cardiaco'},
+    {id: 'factorRiesgoAumenta15' , value: 'Es producto de un embarazo múltiple'}
   ];
   factoresRiesgoReduce = [
     {id: 'factorRiesgoReduce1', value:'Es prematuro y recibió dosis completa de maduración pulmonar'},
     {id: 'factorRiesgoReduce2', value:'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'},
     {id: 'factorRiesgoReduce3', value:'Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio'}
   ];
+
+  comorbilidades = [
+    {id: 'comor1', idbase:1, value: 'Trastornos relacionados con la asfixia', score: 15},
+    {id: 'comor2', idbase:11, value: 'Malformaciones', score:14},
+    {id: 'comor3', idbase:21, value: 'Enfermedades relacionadas con la prematuridad', score:13},
+    {id: 'comor4', idbase:31, value: 'Enfermedades infecciosas', score:9},
+    {id: 'comor5', idbase:41, value: 'Cualquier otro trastorno no clasificado en categorías anteriores', score:11}
+  ]
   total = 0;
   categoria = '';
   descripcion = '';
@@ -59,6 +78,7 @@ export class NeonatoComponent implements OnInit {
   mostrarDesc = true;
   mostrarIntro = false;
   mostrarLogo = true;
+  terminado = false;
   @ViewChild('instrucciones') public instrucciones:ElementRef;
 
 
@@ -67,6 +87,7 @@ export class NeonatoComponent implements OnInit {
    }
 
   ngOnInit() {
+    const formComorbilidades = this.comorbilidades.map(control => new FormControl(false));
     const formControlsInminente = this.factoresRiesgoInminente.map(control => new FormControl(false));
     const formControlsAumenta = this.factoresRiesgoAumenta.map(control => new FormControl(false));
     const formControlsReduce = this.factoresRiesgoReduce.map(control => new FormControl(false));
@@ -85,10 +106,9 @@ export class NeonatoComponent implements OnInit {
       'centil': new FormControl('centil1'),
       'apgar': new FormControl('apgar1'),
       'parto': new FormControl('parto1'),
-      'comor': new FormControl ('comor1')
+      'comorbilidades': new FormArray(formComorbilidades),
+      'comor': new FormControl(null)
     });
-    this.userName = localStorage.getItem('username');
-
     this.authService.getUserData(this.userName)
     .subscribe(
       (response) => {
@@ -101,15 +121,75 @@ export class NeonatoComponent implements OnInit {
     for(let i = 1; i<10; i++) {
       this.showFormulario[i] = false;
     }
+
+    this.formData().valueChanges
+    .subscribe(
+      (data) => {
+        this.terminado = false;
+        for(let value of data){
+          if(value){
+            this.terminado = true;
+            break;
+          }
+        }
+      }
+    )
+
+    this.scoreBebeTest.get('pesoNacimiento').valueChanges
+    .subscribe(
+      (value) => {
+        switch(true) {
+          case (value < 750):
+          this.scoreBebeTest.get('peso').setValue('peso1');
+          this.scoreBebeTest.get('peso').disable();
+          break;
+          case (value < 1000):
+          this.scoreBebeTest.get('peso').setValue('peso2');
+          this.scoreBebeTest.get('peso').disable();
+          break;
+          case (value < 1500):
+          this.scoreBebeTest.get('peso').setValue('peso3');
+          this.scoreBebeTest.get('peso').disable();
+          break;
+          case (value < 2500):
+          this.scoreBebeTest.get('peso').setValue('peso4');
+          this.scoreBebeTest.get('peso').disable();
+          break;
+          case (value < 4000):
+          this.scoreBebeTest.get('peso').setValue('peso5');
+          this.scoreBebeTest.get('peso').disable();
+          break;
+          case (value >= 4000):
+          this.scoreBebeTest.get('peso').setValue('peso6');
+          this.scoreBebeTest.get('peso').disable();
+          break;
+        }
+        
+      }
+    )
+
+    this.scoreBebeTest.get('comor').valueChanges
+    .subscribe(
+      (value) => {
+        if(value){
+          let auxArray = [false,false,false,false,false]
+          this.comorbilidadData().disable();
+          this.comorbilidadData().setValue(auxArray);
+         
+        }else{
+          this.comorbilidadData().enable();
+          
+        }
+      }
+    )
+    
   }
 
-  viewForm(){
-    console.log(this.scoreBebeTest);
-  }
 
   continueFormulario(index) {
-    this.showFormulario[index] = false;
-    this.showFormulario[index + 1] = true;
+    this.showFormulario[index] = false
+    this.showFormulario[index + 1] = true
+    
   }
 
   returnFormulario(index){
@@ -156,7 +236,15 @@ export class NeonatoComponent implements OnInit {
 
   moveToStructure():void {
     this.instrucciones.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
-}
+  }
+
+  formData() { 
+    return <FormArray>this.scoreBebeTest.get('factorRiesgoInminente'); 
+  }
+
+  comorbilidadData(){
+    return <FormArray>this.scoreBebeTest.get('comorbilidades'); 
+  }
 
   async showTestResult() {
     let score = 0;
@@ -270,33 +358,12 @@ export class NeonatoComponent implements OnInit {
       break;
     }
 
-    switch(this.scoreBebeTest.get('comor').value) {
-      case 'comor1':
-      score = 15
-      this.total = this.total + (score);
-      break;
-      case 'comor2':
-      score = 14
-      this.total = this.total + (score);
-      break;
-      case 'comor3':
-      score = 13
-      this.total = this.total + (score);
-      break;
-      case 'comor4':
-      score = 9
-      this.total = this.total + (score);
-      break;
-      case 'comor5':
-      score = 11
-      this.total = this.total + (score);
-      break;
-      case 'comor6':
-      score = 0
-      this.total = this.total + (score);
-      break;
-      default:
-      break;
+    if(this.scoreBebeTest.get('comor').value){
+      this.total = this.total + 0;
+    } else {
+      for(let i=0; i<this.getScoreComorbilidades().length; i++){
+        this.total = this.total + this.getScoreComorbilidades()[i];
+      }
     }
 
     if (this.total >= 77) {
@@ -305,27 +372,14 @@ export class NeonatoComponent implements OnInit {
     } else if(this.total >= 72) {
       this.categoria = 'B';
       this.descripcion = 'Riesgo moderado (72 a <77 puntos)'
-    } else if (this.total >= 64) {
+    } else if (this.total >= 68) {
       this.categoria = 'C';
-      this.descripcion = 'Riesgo bajo (64 a <72 puntos)'
+      this.descripcion = 'Riesgo bajo (68 a <72 puntos)'
     } else {
       this.categoria = 'D';
-      this.descripcion = 'Riesgo muy bajo (<64 puntos)'
+      this.descripcion = 'Riesgo muy bajo (<68 puntos)'
     }
-    await this.crearNeonato();
-    await this.neonatoService.getNeonatoIngresado()
-    .subscribe((
-      response => {
-        console.log(response);
-        this.neonatoID = response.id;
-      }
-    ));
-    setTimeout(
-      () => {
-        this.openDialog();
-      }, 1000);
-    
-    
+    this.crearNeonato();
   }
 
   getNombreCentil(centil) {
@@ -432,7 +486,6 @@ export class NeonatoComponent implements OnInit {
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    this.neonatoID = this.addLeadingZero(this.neonatoID, 4);
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.height = '200px';
@@ -449,13 +502,14 @@ export class NeonatoComponent implements OnInit {
       centil: this.getNombreCentil(this.scoreBebeTest.get('centil').value),
       parto: this.getNombreParto(this.scoreBebeTest.get('parto').value),
       apgar: this.getApgar(this.scoreBebeTest.get('apgar').value),
-      comor: this.getComorbilidad(this.scoreBebeTest.get('comor').value),
+      comor: this.scoreBebeTest.get('comor').value,
       factorRiesgoInminente: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoInminente').value),
       factorRiesgoIncrementa: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoIncrementa').value),
       factorRiesgoReduce: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoReduce').value),
       factoresRiesgoInminente: this.getFactoresRiesgoInmintente(),
       factoresRiesgoAumenta: this.getFactoresRiesgoIncrementa(),
       factoresRiesgoReduce: this.getFactoresRiesgoReduce(),
+      comorbilidades: this.getComorbilidades(),
       nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,
     }
     this.dialog.open(CourseDialogComponent, dialogConfig);
@@ -499,7 +553,7 @@ export class NeonatoComponent implements OnInit {
       catPesoEdadGestional: this.scoreBebeTest.get('centil').value,
       catApgar: this.scoreBebeTest.get('apgar').value,
       catTipoParto: this.scoreBebeTest.get('parto').value,
-      catComorbilidades: this.scoreBebeTest.get('comor').value,
+      comorbilidades: this.mensajeComor(this.scoreBebeTest.get('comor').value),
       scoreTotal: this.total,
       catRiesgo: this.categoria,
       ID_USUARIO: this.userID
@@ -507,7 +561,8 @@ export class NeonatoComponent implements OnInit {
 
     this.neonatoService.addNeonato(this.neonato).subscribe(
       (response) => {
-      console.log(response);
+      this.neonatoID = this.addLeadingZero(response.id,5);
+      this.openDialog();
     });
   }
 
@@ -535,6 +590,30 @@ export class NeonatoComponent implements OnInit {
     return factoresRiesgoSeleccionados;
   }
 
+  getComorbilidades(){
+    const comorbilidadesSeleccionadas = this.scoreBebeTest.get('comorbilidades').value
+    .map((v, i) => v ? this.comorbilidades[i].value : null)
+    .filter(v => v !== null);
+    
+    return comorbilidadesSeleccionadas;
+  }
+
+  getIDBaseComorbilidades(){
+    const comorbilidadesSeleccionadas = this.scoreBebeTest.get('comorbilidades').value
+    .map((v, i) => v ? this.comorbilidades[i].idbase : null)
+    .filter(v => v !== null);
+    
+    return comorbilidadesSeleccionadas;
+  }
+
+  getScoreComorbilidades(){
+    const comorbilidadesSeleccionadas = this.scoreBebeTest.get('comorbilidades').value
+    .map((v, i) => v ? this.comorbilidades[i].score : null)
+    .filter(v => v !== null);
+    
+    return comorbilidadesSeleccionadas;
+  }
+
   getTrueorFalse(factoresDeRiesgo){
     let resultado = false;
     for(let i = 0; i<factoresDeRiesgo.length; i++){
@@ -544,6 +623,20 @@ export class NeonatoComponent implements OnInit {
       }
     }
     return resultado;
+  }
+
+  finalizarTest(){
+    this.crearNeonato();
+  }
+
+  mensajeComor(aux){
+    let mensaje;
+    if(aux){
+      mensaje = [51];
+    }else{
+      mensaje = this.getIDBaseComorbilidades();
+    }
+    return mensaje;
   }
 
 

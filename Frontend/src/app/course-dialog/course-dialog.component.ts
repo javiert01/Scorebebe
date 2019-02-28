@@ -28,6 +28,8 @@ export class CourseDialogComponent implements OnInit {
   factoresRiesgoInminente;
   factoresRiesgoAumenta;
   factoresRiesgoReduce;
+  fechaActual;
+  comorbilidades;
 
   constructor(private dialogRef: MatDialogRef<CourseDialogComponent>, @Inject(MAT_DIALOG_DATA) data) { 
     this.categoria = data.categoria;
@@ -49,15 +51,12 @@ export class CourseDialogComponent implements OnInit {
     this.factoresRiesgoInminente = data.factoresRiesgoInminente;
     this.factoresRiesgoAumenta = data.factoresRiesgoAumenta;
     this.factoresRiesgoReduce = data.factoresRiesgoReduce;
+    this.comorbilidades = data.comorbilidades;
   }
 
   ngOnInit() {
-    console.log(this.factoresRiesgoAumenta);
-    console.log(this.factorRiesgoIncrementa);
-    console.log(this.factoresRiesgoInminente);
-    console.log(this.factorRiesgoInminente);
-    console.log(this.factoresRiesgoReduce);
-    console.log(this.factorRiesgoReduce);
+   this.fechaActual = this.getCurrentDate();
+   this.getCurrentTime();
   }
 
   crearPDF() {
@@ -87,110 +86,384 @@ export class CourseDialogComponent implements OnInit {
     doc.text("Informe del Neonato", 75, 50);
     doc.setFontSize(11);
     doc.setFontStyle("bold");
-    doc.text("Descripción del caso:", 15,inicioTexto);
+    doc.text("Número de Caso: "+this.id, 15, inicioTexto);
+    doc.text("Fecha: "+this.fechaActual,15, inicioTexto+=5);
+    doc.text("Hora del informe: "+this.getCurrentTime(),15,inicioTexto+=5);
+    doc.text("Descripción del caso:", 15,inicioTexto+=10);
     doc.setFontStyle("normal");
     doc.text("Neonato de apellido materno "+this.nombreApellido+" nacido el "+this.fechaNacimiento+", de "+this.edadGestional+" semanas de edad gestacional, con ",15,inicioTexto += 10);
     doc.text("un peso de "+this.pesoNacimiento+" gramos, lo que equivale a un "+this.centil+" de peso para la edad gestacional.",15,inicioTexto += 5);
-    doc.text("- Nace por "+this.parto, 15,inicioTexto += 5);
+    doc.text("Al momento de elaborar este informe, el neonato tiene "+this.daysBetween(this.fechaNacimiento),15,inicioTexto+=5);
+    if(!this.factorRiesgoInminente){
+    doc.text("- Nace por "+this.parto, 15,inicioTexto += 10);
     doc.text("- Con un Apgar "+this.apgar+" a los 5 minutos", 15,inicioTexto += 5);
-    doc.text("- Y desarrolla la siguiente comorbilidad: "+this.comor, 15,inicioTexto += 5);
+    doc.text("- Y desarrolla la(s) siguiente(s) comorbilidad(es): ", 15,inicioTexto += 5);
+    if(this.comor){
+      doc.text("- Sin comorbilidades",25,inicioTexto+=5);
+    }else{
+      for(let i = 0; i<this.comorbilidades.length; i++) {
+        doc.text("- "+this.comorbilidades[i],25, inicioTexto +=5);
+      }
+    }
+    doc.setFontStyle("bold");
+    doc.text('Modificantes de riesgo:',15,inicioTexto+=10);
+    doc.setFontStyle("normal");
+    doc.text("Agravantes del riesgo (que pudieran incrementar el riesgo del neonato):",15, inicioTexto +=10);
+    if(this.factoresRiesgoAumenta.length > 0){
+      for(let i = 0; i<this.factoresRiesgoAumenta.length; i++) {
+        doc.text("- "+this.factoresRiesgoAumenta[i],25, inicioTexto +=5);
+      }
+    }else {
+      doc.text("- No tiene",25, inicioTexto += 5);
+    }
+    doc.text("Considere aspectos que podrían reducir el riesgo del neonato:",15, inicioTexto +=10);
+    doc.setFontStyle("normal");
+    if(this.factoresRiesgoReduce.length > 0){
+      for(let i = 0; i<this.factoresRiesgoReduce.length; i++) {
+        doc.text("- "+this.factoresRiesgoReduce[i],25, inicioTexto +=5);
+      }
+    }else {
+      doc.text("- No tiene",25, inicioTexto += 5);
+    }
     doc.setFontStyle("bold");
     doc.text("Resultado del Score Bebé:",15,inicioTexto += 10);
     doc.setFontStyle("normal");
-    doc.text("Tiene un puntaje de "+this.puntaje+" y le corresponde una categoría de riesgo "+this.categoria+" lo que quiere decir riesgo "+this.riesgo,15,inicioTexto += 10);
-    doc.text("de eventos adversos neonatales.",15,inicioTexto += 5);
+    doc.text("El neonato tiene un puntaje de "+this.puntaje+" y le corresponde una categoría de riesgo "+this.categoria+" lo que quiere decir",15,inicioTexto += 10);
+    doc.text("riesgo "+this.riesgo+" de eventos adversos neonatales.",15,inicioTexto += 5);
     doc.setFontStyle("bold");
-    doc.text("Intervención",15,inicioTexto +=10);
+    doc.text("Intervención de acuerdo al nivel de atención:",15,inicioTexto +=10);
     doc.setFontStyle("normal");
-    if(this.factorRiesgoInminente || this.factorRiesgoIncrementa || this.factorRiesgoReduce){
-      doc.text("Debe estabilizar inmediatamente y/o activar la gestión de la transferencia, considerando el acróstico ",15,inicioTexto += 5);
-      doc.text("\"R.E.F.I.E.R.A.\", conforme su nivel de atención ("+this.nivelAtencion+" nivel).",15,inicioTexto += 5);
-      doc.text("Recuerde que el riesgo del neonato podría afectarse por:",15,inicioTexto += 10);
-      doc.setFontStyle("bold");
-      doc.text("Factores de riesgo inminente (que amenazan la vida del neonato):",15, inicioTexto +=10);
-      doc.setFontStyle("normal");
-      if(this.factoresRiesgoInminente.length > 0){
-        for(let i = 0; i<this.factoresRiesgoInminente.length; i++) {
-          doc.text("- "+this.factoresRiesgoInminente[i],15, inicioTexto +=5);
-        }
-      }else {
-        doc.text("- No tiene",15, inicioTexto += 5);
-      }
-      doc.setFontStyle("bold");
-      doc.text("Agravantes de riesgo (que pudieran incrementar el riesgo del neonato):",15, inicioTexto +=10);
-      doc.setFontStyle("normal");
-      if(this.factoresRiesgoAumenta.length > 0){
-        for(let i = 0; i<this.factoresRiesgoAumenta.length; i++) {
-          doc.text("- "+this.factoresRiesgoAumenta[i],15, inicioTexto +=5);
-        }
-      }else {
-        doc.text("- No tiene",15, inicioTexto += 5);
-      }
-      doc.setFontStyle("bold");
-      doc.text("Alicientes de riesgo (que pudieran reducir el riesgo del neonato):",15, inicioTexto +=10);
-      doc.setFontStyle("normal");
-      if(this.factoresRiesgoReduce.length > 0){
-        for(let i = 0; i<this.factoresRiesgoReduce.length; i++) {
-          doc.text("- "+this.factoresRiesgoReduce[i],15, inicioTexto +=5);
-        }
-      }else {
-        doc.text("- No tiene",15, inicioTexto += 5);
-      }
-    } else {
-      doc.text("No tiene factores de riesgo, y en vista de que Usted se encuentra en el "+this.nivelAtencion+" nivel, le corresponde:",15,inicioTexto += 5);
       switch(this.categoria) {
         case 'A':
-        if(this.nivelAtencion === 'primer' || this.nivelAtencion === 'segundo') {
-          doc.text("A: primer nivel o segundo nivel: estabilización utilizando las normas del MSP y transferencia a cuidados ",15,inicioTexto += 5);
-          doc.text("intensivos neonatales",15, inicioTexto += 5);
-        } else {
-          doc.text("A: tercer nivel: ingreso a cuidados intensivos neonatales",15,inicioTexto += 5);
+        if(this.nivelAtencion === 'primer') {
+          doc.text("Categoría de riesgo A (alto riesgo); tiene más de cuatro veces más probabilidades de eventos adversos",15,inicioTexto += 10);
+          doc.text("neonatales antes de los 15 días de vida que los niños de la categoría C (bajo riesgo).",15, inicioTexto += 5);
+          doc.text("Como se encuentra en el primer nivel, requiere estabilización inmediata: ",15, inicioTexto+=5);
+          doc.text("i.   Administre Oxígeno si tiene dificultad respiratoria, cianosis generalizada o posible aspiración meconial",15,inicioTexto+=5);
+          doc.text("ii.  Si no existe contraindicación, iniciar lactancia en la primera media hora postparto",15,inicioTexto+=5);
+          doc.text("iii. Dar antibiótico apropiado en caso de: a) rotura de membranas de >18 horas, b) flujo genital de mal",15,inicioTexto+=5);
+          doc.text("     olor o c) prematurez (ver las páginas 60 y 61 del AIEPI clínico          )",15,inicioTexto+=5);
+          doc.setFontStyle("bold");
+          doc.textWithLink('(link)', 128, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal");
+          doc.text("iv. Activar la gestión de la transferencia, considerando el acróstico “R.E.F.I.E.R.A.” (ver las páginas 60",15,inicioTexto+=5);
+          doc.text("    y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold");
+          doc.textWithLink('(link)', 57, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal");
+          doc.text("v.  Aplicar las normas de cuidado neonatal vigentes",15,inicioTexto+=5);
+        } else if(this.nivelAtencion === 'segundo'){
+          doc.text("Categoría de riesgo A (alto riesgo); tiene más de cuatro veces más probabilidades de eventos adversos",15,inicioTexto += 10);
+          doc.text("neonatales antes de los 15 días de vida que los niños de la categoría C (bajo riesgo).",15, inicioTexto += 5);
+          doc.text("Como se encuentra en el segundo nivel, requiere estabilización inmediata: ",15, inicioTexto+=5);
+          doc.text("i.   Administre Oxígeno si tiene dificultad respiratoria, cianosis generalizada o posible aspiración meconial",15,inicioTexto+=5);
+          doc.text("ii.  Si no existe contraindicación, iniciar lactancia en la primera media hora postparto",15,inicioTexto+=5);
+          doc.text("iii. Dar antibiótico apropiado en caso de: a) rotura de membranas de >18 horas, b) flujo genital de mal",15,inicioTexto+=5);
+          doc.text("     olor o c) prematurez (ver las páginas 60 y 61 del AIEPI clínico          )",15,inicioTexto+=5);
+          doc.setFontStyle("bold");
+          doc.textWithLink('(link)', 128, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal");
+          doc.text("iv. Activar la gestión de la transferencia, considerando el acróstico “R.E.F.I.E.R.A.” (ver las páginas 60",15,inicioTexto+=5);
+          doc.text("    y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold");
+          doc.textWithLink('(link)', 57, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal");
+          doc.text("v.  Aplicar las normas de cuidado neonatal vigentes",15,inicioTexto+=5);
+        }else {
+          doc.text("Categoría de riesgo A (alto riesgo); tiene más de cuatro veces más probabilidades de eventos adversos",15,inicioTexto += 10);
+          doc.text("neonatales antes de los 15 días de vida que los niños de la categoría C (bajo riesgo).",15, inicioTexto += 5);
+          doc.text("Como se encuentra en el tercer nivel, requiere estabilización inmediata; gestione el ingreso a ",15, inicioTexto+=5);
+          doc.text("cuidados intensivos neonatales y proceda:",15,inicioTexto+=5);
+          doc.text("i.   Administre Oxígeno si tiene dificultad respiratoria, cianosis generalizada o posible aspiración meconial",15,inicioTexto+=5);
+          doc.text("ii.  Si no existe contraindicación, iniciar lactancia en la primera media hora postparto",15,inicioTexto+=5);
+          doc.text("iii. Dar antibiótico apropiado en caso de: a) rotura de membranas de >18 horas, b) flujo genital de mal",15,inicioTexto+=5);
+          doc.text("     olor o c) prematurez (ver las páginas 60 y 61 del AIEPI clínico          )",15,inicioTexto+=5);
+          doc.setFontStyle("bold");
+          doc.textWithLink('(link)', 128, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal");
+          doc.text("iv. De no disponer de tratamiento específico, se deberá activar la gestión de la transferencia,",15,inicioTexto+=5);
+          doc.text("    considerando el acróstico “R.E.F.I.E.R.A.” (ver las páginas 60 y 61 del AIEPI clínico          )",15,inicioTexto+=5);
+          doc.setFontStyle("bold");
+          doc.textWithLink('(link)', 164, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal");
+          doc.text("v.  Aplicar las normas de cuidado neonatal vigentes",15,inicioTexto+=5);
         }
         break;
         case 'B':
         if(this.nivelAtencion === 'primer'){
-          doc.text("B: primer nivel: transferencia al siguiente nivel de atención acompañado por médico especialista ",15,inicioTexto += 5);
-          doc.text("en transporte neonatal",15, inicioTexto += 5);
+          doc.text("Categoría de riesgo B (moderado riesgo); tiene más de un 77% más probabilidades de eventos adversos",15,inicioTexto += 5);
+          doc.text("neonatales antes de los 15 días de vida que los niños de la categoría C (bajo riesgo).", 15, inicioTexto+=5);
+          doc.text("Como se encuentra en el primer nivel, requiere estabilización inmediata: ",15, inicioTexto += 5);
+          doc.text("i.   Administre Oxígeno si tiene dificultad respiratoria, cianosis generalizada o posible aspiración meconial",15, inicioTexto += 5);
+          doc.text("ii.  Si no existe contraindicación, iniciar lactancia en la primera media hora postparto",15,inicioTexto+=5);
+          doc.text("iii. Dar antibiótico apropiado en caso de: a) rotura de membranas de >18 horas, b) flujo genital de mal olor",15,inicioTexto+=5);
+          doc.text("     o c) prematurez (ver las páginas 60 y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 120, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("iv.  Activar la gestión de la transferencia, considerando el acróstico “R.E.F.I.E.R.A.” (ver las páginas ",15,inicioTexto+=5);
+          doc.text("     60 y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 64, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("v.   Aplicar las normas de cuidado neonatal vigentes", 15, inicioTexto += 5);
         }else if(this.nivelAtencion === 'segundo'){
-          doc.text("B: segundo nivel: considerar transferencia al siguiente nivel de atención, acompañado por especialista ",15,inicioTexto += 5);
-          doc.text("en transporte neonatal",15, inicioTexto += 5);
+          doc.text("Categoría de riesgo B (moderado riesgo); tiene más de un 77% más probabilidades de eventos adversos",15,inicioTexto += 5);
+          doc.text("neonatales antes de los 15 días de vida que los niños de la categoría C (bajo riesgo).", 15, inicioTexto+=5);
+          doc.text("Como se encuentra en el segundo nivel, requiere estabilización inmediata: ",15, inicioTexto += 5);
+          doc.text("i.   Administre Oxígeno si tiene dificultad respiratoria, cianosis generalizada o posible aspiración meconial",15, inicioTexto += 5);
+          doc.text("ii.  Si no existe contraindicación, iniciar lactancia en la primera media hora postparto",15,inicioTexto+=5);
+          doc.text("iii. Dar antibiótico apropiado en caso de: a) rotura de membranas de >18 horas, b) flujo genital de mal olor",15,inicioTexto+=5);
+          doc.text("     o c) prematurez (ver las páginas 60 y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 120, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("iv.  Activar la gestión de la transferencia, considerando el acróstico “R.E.F.I.E.R.A.” (ver las páginas ",15,inicioTexto+=5);
+          doc.text("     60 y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 64, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("v.   Aplicar las normas de cuidado neonatal vigentes", 15, inicioTexto += 5);
         }else {
-          doc.text("B: tercer nivel: interconsulta a neonatología y considerar ingreso a cuidados intensivos neonatales",15,inicioTexto += 5);
+          doc.text("Categoría de riesgo B (moderado riesgo); tiene más de un 77% más probabilidades de eventos adversos",15,inicioTexto += 5);
+          doc.text("neonatales antes de los 15 días de vida que los niños de la categoría C (bajo riesgo).", 15, inicioTexto+=5);
+          doc.text("Como se encuentra en el tercer nivel, requiere estabilización inmediata: ",15, inicioTexto += 5);
+          doc.text("i.   Administre Oxígeno si tiene dificultad respiratoria, cianosis generalizada o posible aspiración meconial",15, inicioTexto += 5);
+          doc.text("ii.  Si no existe contraindicación, iniciar lactancia en la primera media hora postparto",15,inicioTexto+=5);
+          doc.text("iii. Dar antibiótico apropiado en caso de: a) rotura de membranas de >18 horas, b) flujo genital de mal olor",15,inicioTexto+=5);
+          doc.text("     o c) prematurez (ver las páginas 60 y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 120, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("iv.  Activar la gestión de la transferencia, considerando el acróstico “R.E.F.I.E.R.A.” (ver las páginas ",15,inicioTexto+=5);
+          doc.text("     60 y 61 del AIEPI clínico           )",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 64, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("v.   Aplicar las normas de cuidado neonatal vigentes", 15, inicioTexto += 5);
         }
         break;
         case 'C':
         if(this.nivelAtencion === 'primer'){
-          doc.text("C: primer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
-          doc.text(" brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
+          doc.text("Categoría de riesgo C (bajo riesgo): tiene más probabilidades de eventos adversos neonatales antes",15,inicioTexto += 5);
+          doc.text("de los 15 días de vida, en comparación a los niños de categoría D (muy bajo riesgo).",15,inicioTexto+=5);
+          doc.text("Como se encuentra en el primer nivel: (i) tome los signos vitales conforme la norma, (ii) mantenga",15, inicioTexto += 5);
+          doc.text("al bebé junto a su madre, (iii) aplique los cuidados rutinarios del recién nacido.",15, inicioTexto += 5);
+          doc.text("Si el neonato está estable y ha cumplido, al menos, 48 horas de vida cuando el nacimiento fue por",15,inicioTexto+=5);
+          doc.text("parto normal; o, 72 horas de vida cuando ha sido por cesárea, proceda a dar el alta de calidad",15,inicioTexto+=5);
+          doc.text("conforme la normativa vigente, y previa evaluación de un médico familiar.",15,inicioTexto+=5);
+          doc.text("Oriente a la madre en lactancia materna exclusiva, cuidados del recién nacido en el hogar; en caso",15,inicioTexto +=5);
+          doc.text("de prematurez o peso bajo, orientar de los cuidados extra (ver las páginas 53, 54 y 55 del AIEPI",15,inicioTexto+=5);
+          doc.text("Clínico          ); y control en no más de 3 días en consulta de Pediatría o Medicina Familiar, previa",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 28, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("notificación al establecimiento de salud para atención preferencial.",15,inicioTexto+=5);
+          doc.text("Si el neonato cumple con alguno de los “Factores que podrían incrementar el riesgo neonatal”,",15,inicioTexto+=5);
+          doc.text("requiere una visita domiciliaria por parte de un médico, dentro de los 2 a 3 días de vida, o 24 a",15,inicioTexto+=5);
+          doc.text("48 horas del alta.",15,inicioTexto+=5);
         }else if(this.nivelAtencion === 'segundo'){
-          doc.text("C: segundo nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
-          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
+          doc.text("Categoría de riesgo C (bajo riesgo): tiene más probabilidades de eventos adversos neonatales antes",15,inicioTexto += 5);
+          doc.text("de los 15 días de vida, en comparación a los niños de categoría D (muy bajo riesgo).",15,inicioTexto+=5);
+          doc.text("Como se encuentra en el segundo nivel: (i) tome los signos vitales conforme la norma, (ii) mantenga",15, inicioTexto += 5);
+          doc.text("al bebé junto a su madre, (iii) aplique los cuidados rutinarios del recién nacido.",15, inicioTexto += 5);
+          doc.text("Si el neonato está estable y ha cumplido, al menos, 48 horas de vida cuando el nacimiento fue por",15,inicioTexto+=5);
+          doc.text("parto normal; o, 72 horas de vida cuando ha sido por cesárea, proceda a dar el alta de calidad",15,inicioTexto+=5);
+          doc.text("conforme la normativa vigente, y previa evaluación de un médico especialista en Pediatría.",15,inicioTexto+=5);
+          doc.text("Oriente a la madre en lactancia materna exclusiva, cuidados del recién nacido en el hogar; en caso",15,inicioTexto +=5);
+          doc.text("de prematurez o peso bajo, orientar de los cuidados extra (ver las páginas 53, 54 y 55 del AIEPI",15,inicioTexto+=5);
+          doc.text("Clínico          ); y control en no más de 3 días en consulta de Pediatría o Medicina Familiar, previa",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 28, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("notificación al establecimiento de salud para atención preferencial.",15,inicioTexto+=5);
+          doc.text("Si el neonato cumple con alguno de los “Factores que podrían incrementar el riesgo neonatal”,",15,inicioTexto+=5);
+          doc.text("requiere una visita domiciliaria por parte de un médico del primer nivel, dentro de los 2 a 3 días",15,inicioTexto+=5);
+          doc.text(" de vida, o 24 a 48 horas del alta.",15,inicioTexto+=5);
         }else {
-          doc.text("C: tercer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);  
-          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);   
+          doc.text("Categoría de riesgo C (bajo riesgo): tiene más probabilidades de eventos adversos neonatales antes",15,inicioTexto += 5);
+          doc.text("de los 15 días de vida, en comparación a los niños de categoría D (muy bajo riesgo).",15,inicioTexto+=5);
+          doc.text("Como se encuentra en el tercer nivel: (i) tome los signos vitales conforme la norma, (ii) mantenga",15, inicioTexto += 5);
+          doc.text("al bebé junto a su madre, (iii) aplique los cuidados rutinarios del recién nacido.",15, inicioTexto += 5);
+          doc.text("Si el neonato está estable y ha cumplido, al menos, 48 horas de vida cuando el nacimiento fue por",15,inicioTexto+=5);
+          doc.text("parto normal; o, 72 horas de vida cuando ha sido por cesárea, proceda a dar el alta de calidad",15,inicioTexto+=5);
+          doc.text("conforme la normativa vigente, y previa evaluación de un médico especialista en Pediatría.",15,inicioTexto+=5);
+          doc.text("Oriente a la madre en lactancia materna exclusiva, cuidados del recién nacido en el hogar; en caso",15,inicioTexto +=5);
+          doc.text("de prematurez o peso bajo, orientar de los cuidados extra (ver las páginas 53, 54 y 55 del AIEPI",15,inicioTexto+=5);
+          doc.text("Clínico          ); y control en no más de 3 días en consulta de Pediatría o Medicina Familiar, previa",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 28, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("notificación al establecimiento de salud para atención preferencial.",15,inicioTexto+=5);
+          doc.text("Si el neonato cumple con alguno de los “Factores que podrían incrementar el riesgo neonatal”,",15,inicioTexto+=5);
+          doc.text("requiere una visita domiciliaria por parte de un médico del primer nivel, dentro de los 2 a 3 días",15,inicioTexto+=5);
+          doc.text(" de vida, o 24 a 48 horas del alta.",15,inicioTexto+=5);
         }
         break;
         case 'D':
         if(this.nivelAtencion === 'primer'){
-          doc.text("D: primer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
-          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
+          doc.text("Categoría de riesgo D: tiene bajas probabilidades de eventos adversos neonatales. Como se encuentra en el",15,inicioTexto += 5);
+          doc.text("primer nivel: (i) tome los signos vitales conforme la norma, (ii) mantenga al bebé junto a su madre,",15, inicioTexto += 5);
+          doc.text("(iii) aplique los cuidados rutinarios del recién nacido.",15,inicioTexto+=5);
+          doc.text("Si el neonato está estable y ha cumplido, al menos, 48 horas de vida cuando el nacimiento fue por",15, inicioTexto += 5);
+          doc.text("parto normal; o, 72 horas de vida cuando ha sido por cesárea, proceda a dar el alta de calidad",15, inicioTexto += 5);
+          doc.text("conforme la normativa vigente, y previa evaluación de un médico.",15,inicioTexto+=5);
+          doc.text("Oriente a la madre en lactancia materna exclusiva, cuidados del recién nacido en el hogar; en caso de",15, inicioTexto += 5);
+          doc.text("prematurez o peso bajo, orientar de los cuidados extra (ver las páginas 53, 54 y 55 del AIEPI Clínico",15, inicioTexto += 5);
+          doc.text("del alta del recién nacido, previa notificación al establecimiento de salud para atención preferencial.",15, inicioTexto += 5);
+          doc.text("         ); y control entre el tercer a quinto día de vida o cuarenta y ocho a setenta y dos horas después",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 15, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("Es importante tomar en cuenta que la muestra para tamizaje metabólico neonatal se debe tomar a partir",15, inicioTexto += 5);
+          doc.text("del cuarto hasta los 28 días de vida del recién nacido.",15,inicioTexto+=5);
+          doc.text("Si el neonato cumple con alguno de los “Factores que podrían incrementar el riesgo neonatal”, requiere",15, inicioTexto += 5);
+          doc.text(" una visita domiciliaria por parte de un médico del primer nivel, dentro de los 2 a 3 días de vida, o",15, inicioTexto += 5);
+          doc.text("24 a 48 horas del alta.",15,inicioTexto+=5);
         }else if(this.nivelAtencion === 'segundo'){
-          doc.text("D: segundo nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
-          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);
+          doc.text("Categoría de riesgo D: tiene bajas probabilidades de eventos adversos neonatales. Como se encuentra en el",15,inicioTexto += 5);
+          doc.text("segundo nivel: (i) tome los signos vitales conforme la norma, (ii) mantenga al bebé junto a su madre,",15, inicioTexto += 5);
+          doc.text("(iii) aplique los cuidados rutinarios del recién nacido.",15,inicioTexto+=5);
+          doc.text("Si el neonato está estable y ha cumplido, al menos, 48 horas de vida cuando el nacimiento fue por",15, inicioTexto += 5);
+          doc.text("parto normal; o, 72 horas de vida cuando ha sido por cesárea, proceda a dar el alta de calidad",15, inicioTexto += 5);
+          doc.text("conforme la normativa vigente, y previa evaluación de un médico.",15,inicioTexto+=5);
+          doc.text("Oriente a la madre en lactancia materna exclusiva, cuidados del recién nacido en el hogar; en caso de",15, inicioTexto += 5);
+          doc.text("prematurez o peso bajo, orientar de los cuidados extra (ver las páginas 53, 54 y 55 del AIEPI Clínico",15, inicioTexto += 5);
+          doc.text("del alta del recién nacido, previa notificación al establecimiento de salud para atención preferencial.",15, inicioTexto += 5);
+          doc.text("         ); y control entre el tercer a quinto día de vida o cuarenta y ocho a setenta y dos horas después",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 15, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("Es importante tomar en cuenta que la muestra para tamizaje metabólico neonatal se debe tomar a partir",15, inicioTexto += 5);
+          doc.text("del cuarto hasta los 28 días de vida del recién nacido.",15,inicioTexto+=5);
+          doc.text("Si el neonato cumple con alguno de los “Factores que podrían incrementar el riesgo neonatal”, requiere",15, inicioTexto += 5);
+          doc.text(" una visita domiciliaria por parte de un médico del primer nivel, dentro de los 2 a 3 días de vida, o",15, inicioTexto += 5);
+          doc.text("24 a 48 horas del alta.",15,inicioTexto+=5);
         }else {
-          doc.text("D: tercer nivel: signos vitales conforme la norma, está estable y ha cumplido al menos 48 horas de vida,",15,inicioTexto += 5);
-          doc.text("brinde alta de calidad y control en 3 días",15, inicioTexto += 5);          
+          doc.text("Categoría de riesgo D: tiene bajas probabilidades de eventos adversos neonatales. Como se encuentra en el",15,inicioTexto += 5);
+          doc.text("tercer nivel: (i) tome los signos vitales conforme la norma, (ii) mantenga al bebé junto a su madre,",15, inicioTexto += 5);
+          doc.text("(iii) aplique los cuidados rutinarios del recién nacido.",15,inicioTexto+=5);
+          doc.text("Si el neonato está estable y ha cumplido, al menos, 48 horas de vida cuando el nacimiento fue por",15, inicioTexto += 5);
+          doc.text("parto normal; o, 72 horas de vida cuando ha sido por cesárea, proceda a dar el alta de calidad",15, inicioTexto += 5);
+          doc.text("conforme la normativa vigente, y previa evaluación de un médico.",15,inicioTexto+=5);
+          doc.text("Oriente a la madre en lactancia materna exclusiva, cuidados del recién nacido en el hogar; en caso de",15, inicioTexto += 5);
+          doc.text("prematurez o peso bajo, orientar de los cuidados extra (ver las páginas 53, 54 y 55 del AIEPI Clínico",15, inicioTexto += 5);
+          doc.text("del alta del recién nacido, previa notificación al establecimiento de salud para atención preferencial.",15, inicioTexto += 5);
+          doc.text("         ); y control entre el tercer a quinto día de vida o cuarenta y ocho a setenta y dos horas después",15,inicioTexto+=5);
+          doc.setFontStyle("bold")
+          doc.textWithLink('(link)', 15, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+          doc.setFontStyle("normal")
+          doc.text("Es importante tomar en cuenta que la muestra para tamizaje metabólico neonatal se debe tomar a partir",15, inicioTexto += 5);
+          doc.text("del cuarto hasta los 28 días de vida del recién nacido.",15,inicioTexto+=5);
+          doc.text("Si el neonato cumple con alguno de los “Factores que podrían incrementar el riesgo neonatal”, requiere",15, inicioTexto += 5);
+          doc.text(" una visita domiciliaria por parte de un médico del primer nivel, dentro de los 2 a 3 días de vida, o",15, inicioTexto += 5);
+          doc.text("24 a 48 horas del alta.",15,inicioTexto+=5);
         }
         break;
         default:
         break;
       }
-    }
+    //}
     doc.save('Informe Neonato '+this.id+'.pdf');
+    }else {
+      doc.setFontStyle("bold");
+      doc.text("Factores de riesgo inminente para el neonato que requieren estabilización inmediata y/o",15,inicioTexto+=10);
+      doc.text("transferencia urgente",15,inicioTexto+=5);
+      doc.setFontStyle("normal");
+      if(this.factoresRiesgoInminente.length > 0){
+        for(let i = 0; i<this.factoresRiesgoInminente.length; i++) {
+          doc.text("- "+this.factoresRiesgoInminente[i],15, inicioTexto +=5);
+        }
+      }
+      //doc.setFontStyle("bold");
+      //doc.text("Condición del Neonato", 15, inicioTexto+=5);
+      //doc.setFontStyle("normal");
+      doc.setFontStyle("bold");
+      doc.text("Mensaje de condición grave del neonato:",15,inicioTexto+=10);
+      doc.setFontStyle("normal");
+      doc.text("Condición del neonato grave; gestione la transferencia y/o el ingreso a cuidados intensivos neonatales ",15,inicioTexto+=5);
+      doc.text("y proceda: ",15,inicioTexto+=5);
+      doc.text("  I.   Administre Oxígeno si tiene dificultad respiratoria, cianosis generalizada o posible aspiración meconial.",15,inicioTexto+=5);
+      doc.text("  II.  Si no existe contraindicación, iniciar lactancia en la primera media hora postparto.",15,inicioTexto+=5);
+      doc.text("  III. Dar antibiótico apropiado en caso de: a) rotura de membranas de >18 horas, b) flujo genital ",15,inicioTexto+=5);
+      doc.text("       de mal olor o c) prematurez",15,inicioTexto+=5);
+      doc.text("  IV. De no disponer de tratamiento específico, se deberá activar la gestión de la transferencia,",15,inicioTexto+=5);
+      doc.text("       considerando el acróstico “R.E.F.I.E.R.A.” (ver las páginas 60 y 61 del AIEPI clínico ",15,inicioTexto+=5);
+      doc.setFontStyle("bold");
+      doc.textWithLink('(link))', 167, inicioTexto, { url: 'https://drive.google.com/open?id=1CZg4SL2cWB9pKSe1-BScDaWLmdJQoBUF' });
+      doc.setFontStyle("normal");
+      doc.text("       aplicar las normas de cuidado neonatal vigentes", 15, inicioTexto += 5);
+      doc.save('Informe Neonato '+this.id+'.pdf');
+
+    }
+    
   }
 
   close() {
     this.dialogRef.close();
 }
+
+getCurrentDate() {
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1; //January is 0!
+    let yyyy = today.getFullYear();
+
+    if(dd<10) { 
+      let ddstring = dd.toString();
+      ddstring = '0'+ dd.toString();
+    } 
+
+    if(mm<10) {
+      let mmstring = mm.toString();
+      mmstring = '0'+ mm.toString();
+    } 
+
+    let todaystring = today.toString();
+    todaystring  = dd + '/' + mm + '/' + yyyy;
+    return todaystring;
+  }
+
+  getCurrentTime(){
+    var today = new Date();
+    let minutes = today.getMinutes();
+    let minutesString = minutes.toString();
+    if(minutes<10){
+      minutesString = '0'+minutes.toString();
+    }
+    var time = today.getHours() + "H" + minutesString;
+    return time;
+  }
+
+  daysBetween(date1:string) {
+    //Get 1 day in milliseconds
+    var one_day=1000*60*60*24;
+    var dateAux = date1.split('-');
+    if(dateAux[1][0] === '0'){
+      dateAux[1].slice(1,1);
+    }
+    if(dateAux[2][0] === '0'){
+      dateAux[2].slice(1,1);
+    }
+    var fechaN = new Date(Number(dateAux[0]), Number(dateAux[1])-1, Number(dateAux[2]));
+  
+    // Convert both dates to milliseconds
+    let today = new Date();
+    var date1_ms = fechaN.getTime();
+    var date2_ms = today.getTime();
+  
+    // Calculate the difference in milliseconds
+    var difference_ms = date2_ms - date1_ms;
+    //take out milliseconds
+    difference_ms = difference_ms/1000;
+    //var seconds = Math.floor(difference_ms % 60);
+    difference_ms = difference_ms/60; 
+    //var minutes = Math.floor(difference_ms % 60);
+    difference_ms = difference_ms/60; 
+    var hours = Math.floor(difference_ms % 24);  
+    var days = Math.floor(difference_ms/24);
+    
+    return days + ' día(s), con ' + hours + ' hora(s) de vida.';
+  }
 
 }

@@ -43,7 +43,7 @@
       <div class="row justify-content-md-center">
         <div class="col-md-8">
                 <p>El <strong>Score Bebé</strong> es una puntuación numérica que permite estimar el riesgo de muerte neonatal en el Ecuador. Este cuestionario le ayudará a medir el riesgo potencial de eventos adversos neonatales.</p>
-<p>Sus respuestas y la puntuación del Score Bebé servirán para facilitar la categorización del riesgo (riesgo bajo, moderado, alto y muy alto) y adecuar las intervenciones más apropiadas y oportunas para el beneficio del neonato.<br>
+<p>Sus respuestas y la puntuación del Score Bebé servirán para facilitar la categorización del riesgo (alto, moderado, bajo y muy bajo) y adecuar las intervenciones más apropiadas y oportunas para el beneficio del neonato.<br>
 El personal de salud debe manejar a los neonatos tal y como señalan las normas de atención neonatal vigentes.</p>
 <p><span style="color: #069efd;">Para revisar las normativas de atención infantil vigentes, consulte:  <a href="https://www.salud.gob.ec" target="_blank">www.salud.gob.ec</a></span></p>
         </div>
@@ -137,11 +137,11 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   </label>
                 </div>
             </div>
-
-                
-
-                <div class="continuar">
+                <div class="continuar" *ngIf="!terminado">
                   <a (click)="continueFormulario(1)">continuar</a>
+                </div>
+                <div class="continuar" *ngIf="terminado">
+                  <a (click)="finalizarTest()">FINALIZAR</a>
                 </div>
                 <div class="continuar">
                   <a (click)="returnFormulario(1)">regresar</a>
@@ -165,6 +165,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
             <div class="form-group">
               <h5>Factores que podrí­an incrementar el riesgo:</h5><br>
+              <p style="color: red">SI NO TIENE ALGUNA DE ESTAS CARACTERÍSTICAS PRESIONE CONTINUAR</p>
                 <div class="form-check" formArrayName="factorRiesgoIncrementa" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoIncrementa.controls; let i = index">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoAumenta[i].id">
                   <label class="form-check-label" [for]="factoresRiesgoAumenta[i].id">
@@ -199,7 +200,8 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
             <div class="form-group">
               <h5>Factores que podrían reducir el riesgo del neonato:</h5><br>
-                <div class="form-check" formArrayName="factorRiesgoReduce" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoReduce.controls; let i = index">
+              <p style="color: red">SI NO TIENE ALGUNA DE ESTAS CARACTERÍSTICAS PRESIONE CONTINUAR</p>  
+              <div class="form-check" formArrayName="factorRiesgoReduce" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoReduce.controls; let i = index">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoReduce[i].id">
                   <label class="form-check-label" [for]="factoresRiesgoReduce[i].id">
                       {{factoresRiesgoReduce[i].value}}
@@ -505,52 +507,21 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
-            
             <h3>Comorbilidades</h3>
-                <div class="form-group">
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="comor" id="comor1" value="comor1" formControlName="comor">
-                  <label class="form-check-label" for="comor1">
-                   Trastornos relacionados con la asfixia
+            <div class="form-group">
+                <div class="form-check" formArrayName="comorbilidades" *ngFor="let factor of scoreBebeTest.controls.comorbilidades.controls; let i = index">
+                  <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="comorbilidades[i].id">
+                  <label class="form-check-label" [for]="comorbilidades[i].id" >  
+                  {{comorbilidades[i].value}}
                   </label>
                 </div>
-
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="comor" id="comor2" value="comor2" formControlName="comor">
-                  <label class="form-check-label" for="comor2">
-                   Malformaciones
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="comor" id="comor3" value="comor3" formControlName="comor">
-                  <label class="form-check-label" for="comor3">
-                   Enfermedades relacionadas con la prematuridad
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="comor" id="comor4" value="comor4" formControlName="comor">
-                  <label class="form-check-label" for="comor4">
-                    Enfermedades infecciosas
-                  </label>
-                </div>
-
-                <div class="form-check">  
-                    <input class="form-check-input" type="radio" name="comor" id="comor5" value="comor5" formControlName="comor">
-                    <label class="form-check-label" for="comor5">
-                      Cualquier otro trastorno no clasificado en categorías anteriores
+                    <input class="form-check-input" type="checkbox" name="comor" id="comor" value="comor" formControlName="comor">
+                    <label class="form-check-label" for="comor">
+                     Sin comorbilidades
                     </label>
                   </div>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="comor" id="comor6" value="comor6" formControlName="comor">
-                    <label class="form-check-label" for="comor6">
-                      Sin comorbilidades
-                    </label>
-                  </div>
-                </div><!-- form group -->
+            </div>
                       
       <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
       <div class="continuar">
