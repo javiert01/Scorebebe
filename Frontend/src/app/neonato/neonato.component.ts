@@ -20,41 +20,41 @@ export class NeonatoComponent implements OnInit {
 
   scoreBebeTest: FormGroup;
   factoresRiesgoInminente = [
-    {id: 'factorRiesgoInminente1', value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'},
-    {id: 'factorRiesgoInminente2', value: 'Su color de piel es pálida, pletórica o azulada'},
-    {id: 'factorRiesgoInminente3', value: 'Tiene una frecuencia cardíaca alterada (<100 o >160 lpm)'},
-    {id: 'factorRiesgoInminente4', value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)'},
-    {id: 'factorRiesgoInminente5', value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)'},
-    {id: 'factorRiesgoInminente6', value: 'Tiene un pobre tono muscular o sus reflejos son débiles o convulsiona.'},
-    {id: 'factorRiesgoInminente7', value: 'Se encuentra ictérico antes de las 24 horas o después del cuarto día de vida.'},
-    {id: 'factorRiesgoInminente8', value: 'Hipoglucemia (<40mg/dL)'},
-    {id: 'factorRiesgoInminente9', value: 'Vomita todo lo que come'},
-    {id: 'factorRiesgoInminente10', value: 'Madre tuvo oligohidramnios, hidrorrea mayor o igual a 18 horas, fiebre o corioamnionitis o flujo genital fétido'},
-    {id: 'factorRiesgoInminente11', value: 'Reanimación neonatal con presión positiva o masaje cardiaco'},
-    {id: 'factorRiesgoInminente12', value: 'Malformaciones severas'},
-    {id: 'factorRiesgoInminente13', value: 'Lesiones severas debidas al parto'}
+    {id: 'factorRiesgoInminente1', idbase:1, value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'},
+    {id: 'factorRiesgoInminente2', idbase:11, value: 'Su color de piel es pálida, pletórica o azulada'},
+    {id: 'factorRiesgoInminente3', idbase:21, value: 'Tiene una frecuencia cardíaca alterada (<100 o >160 lpm)'},
+    {id: 'factorRiesgoInminente4', idbase:31, value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)'},
+    {id: 'factorRiesgoInminente5', idbase:41, value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)'},
+    {id: 'factorRiesgoInminente6', idbase:51, value: 'Tiene un pobre tono muscular o sus reflejos son débiles o convulsiona.'},
+    {id: 'factorRiesgoInminente7', idbase:61, value: 'Se encuentra ictérico antes de las 24 horas o después del cuarto día de vida.'},
+    {id: 'factorRiesgoInminente8', idbase:71, value: 'Hipoglucemia (<40mg/dL)'},
+    {id: 'factorRiesgoInminente9', idbase:81, value: 'Vomita todo lo que come'},
+    {id: 'factorRiesgoInminente10', idbase:91, value: 'Madre tuvo oligohidramnios, hidrorrea mayor o igual a 18 horas, fiebre o corioamnionitis o flujo genital fétido'},
+    {id: 'factorRiesgoInminente11', idbase:101, value: 'Reanimación neonatal con presión positiva o masaje cardiaco'},
+    {id: 'factorRiesgoInminente12', idbase:111, value: 'Malformaciones severas'},
+    {id: 'factorRiesgoInminente13', idbase:121, value: 'Lesiones severas debidas al parto'}
 
   ];
   factoresRiesgoAumenta = [
-    {id: 'factorRiesgoAumenta1' , value: 'Madre tuvo polihidramnios'},
-    {id: 'factorRiesgoAumenta2' , value: 'Madre diabética'},
-    {id: 'factorRiesgoAumenta4' , value: 'Madre preeclámptica/eclámptica'},
-    {id: 'factorRiesgoAumenta5' , value: 'Madre fallece posterior al parto'},
-    {id: 'factorRiesgoAumenta6' , value: 'Madre tuvo IVU en el embarazo'},
-    {id: 'factorRiesgoAumenta7' , value: 'Madre tuvo cultivo positivo para Streptococcus'},
-    {id: 'factorRiesgoAumenta8' , value: 'Tuvo sufrimiento fetal agudo'},
-    {id: 'factorRiesgoAumenta9' , value: 'Niño de sexo masculino'},
-    {id: 'factorRiesgoAumenta10' , value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
-    {id: 'factorRiesgoAumenta11' , value: 'Madre VIH positiva o prueba indeterminada o criterios clínicos de SIDA o Madre con sífilis, tuberculosis o con discapacidad'},
-    {id: 'factorRiesgoAumenta12' , value: 'Parto en domicilio o por personal no entrenado'},
-    {id: 'factorRiesgoAumenta13' , value: 'Ningún control prenatal'},
-    {id: 'factorRiesgoAumenta14' , value: 'Reanimación neonatal sin presión positiva ni masaje cardiaco'},
-    {id: 'factorRiesgoAumenta15' , value: 'Es producto de un embarazo múltiple'}
+    {id: 'factorRiesgoAumenta1' , idbase:1, value: 'Madre tuvo polihidramnios'},
+    {id: 'factorRiesgoAumenta2' , idbase:11, value: 'Madre diabética'},
+    {id: 'factorRiesgoAumenta3' , idbase:21, value: 'Madre preeclámptica/eclámptica'},
+    {id: 'factorRiesgoAumenta4' , idbase:31, value: 'Madre fallece posterior al parto'},
+    {id: 'factorRiesgoAumenta5' , idbase:41, value: 'Madre tuvo IVU en el embarazo'},
+    {id: 'factorRiesgoAumenta6' , idbase:51, value: 'Madre tuvo cultivo positivo para Streptococcus'},
+    {id: 'factorRiesgoAumenta7' , idbase:61, value: 'Tuvo sufrimiento fetal agudo'},
+    {id: 'factorRiesgoAumenta8' , idbase:71, value: 'Niño de sexo masculino'},
+    {id: 'factorRiesgoAumenta9' , idbase:81, value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
+    {id: 'factorRiesgoAumenta10' , idbase:91, value: 'Madre VIH positiva o prueba indeterminada o criterios clínicos de SIDA o Madre con sífilis, tuberculosis o con discapacidad'},
+    {id: 'factorRiesgoAumenta11' , idbase:101, value: 'Parto en domicilio o por personal no entrenado'},
+    {id: 'factorRiesgoAumenta12' , idbase:111, value: 'Ningún control prenatal'},
+    {id: 'factorRiesgoAumenta13' , idbase:121, value: 'Reanimación neonatal sin presión positiva ni masaje cardiaco'},
+    {id: 'factorRiesgoAumenta14' , idbase:131, value: 'Es producto de un embarazo múltiple'}
   ];
   factoresRiesgoReduce = [
-    {id: 'factorRiesgoReduce1', value:'Es prematuro y recibió dosis completa de maduración pulmonar'},
-    {id: 'factorRiesgoReduce2', value:'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'},
-    {id: 'factorRiesgoReduce3', value:'Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio'}
+    {id: 'factorRiesgoReduce1', idbase:1, value:'Es prematuro y recibió dosis completa de maduración pulmonar'},
+    {id: 'factorRiesgoReduce2', idbase:11, value:'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'},
+    {id: 'factorRiesgoReduce3', idbase:21, value:'Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio'}
   ];
 
   comorbilidades = [
@@ -70,6 +70,8 @@ export class NeonatoComponent implements OnInit {
   neonato: Neonato;
   userName = localStorage.getItem('username');
   userID;
+  nombreUser;
+  mailUser;
   neonatoID;
   showFormulario = [];
   mensaje = false;
@@ -94,6 +96,7 @@ export class NeonatoComponent implements OnInit {
     this.scoreBebeTest = new FormGroup({
       'sexo': new FormControl('masculino'),
       'fechaNacimiento': new FormControl(null , Validators.required),
+      'horaNacimiento': new FormControl(null, Validators.required),
       'nombreApellido': new FormControl(null, Validators.required),
       'pesoNacimiento': new FormControl(null , Validators.required),
       'edadGestional': new FormControl(null , Validators.required),
@@ -113,7 +116,10 @@ export class NeonatoComponent implements OnInit {
     .subscribe(
       (response) => {
         this.userID = response.id;
-        this.userID = this.addLeadingZero(this.userID,4)
+        //this.userID = this.addLeadingZero(this.userID,4);
+        this.nombreUser = response.nombre;
+        this.mailUser = response.email;
+
       }
     );
     
@@ -151,16 +157,20 @@ export class NeonatoComponent implements OnInit {
           this.scoreBebeTest.get('peso').setValue('peso3');
           this.scoreBebeTest.get('peso').disable();
           break;
-          case (value < 2500):
+          case (value < 2000):
           this.scoreBebeTest.get('peso').setValue('peso4');
           this.scoreBebeTest.get('peso').disable();
           break;
-          case (value < 4000):
+          case (value < 2500):
           this.scoreBebeTest.get('peso').setValue('peso5');
           this.scoreBebeTest.get('peso').disable();
           break;
-          case (value >= 4000):
+          case (value < 4000):
           this.scoreBebeTest.get('peso').setValue('peso6');
+          this.scoreBebeTest.get('peso').disable();
+          break;
+          case (value >= 4000):
+          this.scoreBebeTest.get('peso').setValue('peso7');
           this.scoreBebeTest.get('peso').disable();
           break;
         }
@@ -189,6 +199,7 @@ export class NeonatoComponent implements OnInit {
   continueFormulario(index) {
     this.showFormulario[index] = false
     this.showFormulario[index + 1] = true
+    console.log(this.scoreBebeTest);
     
   }
 
@@ -251,26 +262,30 @@ export class NeonatoComponent implements OnInit {
 
     switch(this.scoreBebeTest.get('edad').value) {
       case 'edad1':
-      score = 15;
+      score = 17;
       this.total = score;
       break;
       case 'edad2':
-      score = 13
+      score = 16
       this.total = score;
       break;
       case 'edad3':
-      score = 12;
+      score = 15;
       this.total = score;
       break;
       case 'edad4':
-      score = 11;
+      score = 14;
       this.total = score;
       break;
       case 'edad5':
-      score = 12;
+      score = 11;
       this.total = score;
       break;
       case 'edad6':
+      score = 11;
+      this.total = score;
+      break;
+      case 'edad7':
       score = 14;
       this.total = score;
       break;
@@ -279,22 +294,26 @@ export class NeonatoComponent implements OnInit {
     }
     switch(this.scoreBebeTest.get('peso').value) {
       case 'peso1':
-      score = 15;
+      score = 18;
       this.total = this.total + (score);
       break;
       case 'peso2':
-      score = 12;
+      score = 17;
       this.total = this.total + (score);
       break;
       case 'peso3':
-      score = 12;
+      score = 16;
       this.total = this.total + (score);
       break;
       case 'peso4':
-      score = 11;
+      score = 15;
       this.total = this.total + (score);
       break;
       case 'peso5':
+      score = 14;
+      this.total = this.total + (score);
+      break;
+      case 'peso6':
       score = 11;
       this.total = this.total + (score);
       break;
@@ -497,6 +516,7 @@ export class NeonatoComponent implements OnInit {
       nombreApellido: this.scoreBebeTest.get('nombreApellido').value,
       riesgo: this.getNivelRiesgo(this.categoria),
       fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
+      horaNacimiento: this.scoreBebeTest.get('horaNacimiento').value,
       edadGestional: this.scoreBebeTest.get('edadGestional').value,
       pesoNacimiento: this.scoreBebeTest.get('pesoNacimiento').value,
       centil: this.getNombreCentil(this.scoreBebeTest.get('centil').value),
@@ -511,6 +531,8 @@ export class NeonatoComponent implements OnInit {
       factoresRiesgoReduce: this.getFactoresRiesgoReduce(),
       comorbilidades: this.getComorbilidades(),
       nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,
+      nombreUsuario: this.nombreUser,
+      emailUsuario: this.mailUser
     }
     this.dialog.open(CourseDialogComponent, dialogConfig);
   }
@@ -542,11 +564,12 @@ export class NeonatoComponent implements OnInit {
       fechaCalculo: this.getCurrentDate(),
       sexo: this.scoreBebeTest.get('sexo').value,
       fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
+      horaNacimiento: this.scoreBebeTest.get('horaNacimiento').value,
       edadGestional: this.scoreBebeTest.get('edadGestional').value,
       nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,
-      factorRiesgoInminente: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoInminente').value),
-      factorRiesgoAumenta: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoIncrementa').value),
-      factorRiesgoReduce: this.getTrueorFalse(this.scoreBebeTest.get('factorRiesgoReduce').value),
+      factoresRiesgoInminente: this.getIDBaseFactoresInminente(),
+      factoresRiesgoAumenta: this.getIDBaseFactoresAumenta(),
+      factoresRiesgoReduce: this.getIDBaseFactoresReduce(),
       peso: this.scoreBebeTest.get('pesoNacimiento').value,
       catEdadGestional: this.scoreBebeTest.get('edad').value,
       catPeso: this.scoreBebeTest.get('peso').value,
@@ -604,6 +627,30 @@ export class NeonatoComponent implements OnInit {
     .filter(v => v !== null);
     
     return comorbilidadesSeleccionadas;
+  }
+
+  getIDBaseFactoresInminente(){
+    const factoresInminente = this.scoreBebeTest.get('factorRiesgoInminente').value
+    .map((v, i) => v ? this.factoresRiesgoInminente[i].idbase : null)
+    .filter(v => v !== null);
+    
+    return factoresInminente;
+  }
+
+  getIDBaseFactoresAumenta(){
+    const factoresAumenta = this.scoreBebeTest.get('factorRiesgoIncrementa').value
+    .map((v, i) => v ? this.factoresRiesgoAumenta[i].idbase : null)
+    .filter(v => v !== null);
+    
+    return factoresAumenta;
+  }
+
+  getIDBaseFactoresReduce(){
+    const factoresReduce = this.scoreBebeTest.get('factorRiesgoReduce').value
+    .map((v, i) => v ? this.factoresRiesgoReduce[i].idbase : null)
+    .filter(v => v !== null);
+    
+    return factoresReduce;
   }
 
   getScoreComorbilidades(){

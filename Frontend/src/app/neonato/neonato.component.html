@@ -91,6 +91,8 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </select><br>
                 <p>Fecha de Nacimiento:</p>
                 <input type="text" class="form-control" name="fechaNacimiento" formControlName = "fechaNacimiento" type="date" placeholder="Fecha de nacimiento"><br>
+                <p>Hora de Nacimiento: (ingrese en formato de 24 horas)</p>
+                <input type="time" class="form-control" name="horaNacimiento" formControlName="horaNacimiento" placeholder="Hora de nacimiento"><br>
                 <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido" placeholder="Apellido Materno Neonato"><br>
                 <input type="number" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
                 <input type="number" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
@@ -254,27 +256,32 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="edad" id="edad3" value="edad3" formControlName="edad">
                   <label class="form-check-label" for="edad3">
-                    Prematuro moderado (32 a < 37 semanas)
+                    Prematuro moderado (32 a < 35 semanas)
                   </label>
                 </div>
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="edad" id="edad4" value="edad4" formControlName="edad">
                   <label class="form-check-label" for="edad4">
-                    A término temprano (37 a < 39 semanas)
+                    A término temprano (35 a < 37 semanas)
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edad" id="edad5" value="edad5" formControlName="edad">
+                  <label class="form-check-label" for="edad5">
+                    A término temprano (37 a < 38 semanas)
                   </label>
                 </div>
 
                 <div class="form-check">  
-                    <input class="form-check-input" type="radio" name="edad" id="edad5" value="edad5" formControlName="edad">
-                    <label class="form-check-label" for="edad5">
-                      A término completo (39 a < 41 semanas)
+                    <input class="form-check-input" type="radio" name="edad" id="edad6" value="edad6" formControlName="edad">
+                    <label class="form-check-label" for="edad6">
+                      A término completo (38 a < 41 semanas)
                     </label>
                   </div>
 
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="edad" id="edad6" value="edad6" formControlName="edad">
-                    <label class="form-check-label" for="edad6">
+                    <input class="form-check-input" type="radio" name="edad" id="edad7" value="edad7" formControlName="edad">
+                    <label class="form-check-label" for="edad7">
                       Post término (>= 41 semanas)
                     </label>
                   </div>
@@ -328,20 +335,27 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="peso" id="peso4" value="peso4" formControlName="peso">
                   <label class="form-check-label" for="peso4">
-                    1500 a < 2500g al nacer
+                    1500 a < 2000g al nacer
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="peso" id="peso5" value="peso5" formControlName="peso">
+                  <label class="form-check-label" for="peso5">
+                    2000 a < 2500g al nacer
                   </label>
                 </div>
 
                 <div class="form-check">  
-                    <input class="form-check-input" type="radio" name="peso" id="peso5" value="peso5" formControlName="peso">
-                    <label class="form-check-label" for="peso5">
+                    <input class="form-check-input" type="radio" name="peso" id="peso6" value="peso6" formControlName="peso">
+                    <label class="form-check-label" for="peso6">
                       2500 a < 4000g al nacer
                     </label>
                   </div>
 
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="peso" id="peso6" value="peso6" formControlName="peso">
-                    <label class="form-check-label" for="peso6">
+                    <input class="form-check-input" type="radio" name="peso" id="peso7" value="peso7" formControlName="peso">
+                    <label class="form-check-label" for="peso7">
                       4000 o más g al nacer
                     </label>
                   </div>

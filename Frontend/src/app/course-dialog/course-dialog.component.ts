@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import * as jsPDF from 'jspdf';
+import { AbstractFormGroupDirective } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-course-dialog',
@@ -14,6 +16,7 @@ export class CourseDialogComponent implements OnInit {
   puntaje: number;
   riesgo: string;
   nombreApellido: string;
+  horaNacimiento: string;
   fechaNacimiento: string;
   edadGestional: string;
   pesoNacimiento: string;
@@ -30,14 +33,17 @@ export class CourseDialogComponent implements OnInit {
   factoresRiesgoReduce;
   fechaActual;
   comorbilidades;
+  nombreUser;
+  mailUser;
 
-  constructor(private dialogRef: MatDialogRef<CourseDialogComponent>, @Inject(MAT_DIALOG_DATA) data) { 
+  constructor(private dialogRef: MatDialogRef<CourseDialogComponent>, @Inject(MAT_DIALOG_DATA) data, private authService: AuthService) { 
     this.categoria = data.categoria;
     this.id = data.id;
     this.puntaje = data.puntaje;
     this.nombreApellido = data.nombreApellido;
     this.riesgo = data.riesgo;
     this.fechaNacimiento = data.fechaNacimiento;
+    this.horaNacimiento = data.horaNacimiento;
     this.edadGestional = data.edadGestional;
     this.pesoNacimiento = data.pesoNacimiento;
     this.centil = data.centil;
@@ -52,6 +58,8 @@ export class CourseDialogComponent implements OnInit {
     this.factoresRiesgoAumenta = data.factoresRiesgoAumenta;
     this.factoresRiesgoReduce = data.factoresRiesgoReduce;
     this.comorbilidades = data.comorbilidades;
+    this.nombreUser = data.nombreUsuario;
+    this.mailUser = data.emailUsuario;
   }
 
   ngOnInit() {
@@ -61,7 +69,7 @@ export class CourseDialogComponent implements OnInit {
 
   crearPDF() {
     let inicioTexto = 70;
-    let doc = new jsPDF();
+    let doc = new jsPDF("p","mm","a4");
     let imgHeaderData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA2YAAABvCAYAAACHMtOrAAAAAXNSR0IArs4'+
                         'c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAMHHSURBVHhe7J0FgBVV+8alTGw/E7u7' +
                         'Oz67/ewWlFAMLEywW2lERFAQEFC6OxZ2Ybu7u7sT7vN/njN3du8uiwIu/hXnWV7u3JlzzpyZOzP3/O57znv2gCNHj' +
@@ -93,7 +101,7 @@ export class CourseDialogComponent implements OnInit {
     doc.setFontStyle("normal");
     doc.text("Neonato de apellido materno "+this.nombreApellido+" nacido el "+this.fechaNacimiento+", de "+this.edadGestional+" semanas de edad gestacional, con ",15,inicioTexto += 10);
     doc.text("un peso de "+this.pesoNacimiento+" gramos, lo que equivale a un "+this.centil+" de peso para la edad gestacional.",15,inicioTexto += 5);
-    doc.text("Al momento de elaborar este informe, el neonato tiene "+this.daysBetween(this.fechaNacimiento),15,inicioTexto+=5);
+    doc.text("Al momento de elaborar este informe, el neonato tiene "+this.daysBetween(this.fechaNacimiento, this.horaNacimiento),15,inicioTexto+=5);
     if(!this.factorRiesgoInminente){
     doc.text("- Nace por "+this.parto, 15,inicioTexto += 10);
     doc.text("- Con un Apgar "+this.apgar+" a los 5 minutos", 15,inicioTexto += 5);
@@ -372,7 +380,14 @@ export class CourseDialogComponent implements OnInit {
       doc.setFontStyle("normal");
       if(this.factoresRiesgoInminente.length > 0){
         for(let i = 0; i<this.factoresRiesgoInminente.length; i++) {
-          doc.text("- "+this.factoresRiesgoInminente[i],15, inicioTexto +=5);
+          if(this.factoresRiesgoInminente[i] === 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'){
+            let aux = "El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las";
+            let aux2 = "páginas 48 y 49 del AIEPI Clínico)"
+            doc.text("- "+aux,15, inicioTexto +=5);
+            doc.text("- "+aux2,15, inicioTexto +=5);
+          }else{
+            doc.text("- "+this.factoresRiesgoInminente[i],15, inicioTexto +=5);
+          }
         }
       }
       //doc.setFontStyle("bold");
@@ -394,7 +409,25 @@ export class CourseDialogComponent implements OnInit {
       doc.setFontStyle("normal");
       doc.text("       aplicar las normas de cuidado neonatal vigentes", 15, inicioTexto += 5);
       doc.save('Informe Neonato '+this.id+'.pdf');
-
+      let blob = doc.output('blob');
+      console.log(blob);
+      let attachment = {
+        pdf: blob,
+        idneonato: this.id,
+        nombre: this.nombreUser,
+        email: this.mailUser,
+        nombrearchivo: 'Informe Neonato '+this.id+'.pdf'
+      };
+      console.log(attachment['pdf']);
+      this.authService.sendInformeMail(attachment)
+      .subscribe(
+        (data) => {
+          console.log(data);
+        }, (err) => {
+          console.log(err);
+        }
+      )
+    
     }
     
   }
@@ -435,7 +468,7 @@ getCurrentDate() {
     return time;
   }
 
-  daysBetween(date1:string) {
+  daysBetween(date1:string, time:string) { 
     //Get 1 day in milliseconds
     var one_day=1000*60*60*24;
     var dateAux = date1.split('-');
@@ -445,10 +478,19 @@ getCurrentDate() {
     if(dateAux[2][0] === '0'){
       dateAux[2].slice(1,1);
     }
-    var fechaN = new Date(Number(dateAux[0]), Number(dateAux[1])-1, Number(dateAux[2]));
+    let timeAux ;
+    timeAux = time.split(':');
+    if(timeAux[0][1] === '0'){
+        timeAux[0].slice(1,1);
+    }
+    if(timeAux[1][1] === '0'){
+        timeAux[1].slice(1,1);
+    }
+    var fechaN = new Date(Number(dateAux[0]), Number(dateAux[1])-1, Number(dateAux[2]), Number(timeAux[0]), Number(timeAux[1]));
   
     // Convert both dates to milliseconds
     let today = new Date();
+    
     var date1_ms = fechaN.getTime();
     var date2_ms = today.getTime();
   

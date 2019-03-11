@@ -53,4 +53,8 @@ export class AuthService {
     return this.http.patch(this.urlServidor+'usuario/actualizaractivo', username);
   }
 
+  sendInformeMail(attachment){
+    return this.http.post(this.urlServidor+'usuario/sendinformemail', attachment);
+  }
+
 }

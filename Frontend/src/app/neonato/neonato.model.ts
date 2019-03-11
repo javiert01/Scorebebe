@@ -6,6 +6,8 @@ export class Neonato {
   
     public  fechaCalculo: string;
 
+    public horaNacimiento: string;
+
     public fechaNacimiento: string;
 
     public sexo: string;
@@ -13,12 +15,6 @@ export class Neonato {
     public edadGestional: number;
 
     public peso: number;
-
-    public factorRiesgoInminente: boolean;
-
-    public factorRiesgoAumenta: boolean;
-
-    public factorRiesgoReduce: boolean;
 
     public nivelAtencion: string;
   
@@ -33,6 +29,12 @@ export class Neonato {
     public  catTipoParto: number;
   
     public  comorbilidades: number[];
+
+    public  factoresRiesgoAumenta: number[];
+
+    public  factoresRiesgoInminente: number[];
+
+    public  factoresRiesgoReduce: number[];
   
     public  scoreTotal: number;
   

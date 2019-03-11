@@ -29,13 +29,10 @@ export class LoginComponent implements OnInit {
        this._auth.getUserData(nombre)
        .subscribe(
          (user) => {
-           console.log(user)
           localStorage.setItem('rol', user.rol);
           if (user.rol === 'Administrador') {
-          console.log('son iguales');
           this._router.navigate(['/admin-page']);
           } else {
-          console.log('no son iguales');
           this._router.navigate(['/test']);
           }
         },
