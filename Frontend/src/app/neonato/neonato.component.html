@@ -142,7 +142,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <div class="continuar" *ngIf="!terminado">
                   <a (click)="continueFormulario(1)">continuar</a>
                 </div>
-                <div class="continuar" *ngIf="terminado">
+                <div class="finalizar" *ngIf="terminado">
                   <a (click)="finalizarTest()">FINALIZAR</a>
                 </div>
                 <div class="continuar">
@@ -382,9 +382,12 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
         <div class="col-md-8">
             
             <h3>Centil de peso al nacer para edad gestacional</h3>
-            <div class="calcula">
+            <!--<div class="calcula">
                   <a href="http://intergrowth21.ndog.ox.ac.uk/es/ManualEntry" target="_blank">CALCULE EL PERCENTIL DEL PESO PARA LA EDAD GESTACIONAL AQUÍ</a>
-                </div><br>
+                </div><br>-->
+                <div style="display: flex;">
+                  <p>CALCULE EL PERCENTIL DEL PESO PARA LA EDAD GESTACIONAL </p><button><a href="http://intergrowth21.ndog.ox.ac.uk/es/ManualEntry" target="_blank">AQUÍ</a></button>
+                </div>
                 <div class="form-group">
 
                 <div class="form-check">

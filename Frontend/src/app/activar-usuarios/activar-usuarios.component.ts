@@ -20,7 +20,8 @@ export class ActivarUsuariosComponent implements OnInit {
     );
   }
 
-  onActivarUsuario(username:string) {
+  onActivarUsuario(username) {
+    console.log(username);
     this.authService.setUsuarioActivo(username).subscribe(
       (response) => console.log(response)
     )

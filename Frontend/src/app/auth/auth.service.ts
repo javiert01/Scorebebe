@@ -49,12 +49,14 @@ export class AuthService {
     return this.http.get<any>(this.urlServidor+'usuario');
   }
 
-  setUsuarioActivo(username) {
-    return this.http.patch(this.urlServidor+'usuario/actualizaractivo', username);
+  setUsuarioActivo(usernameAux) {
+    let data = {
+      username: usernameAux
+    }
+    return this.http.post(this.urlServidor+'usuario/actualizaractivo', data);
   }
 
   sendInformeMail(attachment){
     return this.http.post(this.urlServidor+'usuario/sendinformemail', attachment);
   }
-
 }
