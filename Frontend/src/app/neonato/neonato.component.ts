@@ -81,7 +81,7 @@ export class NeonatoComponent implements OnInit {
   mostrarIntro = false;
   mostrarLogo = true;
   terminado = false;
-  @ViewChild('instrucciones') public instrucciones:ElementRef;
+  @ViewChild('instrucciones', { static: false }) public instrucciones:ElementRef;
 
 
   constructor(private dialog: MatDialog, private neonatoService: NeonatoService, public authService: AuthService, private fb: FormBuilder) {
