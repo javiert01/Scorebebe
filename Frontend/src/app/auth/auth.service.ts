@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import { Http , HttpModule} from '@angular/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
+  private urlServidor = 'https://scorebbtest.herokuapp.com/'
+  // private urlServidor = 'https://scorebebe.herokuapp.com/';
+    // private urlServidor = 'http://localhost:1337/'
+  private _registerUrl = this.urlServidor + 'usuario/signup';
+  private _loginUrl = this.urlServidor + 'usuario/login';
 
-    private urlServidor = 'https://scorebebe.herokuapp.com/'
-    //private urlServidor = 'http://localhost:1337/'
-  private _registerUrl = this.urlServidor+'usuario/signup';
-  private _loginUrl = this.urlServidor+'usuario/login';
 
   constructor(private http: HttpClient, private _router: Router) { }
 
@@ -34,11 +34,24 @@ export class AuthService {
   }
 
   getUserData(username: string) {
-    return this.http.get<any>(this.urlServidor+'usuario/' + username);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.getToken()
+      })
+    };
+    console.log(httpOptions);
+    return this.http.get<any>(this.urlServidor + 'usuario/' + username, httpOptions);
   }
 
   getUserDataRol(rol: string) {
-    return this.http.get<any>(this.urlServidor+'usuario/' + rol);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.getToken()
+      })
+    };
+    return this.http.get<any>(this.urlServidor + 'usuario/' + rol, httpOptions);
   }
 
   getToken() {
@@ -46,17 +59,35 @@ export class AuthService {
   }
 
   getUsuarios() {
-    return this.http.get<any>(this.urlServidor+'usuario');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.getToken()
+      })
+    };
+    return this.http.get<any>(this.urlServidor + 'usuario', httpOptions);
   }
 
   setUsuarioActivo(usernameAux) {
-    let data = {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.getToken()
+      })
+    };
+    const data = {
       username: usernameAux
-    }
-    return this.http.post(this.urlServidor+'usuario/actualizaractivo', data);
+    };
+    return this.http.post(this.urlServidor + 'usuario/actualizaractivo', data, httpOptions);
   }
 
-  sendInformeMail(attachment){
-    return this.http.post(this.urlServidor+'usuario/sendinformemail', attachment);
+  sendInformeMail(attachment) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.getToken()
+      })
+    };
+    return this.http.post(this.urlServidor + 'usuario/sendinformemail', attachment, httpOptions);
   }
 }

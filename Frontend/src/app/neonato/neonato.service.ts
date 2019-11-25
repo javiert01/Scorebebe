@@ -1,33 +1,58 @@
-import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Neonato } from './neonato.model';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 
 
 @Injectable()
 export class NeonatoService {
-
-    urlServidor = 'https://scorebebe.herokuapp.com/'
+    urlServidor = 'https://scorebbtest.herokuapp.com/';
+    
+    // urlServidor = 'https://scorebebe.herokuapp.com/';
+    // tslint:disable-next-line: comment-format
     //urlServidor = 'http://localhost:1337/'
     constructor(private http: HttpClient) {
     }
 
     addNeonato (neonato: Neonato) {
-        return this.http.post<any>(this.urlServidor+'neonato', neonato);
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        })
+      };
+      console.log(httpOptions);
+        return this.http.post<any>(this.urlServidor + 'neonato', neonato, httpOptions);
     }
 
-    getNeonatos(){
-        return this.http.get<any>(this.urlServidor+'neonato?limit=1000');
+    getNeonatos() {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        })
+      };
+        return this.http.get<any>(this.urlServidor + 'neonato?limit=1000', httpOptions);
       }
 
-      getNeonatoIngresado(){
-          return this.http.get<any>(this.urlServidor+'neonato/ultimoneonatoingresado');
+      getNeonatoIngresado() {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+          })
+        };
+          return this.http.get<any>(this.urlServidor + 'neonato/ultimoneonatoingresado', httpOptions);
       }
 
-      getNeonatoIdUsuario(id: number){
-        return this.http.get<any>(this.urlServidor+'neonato/neonatousuario/'+id.toString())
+      getNeonatoIdUsuario(id: number) {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+          })
+        };
+        return this.http.get<any>(this.urlServidor + 'neonato/neonatousuario/' + id.toString(), httpOptions);
       }
 }

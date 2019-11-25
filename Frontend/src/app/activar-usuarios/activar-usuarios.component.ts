@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Usuario } from '../usuario/usuario.model';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-activar-usuarios',
@@ -11,8 +12,8 @@ import { Http } from '@angular/http';
 export class ActivarUsuariosComponent implements OnInit {
 
   usuarios : Usuario[];
-  
-  constructor(public authService: AuthService, private http:Http) { }
+
+  constructor(public authService: AuthService, private http: HttpClient) { }
 
   ngOnInit() {
     this.authService.getUsuarios().subscribe(

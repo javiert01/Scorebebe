@@ -1,0 +1,114 @@
+.ng-pristine{
+	width: 100%;
+}
+
+.form-login label:before, .form-signup label:before {
+    display: none;
+}
+
+.form-login .form-group, .form-signup .form-group{
+	padding: 0px 0px;
+}
+
+.form-group{
+    /*min-height: 450px!important;*/
+    margin-bottom:40px;
+}
+
+.form-login .btn-success, .form-signup .btn-success {
+    color: #fff;
+    background-color: #03b9ff;
+    border-color: transparent;
+    width: 100%;
+    margin: auto;
+    display: table;
+}
+
+.form-signup .btn-success{
+	margin-top: 15px;
+}
+
+.form-signup .btn-success {
+    width: 50%;
+}
+
+.form-signup label {
+    margin-bottom: .1rem;
+}
+
+
+.form-signup .col-sm-6{
+	margin:auto;
+	display: table;
+}
+
+.form-signup input {
+	margin-bottom: 15px;
+}
+
+.col-sm-10{
+		margin:auto;
+	display: table;
+}
+
+.page h1{
+	    text-align: center;
+    font-size: 30px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #737373;
+}
+
+.cont-logos{
+	padding: 20px 0px;
+}
+
+input{
+	font-weight: 300!important;
+	color:#333;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+font-weight: 300;
+color:#f9f9f9;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+font-weight: 300;
+color:#f9f9f9;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+ font-weight: 300;
+ color:#f9f9f9;
+}
+
+.cont-registro, .cont-login{
+  width: 100%;
+    padding: 150px 0px;
+    margin-bottom: 50px;
+    text-align: center;
+    color: #fff;
+  }
+
+
+  .cont-login{
+  background: #333;
+  }
+
+
+  .cont-login{
+  background: url(/src/assets/img/banner-login.jpg)center center no-repeat;
+  }
+  .cont-registro{
+  background: url(/src/assets/img/banner-registro.jpg)center center no-repeat;
+  }
+
+  .cont-registro h2, .cont-login h2{
+  font-size: 3rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+        text-shadow: 0px 0px 40px rgba(0,0,0,0.5);
+  }

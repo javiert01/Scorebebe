@@ -1,0 +1,28 @@
+.cont-registro, .cont-login{
+  width: 100%;
+    padding: 150px 0px;
+    margin-bottom: 50px;
+    text-align: center;
+    color: #fff;
+  }
+
+
+  .cont-login{
+  background: #333;
+  }
+
+
+  .cont-login{
+  background: url(/src/assets/img/banner-login.jpg)center center no-repeat;
+  }
+  .cont-registro{
+  background: url(/src/assets/img/banner-registro.jpg)center center no-repeat;
+  }
+
+  .cont-registro h2, .cont-login h2{
+  font-size: 3rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+        text-shadow: 0px 0px 40px rgba(0,0,0,0.5);
+  }

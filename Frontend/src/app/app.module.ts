@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { NeonatoComponent } from './neonato/neonato.component';
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
-import { HttpModule } from '@angular/http';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HeaderComponent } from './header/header.component';
@@ -26,6 +25,8 @@ import { AdminpageComponent } from './adminpage/adminpage.component';
 import { ActivarUsuariosComponent } from './activar-usuarios/activar-usuarios.component';
 import { ResultadosTestComponent } from './resultados-test/resultados-test.component';
 import { SelectedDirective } from './shared/selected.directive';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 
@@ -49,11 +50,12 @@ import { SelectedDirective } from './shared/selected.directive';
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpModule,
+    HttpClientModule,
     MatDialogModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
   ],
   providers: [NeonatoService, AuthGuard, AuthService, NoLoginGuard, AdminGuard, {

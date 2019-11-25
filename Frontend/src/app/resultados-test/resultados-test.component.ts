@@ -11,11 +11,11 @@ import { NeonatoService } from '../neonato/neonato.service';
 })
 export class ResultadosTestComponent implements OnInit {
 
-  usuarios : Usuario[];
+  usuarios: Usuario[];
   neonatos: Neonato[];
-  categorias = ['A','B','C','D'];
+  categorias = ['A', 'B', 'C', 'D'];
   idusuario;
-  
+
   constructor(public authService: AuthService, private neonatoService: NeonatoService) { }
 
   ngOnInit() {
@@ -34,23 +34,23 @@ export class ResultadosTestComponent implements OnInit {
   }
 
   getNeonatosId() {
-    if(this.idusuario > 0) {
+    if (this.idusuario > 0) {
       this.neonatoService.getNeonatoIdUsuario(this.idusuario)
       .subscribe(
       (response) => {
         this.neonatos = response;
-      })
+      });
     } else {
       this.neonatoService.getNeonatos().subscribe(
         (response) => this.neonatos = response
       );
     }
-    
+
   }
 
-  cambiarNombreCatEdad(cat){
+  cambiarNombreCatEdad(cat) {
     let nombreCambiado = '';
-    switch(cat){
+    switch (cat) {
       case 'edad1':
       nombreCambiado = '1 (Extremadamente prematuro (< 28 semanas),n(%))';
       break;
@@ -75,9 +75,9 @@ export class ResultadosTestComponent implements OnInit {
     return nombreCambiado;
   }
 
-  cambiarNombreCatPeso(cat){
+  cambiarNombreCatPeso(cat) {
     let nombreCambiado = '';
-    switch(cat){
+    switch (cat) {
       case 'peso1':
       nombreCambiado = '1 (< 750 g al nacer)';
       break;
@@ -102,9 +102,9 @@ export class ResultadosTestComponent implements OnInit {
     return nombreCambiado;
   }
 
-  cambiarNombreCatPesoEdad(cat){
+  cambiarNombreCatPesoEdad(cat) {
     let nombreCambiado = '';
-    switch(cat){
+    switch (cat) {
       case 'centil1':
       nombreCambiado = '1 (Percentil 5 al 95)';
       break;
@@ -120,9 +120,9 @@ export class ResultadosTestComponent implements OnInit {
     return nombreCambiado;
   }
 
-  cambiarNombreCatApgar(cat){
+  cambiarNombreCatApgar(cat) {
     let nombreCambiado = '';
-    switch(cat){
+    switch (cat) {
       case 'apgar1':
       nombreCambiado = '1 (Tranquilizante (7 a 10), n (%))';
       break;
@@ -138,9 +138,9 @@ export class ResultadosTestComponent implements OnInit {
     return nombreCambiado;
   }
 
-  cambiarNombreTipoParto(cat){
+  cambiarNombreTipoParto(cat) {
     let nombreCambiado = '';
-    switch(cat){
+    switch (cat) {
       case 'parto1':
       nombreCambiado = '1 (Parto vaginal eutocico)';
       break;
@@ -156,9 +156,9 @@ export class ResultadosTestComponent implements OnInit {
     return nombreCambiado;
   }
 
-  cambiarNombreComorbilidad(cat){
+  cambiarNombreComorbilidad(cat) {
     let nombreCambiado = '';
-    switch(cat){
+    switch (cat) {
       case 'comor1':
       nombreCambiado = '1 (Trastornos relacionados con la asfixia)';
       break;
@@ -183,32 +183,32 @@ export class ResultadosTestComponent implements OnInit {
     return nombreCambiado;
   }
 
-  addLeadingZero(x, pad){
+  addLeadingZero(x, pad) {
     let contador = 1;
     let numero = x;
-    if(x > 10) {
-      while(numero > 11){
+    if (x > 10) {
+      while (numero > 11) {
         numero = numero - 10;
         contador++;
       }
       x = x - (9 * contador);
     }
     let s = String(x);
-    while (s.length < (pad || 2)) {s = "0" + s;}
+    while (s.length < (pad || 2)) {s = '0' + s; }
     return s;
   }
 
   getNumeroNeonatosCat(cat) {
     let numero = 0;
-    for (let neonato of this.neonatos){
-      if(neonato.catRiesgo === cat){
+    for (const neonato of this.neonatos) {
+      if (neonato.catRiesgo === cat) {
         numero = numero + 1;
       }
     }
     return numero;
   }
 
- 
+
 
 
 }
