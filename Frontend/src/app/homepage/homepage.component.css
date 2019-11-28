@@ -1,0 +1,14 @@
+.bottom-footer{
+	height: auto!important;
+    background: #069efd;
+    padding: 25px 0px;
+}
+
+.bottom-footer p{
+  color: #fff;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 0px;
+      font-weight: 300;
+      opacity: 0.65;
+  }

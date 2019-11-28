@@ -27,7 +27,8 @@ import { ResultadosTestComponent } from './resultados-test/resultados-test.compo
 import { SelectedDirective } from './shared/selected.directive';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
+import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
+import {NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { environment } from '../environments/environment';
     AdminpageComponent,
     ActivarUsuariosComponent,
     ResultadosTestComponent,
-    SelectedDirective
+    SelectedDirective,
+    RegisterDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +57,7 @@ import { environment } from '../environments/environment';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    NgxMaterialTimepickerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
   ],
@@ -64,6 +67,6 @@ import { environment } from '../environments/environment';
     multi: true
   }],
   bootstrap: [AppComponent],
-  entryComponents: [CourseDialogComponent]
+  entryComponents: [CourseDialogComponent, RegisterDialogComponent]
 })
 export class AppModule { }

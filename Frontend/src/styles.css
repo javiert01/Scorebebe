@@ -79,7 +79,7 @@ BANNER
 #####################################*/
 
 .banner{
-    background: url(http://scorebebe.com/img/banner.jpg)top center;
+    background: url(http://scorebebe.com/assets/img/banner.jpg)top center;
     background-position: bottom center;
     background-size: cover;
     padding: 160px 0px 200px 0px;
@@ -132,10 +132,10 @@ BANNER
 
 
 .cont-login{
-	background: url(../../Frontend/src/assets/img/banner-login.jpg)center center no-repeat;
+	background: url(http://scorebebe.com/assets/img/banner-login.jpg)center center no-repeat;
 }
 .cont-registro{
-	background: url(../../Frontend/src/assets/img/banner-registro.jpg)center center no-repeat;
+	background: url(http://scorebebe.com/assets/img/banner-registro.jpg)center center no-repeat;
 }
 
 .cont-registro h2, .cont-login h2{
@@ -305,7 +305,7 @@ instrucciones
 .instrucciones a:hover{
     -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
     -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);    
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
 }
 
 
@@ -357,7 +357,7 @@ select:focus, textarea:focus, input[type="text"]:focus, input[type="password"]:f
 }
 
 input[type=radio] {
-    display:none; 
+    display:none;
 }
 input[type=radio] + label {
     cursor: pointer;
@@ -409,11 +409,12 @@ input[type=radio]:checked + label:before {
 
     .formulario-sb{
     width: 100%!important;
-    height: 140vh!important;
+    height: 170vh!important;
     position: absolute!important;
     z-index: 1!important;
     padding-top: 105px!important;
     }
+    
 
     .continuar a{
       width: 100%;
@@ -556,7 +557,7 @@ select:focus, textarea:focus, input[type="text"]:focus, input[type="password"]:f
 }
 
 input[type=radio], input[type=checkbox] {
-    display:none; 
+    display:none;
 }
 input[type=radio] + label, input[type=checkbox] + label {
     cursor: pointer;

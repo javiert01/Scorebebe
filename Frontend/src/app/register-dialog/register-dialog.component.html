@@ -1,0 +1,19 @@
+<div *ngIf="mensaje === 'OK'">
+  <h2 mat-dialog-title>Registro exitoso!</h2>
+  <mat-dialog-content>
+      <p>Tu información ha sido enviada con exito.</p>
+      <p>Espera tu mail de confirmación para empezar a usar la plataforma</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+      <button class="mat-raised-button"(click)="close()">Cerrar</button>
+  </mat-dialog-actions>
+  </div>
+  <div *ngIf="mensaje !== 'OK'">
+      <h2 mat-dialog-title>Ha ocurrido un error!</h2>
+      <mat-dialog-content>
+          <p>{{mensaje_err}}</p>
+      </mat-dialog-content>
+      <mat-dialog-actions>
+          <button class="mat-raised-button"(click)="close()">Cerrar</button>
+      </mat-dialog-actions>
+  </div>

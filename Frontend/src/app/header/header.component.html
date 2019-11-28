@@ -2,7 +2,16 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto" style="font-size:18px; font-weight: bold;">
         <li class="nav-item active" >
-          <a class="nav-link" [routerLink]="'/homepage'" style="color:white">Inicio<span class="sr-only">(current)</span></a>
+          <a class="nav-link"
+          [routerLink]="'/test'"
+          style="color:white"
+          *ngIf="_authService.loggedIn()">Inicio login<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active" *ngIf="!_authService.loggedIn()">
+          <a class="nav-link"
+          [routerLink]="'/homepage'"
+          style="color:white"
+          >Inicio<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active" *ngIf="_authService.loggedIn()">
             <a class="nav-link" [routerLink]="'/test'" style="color:white">Test<span class="sr-only">(current)</span></a>
@@ -14,7 +23,6 @@
           <a class="nav-link" *ngIf="!_authService.loggedIn()" [routerLink]="'/login'" style="color:white">Inicio de sesión</a>
           <a href="#" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()">Logout</a>
         </li>
-        
+
       </ul>
     </div>
-    

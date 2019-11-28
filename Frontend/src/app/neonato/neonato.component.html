@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0f5992;" *ngIf="authService.loggedIn()">
   <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav ml-auto" style="font-size:18px; font-weight: bold;">
+    <ul class="navbar-nav ml-auto" style="font-size:18px; font-weight: bold; color: white">
       <li class="nav-item">
-        <a (click)="authService.logoutUser()">Logout</a>
+        <a (click)="authService.logoutUser()" >Logout</a>
       </li>
       <li class="nav-item">
-        <a [routerLink]="'/homepage'">Inicio</a>
+        <a (click)="onGotoInicioInstr()">Inicio</a>
       </li>
     </ul>
   </div>
@@ -14,7 +14,7 @@
 <div class="cont-logos" *ngIf="mostrarLogo">
     <div class="container">
       <div class="col-md-12">
-      <img src="http://scorebebe.com/img/logos-header.jpg">
+      <img src="http://scorebebe.com/img/logos-header.jpg" (click)="onGotoInicioInstr()">
       </div>
     </div>
   </div>
@@ -26,10 +26,10 @@
         <div class="col-md-6">
           <h2>SCORE BEBÉ</h2>
           <p>Versión preliminar</p>
-          <p><a (click)="showIntro()" style="cursor: pointer;">Iniciar</a></p>
+          <p><a (click)="showIntro()" style="cursor: pointer;">Comenzar Test</a></p>
         </div>
         <div class="col-md-6">
-          
+
         </div>
       </div>
     </div>
@@ -81,7 +81,11 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-8">
-            
+        <div class="row">
+          <div class="col-md-12">
+            <p style="padding-bottom: 10px;"><strong>Ingrese los siguientes datos para continuar:</strong></p>
+          </div>
+        </div>
           <div class="row">
               <div class="col-md-12">
                 <p>Sexo:</p>
@@ -92,7 +96,12 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <p>Fecha de Nacimiento:</p>
                 <input type="text" class="form-control" name="fechaNacimiento" formControlName = "fechaNacimiento" type="date" placeholder="Fecha de nacimiento"><br>
                 <p>Hora de Nacimiento: (ingrese en formato de 24 horas)</p>
-                <input type="time" class="form-control" name="horaNacimiento" formControlName="horaNacimiento" placeholder="Hora de nacimiento"><br>
+                <div class="ngx-timepicker-field-example">
+                  <ngx-timepicker-field [format]="24"
+                  [defaultTime]="'00:00'"
+                  name="horaNacimiento" formControlName="horaNacimiento"
+                  ></ngx-timepicker-field>
+                </div><br>
                 <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido" placeholder="Apellido Materno Neonato"><br>
                 <input type="number" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
                 <input type="number" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
@@ -102,10 +111,10 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <option  value="segundo">Segundo Nivel de Atención</option>
                   <option  value="tercer">Tercer Nivel de Atención</option>
                 </select>
-              </div> 
+              </div>
             </div><br>
             <span *ngIf="!scoreBebeTest.valid" class="help-block">Recuerde llenar todos los campos para continuar</span>
-            <div class="continuar" *ngIf="!scoreBebeTest.valid">
+            <div class="continuar-invalid" *ngIf="!scoreBebeTest.valid">
                 <a>continuar</a>
               </div>
               <div class="continuar" *ngIf="scoreBebeTest.valid">
@@ -114,7 +123,13 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
               <div class="continuar">
                 <a (click)="showInstrucciones()"  >Regresar a Instrucciones</a>
               </div>
-              
+              <div class="row">
+                <div class="col-md-12">
+                  <i class="fas fa-home center fa-3x" (click)="onGotoInicioInstr()" ></i>
+                  <p class="center" >Regresar a HOME</p>
+                </div>
+              </div>
+
 
       </div><!-- col-md-8 -->
     </div><!-- row -->
@@ -134,11 +149,12 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
               <h5>Factores de riesgo inminente para el neonato que requieren estabilización inmediata y/o transferencia urgente:</h5><br>
                 <div class="form-check" formArrayName="factorRiesgoInminente" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoInminente.controls; let i = index">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoInminente[i].id">
-                  <label class="form-check-label" [for]="factoresRiesgoInminente[i].id" >  
+                  <label class="form-check-label" [for]="factoresRiesgoInminente[i].id" >
                   {{factoresRiesgoInminente[i].value}}
                   </label>
                 </div>
             </div>
+            <p style="text-align: center; padding: 10px; color:black">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar" *ngIf="!terminado">
                   <a (click)="continueFormulario(1)">continuar</a>
                 </div>
@@ -175,8 +191,8 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   </label>
                 </div>
 
-                </div><!-- form group -->                 
-              
+                </div><!-- form group -->
+                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
                   <a (click)="continueFormulario(2)">continuar</a>
                 </div>
@@ -202,7 +218,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
             <div class="form-group">
               <h5>Factores que podrían reducir el riesgo del neonato:</h5><br>
-              <p style="color: red">SI NO TIENE ALGUNA DE ESTAS CARACTERÍSTICAS PRESIONE CONTINUAR</p>  
+              <p style="color: red">SI NO TIENE ALGUNA DE ESTAS CARACTERÍSTICAS PRESIONE CONTINUAR</p>
               <div class="form-check" formArrayName="factorRiesgoReduce" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoReduce.controls; let i = index">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoReduce[i].id">
                   <label class="form-check-label" [for]="factoresRiesgoReduce[i].id">
@@ -210,8 +226,8 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   </label>
                 </div>
 
-                </div><!-- form group -->                 
-               
+                </div><!-- form group -->
+                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
                   <a (click)="continueFormulario(3)">continuar</a>
                 </div>
@@ -247,7 +263,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="edad" id="edad2" value="edad2" formControlName="edad"> 
+                  <input class="form-check-input" type="radio" name="edad" id="edad2" value="edad2" formControlName="edad">
                   <label class="form-check-label" for="edad2">
                     Muy prematuro (28 a < 32 semanas)
                   </label>
@@ -272,7 +288,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   </label>
                 </div>
 
-                <div class="form-check">  
+                <div class="form-check">
                     <input class="form-check-input" type="radio" name="edad" id="edad6" value="edad6" formControlName="edad">
                     <label class="form-check-label" for="edad6">
                       A término completo (38 a < 41 semanas)
@@ -286,6 +302,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                     </label>
                   </div>
                 </div><!-- form group -->
+                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
                   <a (click)="continueFormulario(4)">continuar</a>
                 </div>
@@ -307,7 +324,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
-            
+
            <h3>peso al nacer</h3>
                 <div class="form-group">
 
@@ -346,7 +363,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   </label>
                 </div>
 
-                <div class="form-check">  
+                <div class="form-check">
                     <input class="form-check-input" type="radio" name="peso" id="peso6" value="peso6" formControlName="peso">
                     <label class="form-check-label" for="peso6">
                       2500 a < 4000g al nacer
@@ -360,6 +377,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                     </label>
                   </div>
                 </div><!-- form group -->
+                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
                   <a (click)="continueFormulario(5)">continuar</a>
                 </div>
@@ -380,7 +398,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
-            
+
             <h3>Centil de peso al nacer para edad gestacional</h3>
             <!--<div class="calcula">
                   <a href="http://intergrowth21.ndog.ox.ac.uk/es/ManualEntry" target="_blank">CALCULE EL PERCENTIL DEL PESO PARA LA EDAD GESTACIONAL AQUÍ</a>
@@ -412,6 +430,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </div>
 
                 </div><!-- form group -->
+                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
                   <a (click)="continueFormulario(6)">continuar</a>
                 </div>
@@ -434,7 +453,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
-            
+
            <h3>Apgar a los 5'</h3>
                 <div class="form-group">
 
@@ -460,6 +479,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </div>
 
                 </div><!-- form group -->
+                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
                   <a (click)="continueFormulario(7)">continuar</a>
                 </div>
@@ -478,7 +498,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-8">
-          
+
           <h3>Tipo de Parto</h3>
               <div class="form-group">
 
@@ -502,14 +522,14 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   Parto distócico vaginal
                 </label>
               </div>
-              </div><!-- form group -->
+              </div>
+              <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p><!-- form group -->
    <div class="continuar">
                 <a (click)="continueFormulario(8)">continuar</a>
               </div>
               <div class="continuar">
                 <a (click)="returnFormulario(8)">regresar</a>
               </div>
-
       </div><!-- col-md-8 -->
     </div><!-- row -->
   </div><!-- container -->
@@ -528,7 +548,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
             <div class="form-group">
                 <div class="form-check" formArrayName="comorbilidades" *ngFor="let factor of scoreBebeTest.controls.comorbilidades.controls; let i = index">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="comorbilidades[i].id">
-                  <label class="form-check-label" [for]="comorbilidades[i].id" >  
+                  <label class="form-check-label" [for]="comorbilidades[i].id" >
                   {{comorbilidades[i].value}}
                   </label>
                 </div>
@@ -539,15 +559,20 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                     </label>
                   </div>
             </div>
-                      
+            <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
       <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
       <div class="continuar">
         <a (click)="returnFormulario(9)">regresar</a>
-      </div> 
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <i class="fas fa-home center fa-3x" (click)="onGotoInicioInstr()"></i>
+          <p class="center" >Regresar a HOME</p>
+        </div>
+      </div>
         </div><!-- col-md-8 -->
       </div><!-- row -->
     </div><!-- container -->
   </div><!-- container-form -->
-
 <!-- fin pregunta numero cinco -->
 </form>

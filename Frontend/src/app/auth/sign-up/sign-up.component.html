@@ -2,7 +2,7 @@
 <div class="cont-logos">
   <div class="container">
     <div class="col-md-12">
-    <img src="http://scorebebe.com/img/logos-header.jpg">
+    <img src="http://scorebebe.com/img/logos-header.jpg" [routerLink]="['/homepage']">
     </div>
   </div>
 </div>
@@ -11,7 +11,7 @@
 <div class="cont-registro">
 <div class="container">
   <div class="row">
-    
+
     <div class="col-md-12">
       <h2>Registrate en Score Bebé</h2>
     </div>
@@ -20,27 +20,27 @@
 </div>
 </div>
   <div id="all-site-wrapper" class="hfeed site">
-  
+
     <a href="#" id="back-top">
       <i class="fa fa-angle-up " style=""></i>
     </a>
-      
+
           <div class="negative-push"></div>
-      
-      
-    <div class="title-wrapper-divider blog-version"></div>		
-      
+
+
+    <div class="title-wrapper-divider blog-version"></div>
+
     <div class="iv-layout content-wrapper content-full  no-title-wrapper">
       <div class="container">
-  
-        
+
+
           <div class="row">
-  
+
             <div class="col-xs-12 col-sm-12 col-md-12 site-main" role="main">
-  
-              
-    
-      
+
+
+
+
   <article id="post-13" class="post-13 page type-page status-publish hentry">
     <div class="entry-content">
 
@@ -51,53 +51,59 @@
 <div class="row">
       <form>
       <div class="col-sm-12">
-      <form (ngSubmit)="registerUser(myForm); myForm.reset()" #myForm="ngForm" class="form-signup">
+      <form [formGroup]="signupForm" class="form-signup" (ngSubmit)="registerUser()">
       <div class="row">
         <div class="col-sm-6 form-group">
         <label>Nombre y Apellido</label>
-        <input [(ngModel)]="registerUserData.nombre" type="text" placeholder="Ingrese su Nombre y Apellido.." class="form-control" name="nombre">
+        <input  type="text" placeholder="Ingrese su Nombre y Apellido.." class="form-control" name="nombre" formControlName="nombre">
         </div>
           </div>
           <div class="row">
             <div class="col-sm-6 form-group">
             <label>Institucion</label>
-            <input [(ngModel)]="registerUserData.institucion" type="text" placeholder="Ingrese la institución a la que pertenece" class="form-control" name="institucion">
+            <input  type="text" placeholder="Ingrese la institución a la que pertenece" class="form-control" name="institucion" formControlName="institucion">
             </div>
               </div>
               <div class="row">
                 <div class="col-sm-6 form-group">
                 <label>Email</label>
-                <input [(ngModel)]="registerUserData.email" type="email" placeholder="Ingrese su email" class="form-control" name="email">
+                <input  type="email" placeholder="Ingrese su email" class="form-control" name="email" formControlName="email">
                 </div>
-                  </div>	
+                  </div>
           <div class="row">
       <div class="col-sm-6 form-group">
         <label>Nombre de Usuario</label>
-            <input [(ngModel)]="registerUserData.username" type="text" placeholder="Ingrese su nombre de Usuario.." class="form-control" name="username">
+            <input  type="text" placeholder="Ingrese su nombre de Usuario.." class="form-control" name="username" formControlName="username">
     </div>
     </div>
     <div class="row">
       <div class="col-sm-6 form-group">
         <label>Contraseña</label>
-            <input [(ngModel)]="registerUserData.password" type="password" placeholder="Ingrese su Contraseña.." class="form-control" name="password">
+            <input type="password" placeholder="Ingrese su Contraseña.." class="form-control" name="password" formControlName="password">
       </div>
     </div>
-        <div class="center-btn"><button class="btn btn-success" type="submit">Aceptar</button></div>
-          </form>	
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <label>Confirme su contraseña:</label>
+            <input type="password" placeholder="Vuelva a ingresar su contraseña" class="form-control" name="password-confirm" formControlName="password-confirm">
+      </div>
+    </div>
+    <span *ngIf="signupForm.hasError('differentPassword', 'password-confirm')" class="help-block">Verifica que los campos de cada contraseña sean iguales!</span><br>
+        <span *ngIf="!signupForm?.valid" class="help-block">Recuerde que debe llenar todos los campos para continuar con el registro</span><br>
+        <div class="center-btn"><button class="btn btn-success btn-invalid"
+          type="submit" [disabled]="!signupForm?.valid"
+          [ngStyle]="{'opacity':signupForm.valid === true ? '1' : '0.5' }">Aceptar</button></div>
+          </form>
         </div>
-      </form> 
+      </form>
       </div>
 </div>
 </div>
 </div><!-- .entry-content -->
-</article><!-- #post-## -->		
-    
-              
+</article><!-- #post-## -->
+
           </div>
-
         </div>
-
-      
     </div>
   </div>
-</div> 
+</div>
