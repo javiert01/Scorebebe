@@ -1,3 +1,23 @@
 .btn-invalid {
   cursor: not-allowed !important;
 }
+
+.help-block {
+  color: #069efd;
+  font-weight: bold;
+  padding: 0;
+  letter-spacing: 0px;
+  margin-bottom: 0px !important;
+}
+
+.condition label::before{
+    display: inline-block !important;
+}
+
+.terminos-label {
+  color: black;
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+}

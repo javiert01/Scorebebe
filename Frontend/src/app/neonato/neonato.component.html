@@ -101,7 +101,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   [defaultTime]="'00:00'"
                   name="horaNacimiento" formControlName="horaNacimiento"
                   ></ngx-timepicker-field>
-                </div><br>
+                </div> <br>
                 <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido" placeholder="Apellido Materno Neonato"><br>
                 <input type="number" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
                 <input type="number" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
@@ -247,154 +247,11 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
 <!-- pregunta numero uno -->
 
-
-  <div class="formulario-sb" *ngIf="showFormulario[4]" >
-    <div class="container">
-      <div class="row justify-content-md-center">
-        <div class="col-md-8">
-
-              <h3>Clasificación clí­nica de la edad gestacional.</h3>
-              <div class="form-group">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="edad" id="edad1" value="edad1" formControlName="edad">
-                  <label class="form-check-label" for="edad1">
-                    Extremadamente prematuro (< 28 semanas)
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="edad" id="edad2" value="edad2" formControlName="edad">
-                  <label class="form-check-label" for="edad2">
-                    Muy prematuro (28 a < 32 semanas)
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="edad" id="edad3" value="edad3" formControlName="edad">
-                  <label class="form-check-label" for="edad3">
-                    Prematuro moderado (32 a < 35 semanas)
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="edad" id="edad4" value="edad4" formControlName="edad">
-                  <label class="form-check-label" for="edad4">
-                    A término temprano (35 a < 37 semanas)
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="edad" id="edad5" value="edad5" formControlName="edad">
-                  <label class="form-check-label" for="edad5">
-                    A término temprano (37 a < 38 semanas)
-                  </label>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="edad" id="edad6" value="edad6" formControlName="edad">
-                    <label class="form-check-label" for="edad6">
-                      A término completo (38 a < 41 semanas)
-                    </label>
-                  </div>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="edad" id="edad7" value="edad7" formControlName="edad">
-                    <label class="form-check-label" for="edad7">
-                      Post término (>= 41 semanas)
-                    </label>
-                  </div>
-                </div><!-- form group -->
-                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
-                <div class="continuar">
-                  <a (click)="continueFormulario(4)">continuar</a>
-                </div>
-                <div class="continuar">
-                  <a (click)="returnFormulario(4)">regresar</a>
-                </div>
-
-        </div><!-- col-md-8 -->
-      </div><!-- row -->
-    </div><!-- container -->
-  </div><!-- container-form -->
-
-
-<!-- pregunta numero uno -->
-
-<!-- pregunta numero dos -->
-
-<div class="formulario-sb"  *ngIf="showFormulario[5]">
-    <div class="container">
-      <div class="row justify-content-md-center">
-        <div class="col-md-8">
-
-           <h3>peso al nacer</h3>
-                <div class="form-group">
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="peso" id="peso1" value="peso1" formControlName="peso">
-                  <label class="form-check-label" for="peso1">
-                    < 750 g al nacer
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="peso" id="peso2" value="peso2" formControlName="peso">
-                  <label class="form-check-label" for="peso2">
-                    750 a < 1000 g al nacer
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="peso" id="peso3" value="peso3" formControlName="peso">
-                  <label class="form-check-label" for="peso3">
-                    1000 a < 1500g al nacer
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="peso" id="peso4" value="peso4" formControlName="peso">
-                  <label class="form-check-label" for="peso4">
-                    1500 a < 2000g al nacer
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="peso" id="peso5" value="peso5" formControlName="peso">
-                  <label class="form-check-label" for="peso5">
-                    2000 a < 2500g al nacer
-                  </label>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="peso" id="peso6" value="peso6" formControlName="peso">
-                    <label class="form-check-label" for="peso6">
-                      2500 a < 4000g al nacer
-                    </label>
-                  </div>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="peso" id="peso7" value="peso7" formControlName="peso">
-                    <label class="form-check-label" for="peso7">
-                      4000 o más g al nacer
-                    </label>
-                  </div>
-                </div><!-- form group -->
-                <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
-                <div class="continuar">
-                  <a (click)="continueFormulario(5)">continuar</a>
-                </div>
-                <div class="continuar">
-                  <a (click)="returnFormulario(5)">regresar</a>
-                </div>
-
-        </div><!-- col-md-8 -->
-      </div><!-- row -->
-    </div><!-- container -->
-  </div><!-- container-form -->
-
 <!-- fin pregunta numero dos -->
 
 <!-- pregunta numero tres -->
 
-<div class="formulario-sb"  *ngIf="showFormulario[6]">
+<div class="formulario-sb"  *ngIf="showFormulario[4]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -432,10 +289,10 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </div><!-- form group -->
                 <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
-                  <a (click)="continueFormulario(6)">continuar</a>
+                  <a (click)="continueFormulario(4)">continuar</a>
                 </div>
                 <div class="continuar">
-                  <a (click)="returnFormulario(6)">regresar</a>
+                  <a (click)="returnFormulario(4)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -449,7 +306,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
 <!-- pregunta numero cuatro -->
 
-<div class="formulario-sb"  *ngIf="showFormulario[7]">
+<div class="formulario-sb"  *ngIf="showFormulario[5]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -481,10 +338,10 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </div><!-- form group -->
                 <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
-                  <a (click)="continueFormulario(7)">continuar</a>
+                  <a (click)="continueFormulario(5)">continuar</a>
                 </div>
                 <div class="continuar">
-                  <a (click)="returnFormulario(7)">regresar</a>
+                  <a (click)="returnFormulario(5)">regresar</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -494,7 +351,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
 <!-- fin pregunta numero cuatro -->
 
-<div class="formulario-sb"  *ngIf="showFormulario[8]">
+<div class="formulario-sb"  *ngIf="showFormulario[6]">
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-8">
@@ -525,10 +382,10 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
               </div>
               <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p><!-- form group -->
    <div class="continuar">
-                <a (click)="continueFormulario(8)">continuar</a>
+                <a (click)="continueFormulario(6)">continuar</a>
               </div>
               <div class="continuar">
-                <a (click)="returnFormulario(8)">regresar</a>
+                <a (click)="returnFormulario(6)">regresar</a>
               </div>
       </div><!-- col-md-8 -->
     </div><!-- row -->
@@ -540,7 +397,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
 <!-- pregunta numero cinco -->
 
-<div class="formulario-sb"  *ngIf="showFormulario[9]">
+<div class="formulario-sb"  *ngIf="showFormulario[7]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -562,7 +419,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
             <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
       <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
       <div class="continuar">
-        <a (click)="returnFormulario(9)">regresar</a>
+        <a (click)="returnFormulario(7)">regresar</a>
       </div>
       <div class="row">
         <div class="col-md-12">

@@ -414,7 +414,7 @@ input[type=radio]:checked + label:before {
     z-index: 1!important;
     padding-top: 105px!important;
     }
-    
+
 
     .continuar a{
       width: 100%;
@@ -626,6 +626,11 @@ input[type=color][_ngcontent-c4]:focus, input[type=date][_ngcontent-c4]:focus, i
     border-radius: 6px;
     margin-bottom: 15px;
 }
+
+.ngx-timepicker {
+  height: 15% !important;
+}
+
 
 
 

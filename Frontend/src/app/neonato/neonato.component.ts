@@ -19,6 +19,8 @@ import * as jsPDF from 'jspdf';
 export class NeonatoComponent implements OnInit {
 
   scoreBebeTest: FormGroup;
+  categoriaEdad;
+  categoriaPeso;
   currentQuestionIndex = 1;
   factoresRiesgoInminente = [
     {id: 'factorRiesgoInminente1', idbase: 1, value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'},
@@ -105,8 +107,6 @@ export class NeonatoComponent implements OnInit {
       'factorRiesgoInminente': new FormArray(formControlsInminente),
       'factorRiesgoIncrementa': new FormArray(formControlsAumenta),
       'factorRiesgoReduce': new FormArray(formControlsReduce),
-      'edad': new FormControl('edad1'),
-      'peso': new FormControl('peso1'),
       'centil': new FormControl('centil1'),
       'apgar': new FormControl('apgar1'),
       'parto': new FormControl('parto1'),
@@ -125,7 +125,7 @@ export class NeonatoComponent implements OnInit {
     );
 
     this.showFormulario[0] = true;
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 8; i++) {
       this.showFormulario[i] = false;
     }
 
@@ -142,7 +142,7 @@ export class NeonatoComponent implements OnInit {
       }
     );
 
-    this.scoreBebeTest.get('pesoNacimiento').valueChanges
+    /*this.scoreBebeTest.get('pesoNacimiento').valueChanges
     .subscribe(
       (value) => {
         switch (true) {
@@ -177,7 +177,7 @@ export class NeonatoComponent implements OnInit {
         }
 
       }
-    );
+    );*/
 
     this.scoreBebeTest.get('comor').valueChanges
     .subscribe(
@@ -203,14 +203,12 @@ export class NeonatoComponent implements OnInit {
     this.mostrarInstrucciones = false;
     this.mostrarFormulario = false;
     this.showFormulario[0] = true;
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 8; i++) {
       this.showFormulario[i] = false;
     }
     this.scoreBebeTest.reset();
     this.scoreBebeTest.get('sexo').setValue('femenino');
     this.scoreBebeTest.get('nivelAtencion').setValue('primer');
-    this.scoreBebeTest.get('edad').setValue('edad1');
-    this.scoreBebeTest.get('peso').setValue('peso1');
     this.scoreBebeTest.get('centil').setValue('centil1');
     this.scoreBebeTest.get('apgar').setValue('apgar1');
     this.scoreBebeTest.get('parto').setValue('parto1');
@@ -282,70 +280,66 @@ export class NeonatoComponent implements OnInit {
 
   async showTestResult() {
     let score = 0;
-
-    switch (this.scoreBebeTest.get('edad').value) {
-      case 'edad1':
+    const edadIngresada = this.scoreBebeTest.get('edadGestional').value;
+    if (edadIngresada < 28) {
+      this.categoriaEdad = 'edad1';
       score = 17;
       this.total = score;
-      break;
-      case 'edad2':
+    } else if (edadIngresada >= 28 && edadIngresada < 32) {
+      this.categoriaEdad = 'edad2';
       score = 16;
       this.total = score;
-      break;
-      case 'edad3':
+    } else if (edadIngresada >= 32 && edadIngresada < 35) {
+      this.categoriaEdad = 'edad3';
       score = 15;
       this.total = score;
-      break;
-      case 'edad4':
+    } else if (edadIngresada >= 35 && edadIngresada < 37) {
+      this.categoriaEdad = 'edad4';
       score = 14;
       this.total = score;
-      break;
-      case 'edad5':
+    } else if (edadIngresada >= 37 && edadIngresada < 38) {
+      this.categoriaEdad = 'edad5';
       score = 11;
       this.total = score;
-      break;
-      case 'edad6':
+    } else if (edadIngresada >= 38 && edadIngresada < 41) {
+      this.categoriaEdad = 'edad6';
       score = 11;
       this.total = score;
-      break;
-      case 'edad7':
+    } else if (edadIngresada >= 41) {
+      this.categoriaEdad = 'edad7';
       score = 14;
       this.total = score;
-      break;
-      default:
-      break;
     }
-    switch (this.scoreBebeTest.get('peso').value) {
-      case 'peso1':
+
+    const pesoIngresado = this.scoreBebeTest.get('pesoNacimiento').value;
+    if (pesoIngresado < 750) {
+      this.categoriaPeso = 'peso1';
       score = 18;
       this.total = this.total + (score);
-      break;
-      case 'peso2':
+    } else if (pesoIngresado >= 750 && pesoIngresado < 1000) {
+      this.categoriaPeso = 'peso2';
       score = 17;
       this.total = this.total + (score);
-      break;
-      case 'peso3':
+    } else if (pesoIngresado >= 1000 && pesoIngresado < 1500) {
+      this.categoriaPeso = 'peso3';
       score = 16;
       this.total = this.total + (score);
-      break;
-      case 'peso4':
+    } else if (pesoIngresado >= 1500 && pesoIngresado < 2000) {
+      this.categoriaPeso = 'peso4';
       score = 15;
       this.total = this.total + (score);
-      break;
-      case 'peso5':
+    } else if (pesoIngresado >= 2000 && pesoIngresado < 2500) {
+      this.categoriaPeso = 'peso5';
       score = 14;
       this.total = this.total + (score);
-      break;
-      case 'peso6':
+    } else if (pesoIngresado >= 2500 && pesoIngresado < 4000) {
+      this.categoriaPeso = 'peso6';
       score = 11;
       this.total = this.total + (score);
-      break;
-      case 'peso6':
+    } else if (pesoIngresado > 4000) {
+      this.categoriaPeso = 'peso7';
       score = 12;
       this.total = this.total + (score);
-      break;
-      default:
-      break;
     }
 
     switch (this.scoreBebeTest.get('centil').value) {
@@ -594,8 +588,8 @@ export class NeonatoComponent implements OnInit {
       factoresRiesgoAumenta: this.getIDBaseFactoresAumenta(),
       factoresRiesgoReduce: this.getIDBaseFactoresReduce(),
       peso: this.scoreBebeTest.get('pesoNacimiento').value,
-      catEdadGestional: this.scoreBebeTest.get('edad').value,
-      catPeso: this.scoreBebeTest.get('peso').value,
+      catEdadGestional: this.categoriaEdad,
+      catPeso: this.categoriaPeso,
       catPesoEdadGestional: this.scoreBebeTest.get('centil').value,
       catApgar: this.scoreBebeTest.get('apgar').value,
       catTipoParto: this.scoreBebeTest.get('parto').value,

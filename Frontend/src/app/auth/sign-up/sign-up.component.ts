@@ -5,6 +5,7 @@ import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { RegisterDialogComponent } from 'src/app/register-dialog/register-dialog.component';
 import { Observable } from 'rxjs';
+import { DisclaimerDialogComponent } from 'src/app/disclaimer-dialog/disclaimer-dialog.component';
 
 
 @Component({
@@ -37,8 +38,10 @@ export class SignUpComponent implements OnInit {
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'username': new FormControl(null, Validators.required),
       'password': new FormControl(null, Validators.required),
-      'password-confirm': new FormControl(null, Validators.required, this.equalPasswords.bind(this))
+      'password-confirm': new FormControl(null, Validators.required, this.equalPasswords.bind(this)),
+      'aceptarCondiciones': new FormControl(null, Validators.required, this.isChecked.bind(this))
     });
+    console.log(this.signupForm);
   }
 
   registerUser() {
@@ -75,6 +78,17 @@ export class SignUpComponent implements OnInit {
     return promise;
   }
 
+  isChecked(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+    if (this.signupForm.get('aceptarCondiciones').value !== true) {
+        resolve({'isChecked': true});
+      } else {
+        resolve(null);
+      }
+    });
+    return promise;
+  }
+
   openDialog(respuesta) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -86,6 +100,15 @@ export class SignUpComponent implements OnInit {
       mensaje_err: this.mensaje_err
     };
     this.dialog.open(RegisterDialogComponent, dialogConfig);
+  }
+
+  openDisclaimerDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.height = '800px';
+    dialogConfig.width = '600px';
+    this.dialog.open(DisclaimerDialogComponent, dialogConfig);
   }
 
 }

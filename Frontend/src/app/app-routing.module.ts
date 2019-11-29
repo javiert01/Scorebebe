@@ -10,6 +10,7 @@ import { AdminGuard } from "./auth/admin.guard";
 import { ActivarUsuariosComponent } from "./activar-usuarios/activar-usuarios.component";
 import { ResultadosTestComponent } from "./resultados-test/resultados-test.component";
 import { AdminpageComponent } from "./adminpage/adminpage.component";
+import { ReestablecerPasswordComponent } from './auth/reestablecer-password/reestablecer-password.component';
 
 
 const appRoutes: Routes = [
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
     { path: 'homepage', component: HomepageComponent},
     { path: 'signup', component: SignUpComponent, canActivate: [NoLoginGuard]},
     { path: 'login' , component: LoginComponent, canActivate: [NoLoginGuard]},
+    { path: 'reestablecer-password' , component: ReestablecerPasswordComponent, canActivate: [NoLoginGuard]},
     { path: 'test', canActivate: [AuthGuard], component: NeonatoComponent},
     { path: 'admin-page', component: AdminpageComponent, canActivate: [AdminGuard]},
     { path: 'activar-usuarios', component: ActivarUsuariosComponent, canActivate: [AdminGuard]},

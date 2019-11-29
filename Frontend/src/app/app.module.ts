@@ -29,6 +29,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 import {NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { DisclaimerDialogComponent } from './disclaimer-dialog/disclaimer-dialog.component';
+import { ReestablecerPasswordComponent } from './auth/reestablecer-password/reestablecer-password.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import {NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     ActivarUsuariosComponent,
     ResultadosTestComponent,
     SelectedDirective,
-    RegisterDialogComponent
+    RegisterDialogComponent,
+    DisclaimerDialogComponent,
+    ReestablecerPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,6 @@ import {NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     multi: true
   }],
   bootstrap: [AppComponent],
-  entryComponents: [CourseDialogComponent, RegisterDialogComponent]
+  entryComponents: [CourseDialogComponent, RegisterDialogComponent, DisclaimerDialogComponent]
 })
 export class AppModule { }
