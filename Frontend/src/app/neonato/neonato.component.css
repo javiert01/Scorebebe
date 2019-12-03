@@ -105,6 +105,17 @@ p{
       border-radius:6px;
     }
 
+    .reiniciar a {
+      width: 100%;
+      text-align: center;
+      color:#fff;
+      padding: 10px;
+      background: #0a94fd;
+      display: block;
+      text-transform: uppercase;
+      border-radius:6px;
+    }
+
     .center {
       display: inline-block;
       width: 100%;
@@ -295,3 +306,11 @@ line-height: 1;
 .fa-home {
   color: white;
 }
+.bottom {
+  position: relative;
+  bottom: -15;
+  font-weight: 900;
+  margin-right: 15px;
+  margin-left: 15px
+}
+

@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
       },
       err => {
         this.mensaje_err = err.error.err;
-        console.log(this.mensaje_err);
         this.openDialog('ERROR');
       }
     );

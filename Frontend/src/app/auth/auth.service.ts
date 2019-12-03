@@ -90,4 +90,16 @@ export class AuthService {
     };
     return this.http.post(this.urlServidor + 'usuario/sendinformemail', attachment, httpOptions);
   }
+
+  postAPIkey(token) {
+    return this.http.post(this.urlServidor + 'validate_captcha', token);
+  }
+
+  validarUsuario(username) {
+    return this.http.post(this.urlServidor + 'usuario/validadorusername', username);
+  }
+
+  reestablecerPassword(username) {
+    return this.http.post(this.urlServidor + 'password/restaurar', username);
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDatepicker } from '@angular/material';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 import { NeonatoService } from './neonato.service';
 import { Neonato } from './neonato.model';
@@ -19,8 +19,10 @@ import * as jsPDF from 'jspdf';
 export class NeonatoComponent implements OnInit {
 
   scoreBebeTest: FormGroup;
+  contador = 0;
   categoriaEdad;
   categoriaPeso;
+  edadGestionalTotal;
   currentQuestionIndex = 1;
   factoresRiesgoInminente = [
     {id: 'factorRiesgoInminente1', idbase: 1, value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'},
@@ -81,11 +83,11 @@ export class NeonatoComponent implements OnInit {
   mostrarInstrucciones = false;
   mostrarFormulario = false;
   mostrarDesc = true;
-  mostrarIntro = false;
+  mostrarIntro = true;
   mostrarLogo = true;
   terminado = false;
   @ViewChild('instrucciones', { static: false }) public instrucciones: ElementRef;
-
+  @ViewChild('picker', {static: false}) picker: MatDatepicker<Date>;
 
   constructor(private dialog: MatDialog, private neonatoService: NeonatoService, public authService: AuthService, private fb: FormBuilder) {
 
@@ -102,7 +104,8 @@ export class NeonatoComponent implements OnInit {
       'horaNacimiento': new FormControl(null, Validators.required),
       'nombreApellido': new FormControl(null, Validators.required),
       'pesoNacimiento': new FormControl(null , Validators.required),
-      'edadGestional': new FormControl(null , Validators.required),
+      'edadGestionalEntero': new FormControl(null , [Validators.required, Validators.min(0)]),
+      'edadGestionalDecimal': new FormControl(0, Validators.required),
       'nivelAtencion': new FormControl('primer'),
       'factorRiesgoInminente': new FormArray(formControlsInminente),
       'factorRiesgoIncrementa': new FormArray(formControlsAumenta),
@@ -197,10 +200,11 @@ export class NeonatoComponent implements OnInit {
   }
 
   onGotoInicioInstr() {
+    this.contador++;
     this.mostrarLogo = true;
-    this.mostrarDesc = true;
+    this.mostrarDesc = false;
     this.mostrarIntro = false;
-    this.mostrarInstrucciones = false;
+    this.mostrarInstrucciones = true;
     this.mostrarFormulario = false;
     this.showFormulario[0] = true;
     for (let i = 1; i < 8; i++) {
@@ -219,7 +223,7 @@ export class NeonatoComponent implements OnInit {
     this.currentQuestionIndex = index + 1;
     this.showFormulario[index] = false;
     this.showFormulario[index + 1] = true;
-    console.log(this.scoreBebeTest);
+    window.scroll(0, 0);
 
   }
 
@@ -227,6 +231,7 @@ export class NeonatoComponent implements OnInit {
     this.currentQuestionIndex = index - 1;
     this.showFormulario[index] = false;
     this.showFormulario[index - 1] = true;
+    window.scroll(0, 0);
   }
 
   showIntro() {
@@ -235,7 +240,28 @@ export class NeonatoComponent implements OnInit {
 
   }
 
+  reiniciarTest() {
+    this.scoreBebeTest.reset();
+    this.scoreBebeTest.get('sexo').setValue('femenino');
+    this.scoreBebeTest.get('nivelAtencion').setValue('primer');
+    this.scoreBebeTest.get('centil').setValue('centil1');
+    this.scoreBebeTest.get('apgar').setValue('apgar1');
+    this.scoreBebeTest.get('parto').setValue('parto1');
+    this.contador++;
+    this.mostrarLogo = false;
+    this.mostrarDesc = false;
+    this.mostrarIntro = false;
+    this.mostrarInstrucciones = false;
+    this.mostrarFormulario = true;
+    this.showFormulario[0] = true;
+    for (let i = 1; i < 8; i++) {
+      this.showFormulario[i] = false;
+    }
+    window.scroll(0, 0);
+  }
+
   showInstrucciones() {
+    this.contador++;
     this.mostrarIntro = false;
     this.mostrarFormulario = false;
     this.mostrarLogo = true;
@@ -280,32 +306,35 @@ export class NeonatoComponent implements OnInit {
 
   async showTestResult() {
     let score = 0;
-    const edadIngresada = this.scoreBebeTest.get('edadGestional').value;
-    if (edadIngresada < 28) {
+    const decimal = this.scoreBebeTest.get('edadGestionalDecimal').value;
+    const entero = this.scoreBebeTest.get('edadGestionalEntero').value;
+    const edadIngresadaString = entero + '.' + decimal;
+    this.edadGestionalTotal = parseFloat(edadIngresadaString);
+    if (this.edadGestionalTotal < 28) {
       this.categoriaEdad = 'edad1';
       score = 17;
       this.total = score;
-    } else if (edadIngresada >= 28 && edadIngresada < 32) {
+    } else if (this.edadGestionalTotal >= 28 && this.edadGestionalTotal < 32) {
       this.categoriaEdad = 'edad2';
       score = 16;
       this.total = score;
-    } else if (edadIngresada >= 32 && edadIngresada < 35) {
+    } else if (this.edadGestionalTotal >= 32 && this.edadGestionalTotal < 35) {
       this.categoriaEdad = 'edad3';
       score = 15;
       this.total = score;
-    } else if (edadIngresada >= 35 && edadIngresada < 37) {
+    } else if (this.edadGestionalTotal >= 35 && this.edadGestionalTotal < 37) {
       this.categoriaEdad = 'edad4';
       score = 14;
       this.total = score;
-    } else if (edadIngresada >= 37 && edadIngresada < 38) {
+    } else if (this.edadGestionalTotal >= 37 && this.edadGestionalTotal < 38) {
       this.categoriaEdad = 'edad5';
       score = 11;
       this.total = score;
-    } else if (edadIngresada >= 38 && edadIngresada < 41) {
+    } else if (this.edadGestionalTotal >= 38 && this.edadGestionalTotal < 41) {
       this.categoriaEdad = 'edad6';
       score = 11;
       this.total = score;
-    } else if (edadIngresada >= 41) {
+    } else if (this.edadGestionalTotal >= 41) {
       this.categoriaEdad = 'edad7';
       score = 14;
       this.total = score;
@@ -534,7 +563,7 @@ export class NeonatoComponent implements OnInit {
       riesgo: this.getNivelRiesgo(this.categoria),
       fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
       horaNacimiento: this.scoreBebeTest.get('horaNacimiento').value,
-      edadGestional: this.scoreBebeTest.get('edadGestional').value,
+      edadGestional: this.edadGestionalTotal,
       pesoNacimiento: this.scoreBebeTest.get('pesoNacimiento').value,
       centil: this.getNombreCentil(this.scoreBebeTest.get('centil').value),
       parto: this.getNombreParto(this.scoreBebeTest.get('parto').value),
@@ -582,7 +611,7 @@ export class NeonatoComponent implements OnInit {
       sexo: this.scoreBebeTest.get('sexo').value,
       fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
       horaNacimiento: this.scoreBebeTest.get('horaNacimiento').value,
-      edadGestional: this.scoreBebeTest.get('edadGestional').value,
+      edadGestional: this.edadGestionalTotal,
       nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,
       factoresRiesgoInminente: this.getIDBaseFactoresInminente(),
       factoresRiesgoAumenta: this.getIDBaseFactoresAumenta(),

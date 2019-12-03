@@ -4,7 +4,7 @@
       <li class="nav-item">
         <a (click)="authService.logoutUser()" >Logout</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!mostrarInstrucciones">
         <a (click)="onGotoInicioInstr()">Inicio</a>
       </li>
     </ul>
@@ -14,12 +14,12 @@
 <div class="cont-logos" *ngIf="mostrarLogo">
     <div class="container">
       <div class="col-md-12">
-      <img src="http://scorebebe.com/img/logos-header.jpg" (click)="onGotoInicioInstr()">
+      <img src="http://scorebebe.com/img/logos-header.jpg" (click)="onGotoInicioInstr()" style="cursor: pointer;">
       </div>
     </div>
   </div>
 
-  <div *ngIf="mostrarDesc">
+  <!-- <div *ngIf="mostrarDesc">
   <div class="banner">
     <div class="container">
       <div class="row">
@@ -34,11 +34,11 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 
-  <div class="intro" *ngIf="mostrarIntro">
+  <div class="intro" *ngIf="mostrarIntro && contador === 0">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -60,10 +60,10 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 <div class="instrucciones"  #instrucciones id="instrucciones" *ngIf="mostrarInstrucciones">
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
           <h3>INSTRUCCIONES</h3>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
           <p>Para llenar el cuestionario haga clic en cada pregunta que se presenta a continuación, y marque con una marca (X) en la casilla que mejor describa el estado actual del neonato. Al finalizar, podrá visualizar el puntaje total del Score Bebé, su categoría de riesgo y sugerencias de manejo.</p>
       </div>
     </div>
@@ -94,6 +94,9 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <option value="masculino">Masculino</option>
                 </select><br>
                 <p>Fecha de Nacimiento:</p>
+                <input [matDatepicker]="myDatepicker">
+                <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
                 <input type="text" class="form-control" name="fechaNacimiento" formControlName = "fechaNacimiento" type="date" placeholder="Fecha de nacimiento"><br>
                 <p>Hora de Nacimiento: (ingrese en formato de 24 horas)</p>
                 <div class="ngx-timepicker-field-example">
@@ -104,7 +107,12 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </div> <br>
                 <input type="text" class="form-control" placeholder="Apellido Materno Neonato" formControlName="nombreApellido" name="nombreApellido" placeholder="Apellido Materno Neonato"><br>
                 <input type="number" class="form-control" formControlName="pesoNacimiento" name="pesoNacimiento" placeholder="Peso al nacer (en gramos)"><br>
-                <input type="number" class="form-control" formControlName="edadGestional" name="edadGestional" placeholder="Edad gestional al nacer (en semanas)"><br>
+                <p>Edad Gestacional:</p>
+                <div style="display:inline-flex">
+                <input type="number" style="width: 17%" class="form-control" formControlName="edadGestionalEntero" name="edadGestionalEntero" min="0">
+                <p class="bottom"> . </p>
+                <input type="number" style="width: 17%" class="form-control" formControlName="edadGestionalDecimal" name="edadGestionalDecimal"><br>
+                </div>
                 <p>Nivel de atención:</p>
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="nivelAtencion">
                   <option  value="primer">Primer Nivel de Atención</option>
@@ -123,12 +131,12 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
               <div class="continuar">
                 <a (click)="showInstrucciones()"  >Regresar a Instrucciones</a>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-md-12">
                   <i class="fas fa-home center fa-3x" (click)="onGotoInicioInstr()" ></i>
                   <p class="center" >Regresar a HOME</p>
                 </div>
-              </div>
+              </div>-->
 
 
       </div><!-- col-md-8 -->
@@ -138,7 +146,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 <!-- antes de empezar uno -->
 
 
-<div class="formulario-sb" *ngIf="showFormulario[1]" >
+<div class="formulario-sb" *ngIf="showFormulario[1]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
@@ -162,7 +170,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <a (click)="finalizarTest()">FINALIZAR</a>
                 </div>
                 <div class="continuar">
-                  <a (click)="returnFormulario(1)">regresar</a>
+                  <a (click)="returnFormulario(1)">regresar al formulario</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -197,7 +205,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <a (click)="continueFormulario(2)">continuar</a>
                 </div>
                 <div class="continuar">
-                  <a (click)="returnFormulario(2)">regresar</a>
+                  <a (click)="returnFormulario(2)">PREGUNTA ANTERIOR</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -232,7 +240,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <a (click)="continueFormulario(3)">continuar</a>
                 </div>
                 <div class="continuar">
-                  <a (click)="returnFormulario(3)">regresar</a>
+                  <a (click)="returnFormulario(3)">PREGUNTA ANTERIOR</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -292,7 +300,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <a (click)="continueFormulario(4)">continuar</a>
                 </div>
                 <div class="continuar">
-                  <a (click)="returnFormulario(4)">regresar</a>
+                  <a (click)="returnFormulario(4)">PREGUNTA ANTERIOR</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -341,7 +349,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <a (click)="continueFormulario(5)">continuar</a>
                 </div>
                 <div class="continuar">
-                  <a (click)="returnFormulario(5)">regresar</a>
+                  <a (click)="returnFormulario(5)">PREGUNTA ANTERIOR</a>
                 </div>
 
         </div><!-- col-md-8 -->
@@ -385,7 +393,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <a (click)="continueFormulario(6)">continuar</a>
               </div>
               <div class="continuar">
-                <a (click)="returnFormulario(6)">regresar</a>
+                <a (click)="returnFormulario(6)">PREGUNTA ANTERIOR</a>
               </div>
       </div><!-- col-md-8 -->
     </div><!-- row -->
@@ -419,7 +427,10 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
             <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
       <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
       <div class="continuar">
-        <a (click)="returnFormulario(7)">regresar</a>
+        <a (click)="returnFormulario(7)">PREGUNTA ANTERIOR</a>
+      </div>
+      <div class="continuar">
+        <a (click)="reiniciarTest()">Nueva evaluación</a>
       </div>
       <div class="row">
         <div class="col-md-12">

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {MatDialogModule} from '@angular/material';
+import {MatDialogModule, MatDatepicker, MatFormField, MatFormFieldModule, MatNativeDateModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { UsuarioComponent } from './usuario/usuario.component';
@@ -31,7 +31,9 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
 import {NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DisclaimerDialogComponent } from './disclaimer-dialog/disclaimer-dialog.component';
 import { ReestablecerPasswordComponent } from './auth/reestablecer-password/reestablecer-password.component';
-
+import { CambioPasswordDialogComponent } from './cambio-password-dialog/cambio-password-dialog.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { ReestablecerPasswordComponent } from './auth/reestablecer-password/rees
     SelectedDirective,
     RegisterDialogComponent,
     DisclaimerDialogComponent,
-    ReestablecerPasswordComponent
+    ReestablecerPasswordComponent,
+    CambioPasswordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,15 +65,19 @@ import { ReestablecerPasswordComponent } from './auth/reestablecer-password/rees
     HttpClientModule,
     AppRoutingModule,
     NgxMaterialTimepickerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
   ],
+
   providers: [NeonatoService, AuthGuard, AuthService, NoLoginGuard, AdminGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
   }],
   bootstrap: [AppComponent],
-  entryComponents: [CourseDialogComponent, RegisterDialogComponent, DisclaimerDialogComponent]
+  entryComponents: [CourseDialogComponent, RegisterDialogComponent, DisclaimerDialogComponent,
+  CambioPasswordDialogComponent]
 })
 export class AppModule { }

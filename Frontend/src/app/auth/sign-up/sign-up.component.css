@@ -12,6 +12,9 @@
 
 .condition label::before{
     display: inline-block !important;
+    height: 20px;
+    width: 20px;
+    white-space: nowrap;
 }
 
 .terminos-label {
@@ -20,4 +23,9 @@
   font-weight: bold;
   text-align: center;
   padding: 10px;
+}
+
+.center-div {
+  margin-left: auto !important;
+  white-space: nowrap !important;
 }

@@ -2,7 +2,7 @@
 <div class="cont-logos">
   <div class="container">
     <div class="col-md-12">
-    <img src="http://scorebebe.com/img/logos-header.jpg" [routerLink]="['/homepage']">
+    <img src="http://scorebebe.com/img/logos-header.jpg" [routerLink]="['/homepage']" style="cursor: pointer;">
     </div>
   </div>
 </div>
@@ -13,18 +13,13 @@
   <div class="row">
 
     <div class="col-md-12">
-      <h2>Registrate en Score Bebé</h2>
+      <h2>Regístrate en Score Bebé</h2>
     </div>
 
   </div>
 </div>
 </div>
   <div id="all-site-wrapper" class="hfeed site">
-
-    <a href="#" id="back-top">
-      <i class="fa fa-angle-up " style=""></i>
-    </a>
-
           <div class="negative-push"></div>
 
 
@@ -88,21 +83,22 @@
             <input type="password" placeholder="Vuelva a ingresar su contraseña" class="form-control" name="password-confirm" formControlName="password-confirm">
       </div>
     </div>
+    <span *ngIf="signupForm.hasError('differentPassword', 'password-confirm')" class="help-block">Verifique que los campos de cada contraseña sean iguales!</span><br>
     <div class="row">
       <div class="col-sm-6 form-group terminos-label">
         <a (click)="openDisclaimerDialog()">Haga click aquí para leer las condiciones de uso de la app SCORE BEBÉ</a>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-6 form-group form-check condition">
+    <div class="row center-div" >
+      <div class="col-sm-6 col-md-offset-1 form-group form-check condition">
         <input class="form-check-input" type="checkbox" id="aceptarCondiciones" formControlName="aceptarCondiciones" name="aceptarCondiciones">
-        <label class="form-check-label" for="aceptarCondiciones">
+        <label class="form-check-label little-label" for="aceptarCondiciones">
           He leído y acepto las condiciones de uso.
         </label>
       </div>
     </div>
+    <br>
     <span *ngIf="signupForm.hasError('isChecked', 'aceptarCondiciones') || signupForm.get('aceptarCondiciones').invalid" class="help-block">Debe aceptar las condiciones para poder registrarse!</span><br>
-    <span *ngIf="signupForm.hasError('differentPassword', 'password-confirm')" class="help-block">Verifique que los campos de cada contraseña sean iguales!</span><br>
         <span *ngIf="!signupForm?.valid" class="help-block">Recuerde que debe llenar todos los campos para continuar con el registro</span><br>
         <div class="center-btn"><button class="btn btn-success btn-invalid"
           type="submit" [disabled]="!signupForm?.valid"
