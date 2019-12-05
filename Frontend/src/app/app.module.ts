@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {MatDialogModule, MatDatepicker, MatFormField, MatFormFieldModule, MatNativeDateModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatNativeDateModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { UsuarioComponent } from './usuario/usuario.component';
@@ -33,7 +33,7 @@ import { DisclaimerDialogComponent } from './disclaimer-dialog/disclaimer-dialog
 import { ReestablecerPasswordComponent } from './auth/reestablecer-password/reestablecer-password.component';
 import { CambioPasswordDialogComponent } from './cambio-password-dialog/cambio-password-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { CambioPasswordComponent } from './auth/cambio-password/cambio-password.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,8 @@ import {MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/ma
     RegisterDialogComponent,
     DisclaimerDialogComponent,
     ReestablecerPasswordComponent,
-    CambioPasswordDialogComponent
+    CambioPasswordDialogComponent,
+    CambioPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +68,7 @@ import {MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/ma
     NgxMaterialTimepickerModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatFormFieldModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
   ],

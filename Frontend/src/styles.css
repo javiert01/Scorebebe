@@ -149,10 +149,6 @@ BANNER
 
 /* registro */
 
-.ng-pristine{
-	width: 100%;
-}
-
 .form-login label:before, .form-signup label:before {
     display: none;
 }

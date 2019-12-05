@@ -65,9 +65,8 @@ export class AuthService {
         'Authorization': this.getToken()
       })
     };
-    return this.http.get<any>(this.urlServidor + 'usuario', httpOptions);
+    return this.http.get<any>(this.urlServidor + 'usuario?limit=1000', httpOptions);
   }
-
   setUsuarioActivo(usernameAux) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -101,5 +100,14 @@ export class AuthService {
 
   reestablecerPassword(username) {
     return this.http.post(this.urlServidor + 'password/restaurar', username);
+  }
+
+  cambiarPassword(id, passwordActual, newPassword) {
+    const params = {
+      id: id,
+      oldPassword: passwordActual,
+      newPassword: newPassword
+    };
+    return this.http.post(this.urlServidor + 'password/cambio', params);
   }
 }

@@ -76,6 +76,17 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
   </div>
 </div>
 
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 offset-md-8 offset-sm-1" [routerLink]="['/cambio-password/'+ userID]" style="cursor: pointer;">
+        <i class="fa fa-key" aria-hidden="true"></i>
+        <p>Haga click aquí para cambiar su contraseña</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <form [formGroup]="scoreBebeTest" (ngSubmit)="showTestResult()" class="formTest" *ngIf="mostrarFormulario">
 <div class="formulario-sb" *ngIf="showFormulario[0]"  style="height: 100%;">
   <div class="container">
@@ -94,10 +105,9 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <option value="masculino">Masculino</option>
                 </select><br>
                 <p>Fecha de Nacimiento:</p>
-                <input [matDatepicker]="myDatepicker">
-                <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
-                <mat-datepicker #myDatepicker></mat-datepicker>
-                <input type="text" class="form-control" name="fechaNacimiento" formControlName = "fechaNacimiento" type="date" placeholder="Fecha de nacimiento"><br>
+                  <input matInput [matDatepicker]="picker" placeholder="Seleccione la fecha de nacimiento" formControlName = "fechaNacimiento">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
                 <p>Hora de Nacimiento: (ingrese en formato de 24 horas)</p>
                 <div class="ngx-timepicker-field-example">
                   <ngx-timepicker-field [format]="24"

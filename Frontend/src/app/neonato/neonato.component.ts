@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDatepicker } from '@angular/material';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
@@ -14,7 +14,8 @@ import * as jsPDF from 'jspdf';
   styleUrls: ['./neonato.component.css'],
   animations: [
     formularioStateTrigger
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class NeonatoComponent implements OnInit {
 
@@ -224,7 +225,6 @@ export class NeonatoComponent implements OnInit {
     this.showFormulario[index] = false;
     this.showFormulario[index + 1] = true;
     window.scroll(0, 0);
-
   }
 
   returnFormulario(index) {
@@ -247,6 +247,7 @@ export class NeonatoComponent implements OnInit {
     this.scoreBebeTest.get('centil').setValue('centil1');
     this.scoreBebeTest.get('apgar').setValue('apgar1');
     this.scoreBebeTest.get('parto').setValue('parto1');
+    this.scoreBebeTest.get('edadGestionalDecimal').setValue(0);
     this.contador++;
     this.mostrarLogo = false;
     this.mostrarDesc = false;
@@ -528,6 +529,27 @@ export class NeonatoComponent implements OnInit {
     return nombreComorbilidad;
   }
 
+  parseDate(dateInput) {
+    const date = new Date(dateInput);
+    const dd = date.getDate();
+    const mm = date.getMonth() + 1;
+    const yyyy = date.getFullYear();
+    let ddstring = dd.toString();
+    let mmstring = mm.toString();
+
+    if (dd < 10) {
+      ddstring = '0' + dd.toString();
+    }
+
+    if (mm < 10) {
+      mmstring = '0' + mm.toString();
+    }
+
+    let parseDate = date.toString();
+    parseDate  = yyyy + '-' + mmstring + '-' + ddstring;
+    return parseDate;
+  }
+
   getCurrentDate() {
     const today = new Date();
     const dd = today.getDate();
@@ -561,7 +583,7 @@ export class NeonatoComponent implements OnInit {
       puntaje: this.total,
       nombreApellido: this.scoreBebeTest.get('nombreApellido').value,
       riesgo: this.getNivelRiesgo(this.categoria),
-      fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
+      fechaNacimiento: this.parseDate(this.scoreBebeTest.get('fechaNacimiento').value),
       horaNacimiento: this.scoreBebeTest.get('horaNacimiento').value,
       edadGestional: this.edadGestionalTotal,
       pesoNacimiento: this.scoreBebeTest.get('pesoNacimiento').value,
@@ -609,7 +631,7 @@ export class NeonatoComponent implements OnInit {
       nombreApellido: this.scoreBebeTest.get('nombreApellido').value,
       fechaCalculo: this.getCurrentDate(),
       sexo: this.scoreBebeTest.get('sexo').value,
-      fechaNacimiento: this.scoreBebeTest.get('fechaNacimiento').value,
+      fechaNacimiento: this.parseDate(this.scoreBebeTest.get('fechaNacimiento').value),
       horaNacimiento: this.scoreBebeTest.get('horaNacimiento').value,
       edadGestional: this.edadGestionalTotal,
       nivelAtencion: this.scoreBebeTest.get('nivelAtencion').value,

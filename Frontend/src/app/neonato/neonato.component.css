@@ -85,7 +85,7 @@ p{
     .continuar a{
       width: 100%;
       text-align: center;
-      color:#fff;
+      color:#fff !important;
       padding: 10px;
       background: #0a94fd;
       display: block;
@@ -96,7 +96,7 @@ p{
     .continuar-invalid a{
       width: 100%;
       text-align: center;
-      color:#fff;
+      color:#fff !important;
       padding: 10px;
       background: #536462;
       cursor: not-allowed !important;
@@ -314,3 +314,10 @@ line-height: 1;
   margin-left: 15px
 }
 
+
+
+.mat-icon-button{
+  margin: 0 !important;
+  display: inline-block !important;
+  width: auto !important;
+}
