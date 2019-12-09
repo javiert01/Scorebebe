@@ -2,3 +2,12 @@
   color: #069efd;
   font-weight: bold;
 }
+
+.btn-inactive {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+.btn-active {
+  opacity: 1;
+  cursor: pointer !important;
+}

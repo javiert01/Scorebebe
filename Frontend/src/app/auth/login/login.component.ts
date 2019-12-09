@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
+    window.scroll(0, 200);
     this.loginForm = new FormGroup({
       'username': new FormControl(null, Validators.required),
       'password': new FormControl(null, Validators.required)

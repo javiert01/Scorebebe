@@ -2,12 +2,12 @@
 <div class="cont-logos">
   <div class="container">
     <div class="col-md-12">
-    <img src="http://scorebebe.com/img/logos-header.jpg" [routerLink]="['/homepage']" style="cursor: pointer;">
+    <img src="http://scorebebe.com/assets/img/logos-header.jpg" [routerLink]="['/homepage']" style="cursor: pointer;">
     </div>
   </div>
 </div>
 
-<div class="cont-registro">
+<div class="cont-login">
 <div class="container">
   <div class="row">
 
@@ -38,81 +38,65 @@
   <article id="post-13" class="post-13 page type-page status-publish hentry">
     <div class="entry-content">
 
-
-<div class="container">
-  <h1 >Llena todos los campos en el formulario para registrarte</h1>
-<div class="col-lg-12">
-<div class="row">
+<div class="row center_div">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form>
-      <div class="col-sm-12">
-      <form [formGroup]="signupForm" class="form-signup" (ngSubmit)="registerUser()">
-      <div class="row">
-        <div class="col-sm-6 form-group">
-        <label>Nombre y Apellido</label>
-        <input  type="text" placeholder="Ingrese su Nombre y Apellido.." class="form-control" name="nombre" formControlName="nombre">
-        </div>
+        <div class="col-sm-12">
+        <form [formGroup]="signupForm" class="form-signup" (ngSubmit)="registerUser()">
+          <div class="form-group">
+          <label>Nombre y Apellido</label>
+          <input  type="text" placeholder="Ingrese su Nombre y Apellido.." class="form-control" name="nombre" formControlName="nombre">
           </div>
-          <div class="row">
-            <div class="col-sm-6 form-group">
-            <label>Institucion</label>
-            <input  type="text" placeholder="Ingrese la institución a la que pertenece" class="form-control" name="institucion" formControlName="institucion">
-            </div>
+              <div class="form-group">
+              <label>Institucion</label>
+              <input  type="text" placeholder="Ingrese la institución a la que pertenece" class="form-control" name="institucion" formControlName="institucion">
               </div>
-              <div class="row">
-                <div class="col-sm-6 form-group">
-                <label>Email</label>
-                <input  type="email" placeholder="Ingrese su email" class="form-control" name="email" formControlName="email">
-                </div>
-                  </div>
-          <div class="row">
-      <div class="col-sm-6 form-group">
-        <label>Nombre de Usuario</label>
-            <input  type="text" placeholder="Ingrese su nombre de Usuario.." class="form-control" name="username" formControlName="username">
-    </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 form-group">
-        <label>Contraseña</label>
-            <input type="password" placeholder="Ingrese su Contraseña.." class="form-control" name="password" formControlName="password">
+                  <div class="form-group">
+                  <label>Email</label>
+                  <input  type="email" placeholder="Ingrese su email" class="form-control" name="email" formControlName="email">
+              </div>
+
+        <div class="form-group">
+          <label>Nombre de Usuario</label>
+              <input  type="text" placeholder="Ingrese su nombre de Usuario.." class="form-control" name="username" formControlName="username">
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 form-group">
-        <label>Confirme su contraseña:</label>
-            <input type="password" placeholder="Vuelva a ingresar su contraseña" class="form-control" name="password-confirm" formControlName="password-confirm">
-      </div>
-    </div>
-    <span *ngIf="signupForm.hasError('differentPassword', 'password-confirm')" class="help-block">Verifique que los campos de cada contraseña sean iguales!</span><br>
-    <div class="row">
-      <div class="col-sm-6 form-group terminos-label">
-        <a (click)="openDisclaimerDialog()">Haga click aquí para leer las condiciones de uso de la app SCORE BEBÉ</a>
-      </div>
-    </div>
-    <div class="row center-div" >
-      <div class="col-sm-6 col-md-offset-1 form-group form-check condition">
-        <input class="form-check-input" type="checkbox" id="aceptarCondiciones" formControlName="aceptarCondiciones" name="aceptarCondiciones">
-        <label class="form-check-label little-label" for="aceptarCondiciones">
-          He leído y acepto las condiciones de uso.
-        </label>
-      </div>
-    </div>
-    <br>
-    <span *ngIf="signupForm.hasError('isChecked', 'aceptarCondiciones') || signupForm.get('aceptarCondiciones').invalid" class="help-block">Debe aceptar las condiciones para poder registrarse!</span><br>
-        <span *ngIf="!signupForm?.valid" class="help-block">Recuerde que debe llenar todos los campos para continuar con el registro</span><br>
-        <div class="center-btn"><button class="btn btn-success btn-invalid"
-          type="submit" [disabled]="!signupForm?.valid"
-          [ngStyle]="{'opacity':signupForm.valid === true ? '1' : '0.5' }">Aceptar</button></div>
-          </form>
+        <div class="form-group">
+          <label>Contraseña</label>
+              <input type="password" placeholder="Ingrese su Contraseña.." class="form-control" name="password" formControlName="password">
         </div>
-      </form>
-      </div>
-</div>
-</div>
+        <div class="form-group">
+          <label>Confirme su contraseña:</label>
+              <input type="password" placeholder="Vuelva a ingresar su contraseña" class="form-control" name="password-confirm" formControlName="password-confirm">
+        </div>
+      <span *ngIf="signupForm.hasError('differentPassword', 'password-confirm')" class="help-block">Verifique que los campos de cada contraseña sean iguales!</span><br>
+        <div class="form-group terminos-label">
+          <a (click)="openDisclaimerDialog()">Haga click aquí para leer las condiciones de uso de la app SCORE BEBÉ</a>
+        </div>
+        <div class="form-group form-check condition">
+          <input class="form-check-input" type="checkbox" id="aceptarCondiciones" formControlName="aceptarCondiciones" name="aceptarCondiciones">
+          <label class="form-check-label little-label" for="aceptarCondiciones">
+            He leído y acepto las condiciones de uso.
+          </label>
+        </div>
+      <span *ngIf="signupForm.hasError('isChecked', 'aceptarCondiciones') || signupForm.get('aceptarCondiciones').invalid" class="help-block">Debe aceptar las condiciones para poder registrarse!</span><br>
+          <span *ngIf="!signupForm?.valid" class="help-block">Recuerde que debe llenar todos los campos para continuar con el registro</span><br>
+          <div class="center-btn"><button class="btn btn-success btn-invalid"
+            type="submit" [disabled]="!signupForm?.valid"
+            [ngClass]="{ 'btn-active': signupForm.valid, 'btn-inactive': !signupForm.valid}">Aceptar</button></div>
+            </form>
+          </div>
+        </form>
+    </div>
+  </div>
 </div><!-- .entry-content -->
 </article><!-- #post-## -->
 
+
           </div>
+
         </div>
+
+
     </div>
   </div>
 </div>

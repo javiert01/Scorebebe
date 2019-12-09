@@ -32,6 +32,7 @@ export class SignUpComponent implements OnInit {
    }
 
   ngOnInit() {
+    window.scroll(0, 200);
     this.signupForm = new FormGroup({
       'nombre': new FormControl(null, Validators.required),
       'institucion': new FormControl(null, Validators.required),

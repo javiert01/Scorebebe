@@ -16,7 +16,7 @@ import { CambioPasswordComponent } from './auth/cambio-password/cambio-password.
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/homepage', pathMatch: 'full'},
-    { path: 'homepage', component: HomepageComponent},
+    { path: 'homepage', component: HomepageComponent, canActivate: [NoLoginGuard]},
     { path: 'signup', component: SignUpComponent, canActivate: [NoLoginGuard]},
     { path: 'login' , component: LoginComponent, canActivate: [NoLoginGuard]},
     { path: 'reestablecer-password' , component: ReestablecerPasswordComponent, canActivate: [NoLoginGuard]},

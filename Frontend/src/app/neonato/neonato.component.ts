@@ -273,6 +273,7 @@ export class NeonatoComponent implements OnInit {
     this.mostrarLogo = false;
     this.mostrarInstrucciones = false;
     this.mostrarFormulario = true;
+    window.scroll(0, 0);
   }
 
   addLeadingZero(x, pad) {

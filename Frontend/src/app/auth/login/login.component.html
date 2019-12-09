@@ -3,7 +3,7 @@
 <div class="cont-logos">
   <div class="container">
     <div class="col-md-12">
-    <img src="http://scorebebe.com/img/logos-header.jpg" [routerLink]="['/homepage']" style="cursor: pointer;">
+    <img src="http://scorebebe.com/assets/img/logos-header.jpg" [routerLink]="['/homepage']" style="cursor: pointer;">
     </div>
   </div>
 </div>
@@ -53,7 +53,10 @@
         </div>
         <span class="help-block" [routerLink]="['/reestablecer-password']" style="cursor: pointer;">¿Olvidaste tu contraseña? Has click aquí para reestablecerla</span>
         <span class="help-block" *ngIf="!loginForm.valid">Recuerda llenar todos los campos para ingresar</span><br>
-            <div class="center-btn"><button [ngStyle]="{'opacity':loginForm.valid === true ? '1' : '0.5' }" class="btn btn-success" type="submit" [disabled]="!loginForm.valid">
+            <div class="center-btn">
+              <button
+              class="btn btn-success" type="submit" [disabled]="!loginForm.valid"
+              [ngClass]="{ 'btn-active': loginForm.valid, 'btn-inactive': !loginForm.valid}">
               Ingresar
             </button>
           </div>

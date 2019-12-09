@@ -296,7 +296,7 @@ line-height: 1;
   text-align: center;
   color: #fff;
   padding: 10px;
-  background: #0a94fd;
+  background: #999999;
   display: block;
   text-transform: uppercase;
   border-radius: 6px;
@@ -320,4 +320,10 @@ line-height: 1;
   margin: 0 !important;
   display: inline-block !important;
   width: auto !important;
+}
+
+.div-cambio-password {
+  color: #0f5992;;
+  font-size: small;
+  padding: 20px;
 }

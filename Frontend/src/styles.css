@@ -135,6 +135,7 @@ BANNER
 	background: url(http://scorebebe.com/assets/img/banner-login.jpg)center center no-repeat;
 }
 .cont-registro{
+	/* background: url(http://scorebebe.com/assets/img/banner-registro.jpg)center center no-repeat;*/
 	background: url(http://scorebebe.com/assets/img/banner-registro.jpg)center center no-repeat;
 }
 
@@ -405,7 +406,7 @@ input[type=radio]:checked + label:before {
 
     .formulario-sb{
     width: 100%!important;
-    height: 220vh!important;
+    height: 270vh!important;
     position: absolute!important;
     z-index: 1!important;
     padding-top: 105px!important;
