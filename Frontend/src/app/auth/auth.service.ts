@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
@@ -9,6 +10,7 @@ export class AuthService {
     // private urlServidor = 'http://localhost:1337/'
   private _registerUrl = this.urlServidor + 'usuario/signup';
   private _loginUrl = this.urlServidor + 'usuario/login';
+  helper = new JwtHelperService();
 
 
   constructor(private http: HttpClient, private _router: Router) { }
@@ -56,6 +58,17 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('token');
+  }
+
+  isTokenExpired() {
+    const token = localStorage.getItem('token');
+      if (token !== null) {
+        if (this.helper.isTokenExpired(token)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
   }
 
   getUsuarios() {

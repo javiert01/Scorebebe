@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDatepicker } from '@angular/material';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
@@ -7,6 +7,7 @@ import { Neonato } from './neonato.model';
 import { AuthService } from '../auth/auth.service';
 import { formularioStateTrigger } from './neonato-animations';
 import * as jsPDF from 'jspdf';
+import { DialogCie10Component } from '../dialog-cie10/dialog-cie10.component';
 
 @Component({
   selector: 'app-neonato',
@@ -21,41 +22,43 @@ export class NeonatoComponent implements OnInit {
 
   scoreBebeTest: FormGroup;
   contador = 0;
+  showDownes = false;
+  showSilverman = false;
+  mostrarCuadros = false;
   categoriaEdad;
   categoriaPeso;
   edadGestionalTotal;
   currentQuestionIndex = 1;
   factoresRiesgoInminente = [
     {id: 'factorRiesgoInminente1', idbase: 1, value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'},
-    {id: 'factorRiesgoInminente2', idbase: 11, value: 'Su color de piel es pálida, pletórica o azulada'},
-    {id: 'factorRiesgoInminente3', idbase: 21, value: 'Tiene una frecuencia cardíaca alterada (<100 o >160 lpm)'},
-    {id: 'factorRiesgoInminente4', idbase: 31, value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)'},
-    {id: 'factorRiesgoInminente5', idbase: 41, value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)'},
-    {id: 'factorRiesgoInminente6', idbase: 51, value: 'Tiene un pobre tono muscular o sus reflejos son débiles o convulsiona.'},
-    {id: 'factorRiesgoInminente7', idbase: 61, value: 'Se encuentra ictérico antes de las 24 horas o después del cuarto día de vida.'},
-    {id: 'factorRiesgoInminente8', idbase: 71, value: 'Hipoglucemia (<40mg/dL)'},
-    {id: 'factorRiesgoInminente9', idbase: 81, value: 'Vomita todo lo que come'},
-    {id: 'factorRiesgoInminente10', idbase: 91, value: 'Madre tuvo oligohidramnios, hidrorrea mayor o igual a 18 horas, fiebre o corioamnionitis o flujo genital fétido'},
-    {id: 'factorRiesgoInminente11', idbase: 101, value: 'Reanimación neonatal con presión positiva o masaje cardiaco'},
-    {id: 'factorRiesgoInminente12', idbase: 111, value: 'Malformaciones severas'},
-    {id: 'factorRiesgoInminente13', idbase: 121, value: 'Lesiones severas debidas al parto'}
+    {id: 'factorRiesgoInminente2', idbase: [11, 21], value: 'Porcentaje de saturación', opciones: ['Menor a 92%', 'Mayor a 92%']},
+    {id: 'factorRiesgoInminente3', idbase: 31, value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)'},
+    {id: 'factorRiesgoInminente4', idbase: 41, value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)'},
+    {id: 'factorRiesgoInminente5', idbase: [51], value: 'Se encuentra hipotónico:', opciones:['Presencia de convulsiones']},
+    {id: 'factorRiesgoInminente6', idbase: 61, value: 'Se encuentra ictérico antes de las 24 horas o después del cuarto día de vida.'},
+    {id: 'factorRiesgoInminente7', idbase: 71, value: 'Hipoglucemia (<50mg/dL)'},
+    {id: 'factorRiesgoInminente8', idbase: 81, value: 'Tiene succión débil'},
+    {id: 'factorRiesgoInminente9', idbase: 91, value: 'Madre tuvo hidrorrea mayor a 18 horas'},
+    {id: 'factorRiesgoInminente10', idbase: 101, value: 'Fue necesario reanimación básica o avanzada'},
+    {id: 'factorRiesgoInminente11', idbase: 111, value: 'Malformaciones severas'},
+    {id: 'factorRiesgoInminente12', idbase: 121, value: 'Lesiones severas debidas al parto'}
 
   ];
   factoresRiesgoAumenta = [
     {id: 'factorRiesgoAumenta1' , idbase: 1, value: 'Madre tuvo polihidramnios'},
     {id: 'factorRiesgoAumenta2' , idbase: 11, value: 'Madre diabética'},
-    {id: 'factorRiesgoAumenta3' , idbase: 21, value: 'Madre preeclámptica/eclámptica'},
+    {id: 'factorRiesgoAumenta3' , idbase: 21, value: 'Madre con trastornos hipertensivos'},
     {id: 'factorRiesgoAumenta4' , idbase: 31, value: 'Madre fallece posterior al parto'},
     {id: 'factorRiesgoAumenta5' , idbase: 41, value: 'Madre tuvo IVU en el embarazo'},
     {id: 'factorRiesgoAumenta6' , idbase: 51, value: 'Madre tuvo cultivo positivo para Streptococcus'},
-    {id: 'factorRiesgoAumenta7' , idbase: 61, value: 'Tuvo sufrimiento fetal agudo'},
-    {id: 'factorRiesgoAumenta8' , idbase: 71, value: 'Niño de sexo masculino'},
-    {id: 'factorRiesgoAumenta9' , idbase: 81, value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
-    {id: 'factorRiesgoAumenta10' , idbase: 91, value: 'Madre VIH positiva o prueba indeterminada o criterios clínicos de SIDA o Madre con sífilis, tuberculosis o con discapacidad'},
-    {id: 'factorRiesgoAumenta11' , idbase: 101, value: 'Parto en domicilio o por personal no entrenado'},
-    {id: 'factorRiesgoAumenta12' , idbase: 111, value: 'Ningún control prenatal'},
-    {id: 'factorRiesgoAumenta13' , idbase: 121, value: 'Reanimación neonatal sin presión positiva ni masaje cardiaco'},
-    {id: 'factorRiesgoAumenta14' , idbase: 131, value: 'Es producto de un embarazo múltiple'}
+    {id: 'factorRiesgoAumenta7' , idbase: [61, 71], value: 'Edad de la madre:', opciones: ['Menor de 15 años', 'Mayor de 40 años']},
+    {id: 'factorRiesgoAumenta8' , idbase: [81, 91], value: 'Madre con adicciones:', opciones: ['Alcohol', 'Cocaína']},
+    {id: 'factorRiesgoAumenta9' , idbase: 101, value: 'Niño de sexo masculino'},
+    {id: 'factorRiesgoAumenta10' , idbase: 111, value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
+    {id: 'factorRiesgoAumenta11' , idbase: [121, 131, 141, 151], value: 'Madre presenta:', opciones: ['VIH', 'Sífilis', 'Tuberculosis', 'Discapacidades']},
+    {id: 'factorRiesgoAumenta12' , idbase: 161, value: 'Parto en domicilio o por personal no entrenado'},
+    {id: 'factorRiesgoAumenta13' , idbase: 171, value: 'Ningún control prenatal'},
+    {id: 'factorRiesgoAumenta15' , idbase: 181, value: 'Es embarazo múltiple'}
   ];
   factoresRiesgoReduce = [
     {id: 'factorRiesgoReduce1', idbase: 1, value: 'Es prematuro y recibió dosis completa de maduración pulmonar'},
@@ -87,19 +90,44 @@ export class NeonatoComponent implements OnInit {
   mostrarIntro = true;
   mostrarLogo = true;
   terminado = false;
+  formComorbilidades;
+  formControlsInminente = [];
+  formControlsAumenta = [];
+  formControlsReduce;
+  formsControlInminenteOpciones = [];
+  formsControlAumentaOpciones = [];
   @ViewChild('instrucciones', { static: false }) public instrucciones: ElementRef;
   @ViewChild('picker', {static: false}) picker: MatDatepicker<Date>;
 
-  constructor(private dialog: MatDialog, private neonatoService: NeonatoService, public authService: AuthService, private fb: FormBuilder) {
-
+  constructor(private dialog: MatDialog, private neonatoService: NeonatoService,
+    public authService: AuthService, private fb: FormBuilder) {
    }
 
   ngOnInit() {
-    const formComorbilidades = this.comorbilidades.map(control => new FormControl(false));
-    const formControlsInminente = this.factoresRiesgoInminente.map(control => new FormControl(false));
-    const formControlsAumenta = this.factoresRiesgoAumenta.map(control => new FormControl(false));
-    const formControlsReduce = this.factoresRiesgoReduce.map(control => new FormControl(false));
-    this.scoreBebeTest = new FormGroup({
+    this.formComorbilidades = this.comorbilidades.map(control => new FormControl(false));
+    this.formControlsReduce = this.factoresRiesgoReduce.map(control => new FormControl(false));
+    let j = 0;
+    for (let i = 0; i < this.factoresRiesgoInminente.length; i++) {
+      if (this.factoresRiesgoInminente[i].opciones !== undefined) {
+        this.formsControlInminenteOpciones.push(this.factoresRiesgoInminente[i].opciones.map(control => new FormControl(false)));
+        this.formControlsInminente.push(new FormArray(this.formsControlInminenteOpciones[j]));
+        j++;
+      } else {
+        this.formControlsInminente.push(new FormControl(false));
+      }
+    }
+    j = 0;
+    for (let i = 0; i < this.factoresRiesgoAumenta.length; i++) {
+      if (this.factoresRiesgoAumenta[i].opciones !== undefined) {
+        this.formsControlAumentaOpciones.push(this.factoresRiesgoAumenta[i].opciones.map(control => new FormControl(false)));
+        this.formControlsAumenta.push(new FormArray(this.formsControlAumentaOpciones[j]));
+        j++;
+      } else {
+        this.formControlsAumenta.push(new FormControl(false));
+      }
+    }
+    console.log(this.formControlsInminente);
+    this.scoreBebeTest = this.fb.group({
       'sexo': new FormControl('masculino'),
       'fechaNacimiento': new FormControl(null , Validators.required),
       'horaNacimiento': new FormControl(null, Validators.required),
@@ -108,15 +136,19 @@ export class NeonatoComponent implements OnInit {
       'edadGestionalEntero': new FormControl(null , [Validators.required, Validators.min(0)]),
       'edadGestionalDecimal': new FormControl(0, Validators.required),
       'nivelAtencion': new FormControl('primer'),
-      'factorRiesgoInminente': new FormArray(formControlsInminente),
-      'factorRiesgoIncrementa': new FormArray(formControlsAumenta),
-      'factorRiesgoReduce': new FormArray(formControlsReduce),
+      'factorRiesgoInminente': new FormArray(this.formControlsInminente),
+      'factorRiesgoIncrementa': new FormArray(this.formControlsAumenta),
+      'factorRiesgoReduce': new FormArray(this.formControlsReduce),
       'centil': new FormControl('centil1'),
       'apgar': new FormControl('apgar1'),
       'parto': new FormControl('parto1'),
-      'comorbilidades': new FormArray(formComorbilidades),
-      'comor': new FormControl(null)
+      'codigosComor': new FormControl(null),
+      'comorbilidades': new FormArray(this.formComorbilidades),
+      'comor': new FormControl('')
     });
+
+    console.log(this.scoreBebeTest);
+
     this.authService.getUserData(this.userName)
     .subscribe(
       (response) => {
@@ -129,7 +161,7 @@ export class NeonatoComponent implements OnInit {
     );
 
     this.showFormulario[0] = true;
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 6; i++) {
       this.showFormulario[i] = false;
     }
 
@@ -138,9 +170,18 @@ export class NeonatoComponent implements OnInit {
       (data) => {
         this.terminado = false;
         for (const value of data) {
-          if (value) {
-            this.terminado = true;
-            break;
+          if (Array.isArray(value)) {
+            for (let i = 0;  i < value.length; i++) {
+              if (value[i]) {
+                this.terminado = true;
+                break;
+              }
+            }
+          } else {
+            if (value) {
+              this.terminado = true;
+              break;
+            }
           }
         }
       }
@@ -221,16 +262,24 @@ export class NeonatoComponent implements OnInit {
 
 
   continueFormulario(index) {
-    this.currentQuestionIndex = index + 1;
-    this.showFormulario[index] = false;
-    this.showFormulario[index + 1] = true;
-    window.scroll(0, 0);
+    if (this.authService.isTokenExpired()) {
+      this.authService.logoutUser();
+    } else {
+      this.currentQuestionIndex = index + 1;
+      this.showFormulario[index] = false;
+      this.showFormulario[index + 1] = true;
+      window.scroll(0, 0);
+    }
+    console.log('valores inminentes', this.scoreBebeTest.get('factorRiesgoInminente').value);
+    console.log('valores inminentes seleccionados', this.getFactoresRiesgoInmintente());
+
   }
 
   returnFormulario(index) {
     this.currentQuestionIndex = index - 1;
     this.showFormulario[index] = false;
     this.showFormulario[index - 1] = true;
+    console.log('valores inminentes seleccionados', this.getFactoresRiesgoInmintente());
     window.scroll(0, 0);
   }
 
@@ -270,10 +319,14 @@ export class NeonatoComponent implements OnInit {
   }
 
   showForm() {
-    this.mostrarLogo = false;
-    this.mostrarInstrucciones = false;
-    this.mostrarFormulario = true;
-    window.scroll(0, 0);
+    if (this.authService.isTokenExpired()) {
+      this.authService.logoutUser();
+    } else {
+      this.mostrarLogo = false;
+      this.mostrarInstrucciones = false;
+      this.mostrarFormulario = true;
+      window.scroll(0, 0);
+    }
   }
 
   addLeadingZero(x, pad) {
@@ -307,146 +360,150 @@ export class NeonatoComponent implements OnInit {
   }
 
   async showTestResult() {
-    let score = 0;
-    const decimal = this.scoreBebeTest.get('edadGestionalDecimal').value;
-    const entero = this.scoreBebeTest.get('edadGestionalEntero').value;
-    const edadIngresadaString = entero + '.' + decimal;
-    this.edadGestionalTotal = parseFloat(edadIngresadaString);
-    if (this.edadGestionalTotal < 28) {
-      this.categoriaEdad = 'edad1';
-      score = 17;
-      this.total = score;
-    } else if (this.edadGestionalTotal >= 28 && this.edadGestionalTotal < 32) {
-      this.categoriaEdad = 'edad2';
-      score = 16;
-      this.total = score;
-    } else if (this.edadGestionalTotal >= 32 && this.edadGestionalTotal < 35) {
-      this.categoriaEdad = 'edad3';
-      score = 15;
-      this.total = score;
-    } else if (this.edadGestionalTotal >= 35 && this.edadGestionalTotal < 37) {
-      this.categoriaEdad = 'edad4';
-      score = 14;
-      this.total = score;
-    } else if (this.edadGestionalTotal >= 37 && this.edadGestionalTotal < 38) {
-      this.categoriaEdad = 'edad5';
-      score = 11;
-      this.total = score;
-    } else if (this.edadGestionalTotal >= 38 && this.edadGestionalTotal < 41) {
-      this.categoriaEdad = 'edad6';
-      score = 11;
-      this.total = score;
-    } else if (this.edadGestionalTotal >= 41) {
-      this.categoriaEdad = 'edad7';
-      score = 14;
-      this.total = score;
-    }
-
-    const pesoIngresado = this.scoreBebeTest.get('pesoNacimiento').value;
-    if (pesoIngresado < 750) {
-      this.categoriaPeso = 'peso1';
-      score = 18;
-      this.total = this.total + (score);
-    } else if (pesoIngresado >= 750 && pesoIngresado < 1000) {
-      this.categoriaPeso = 'peso2';
-      score = 17;
-      this.total = this.total + (score);
-    } else if (pesoIngresado >= 1000 && pesoIngresado < 1500) {
-      this.categoriaPeso = 'peso3';
-      score = 16;
-      this.total = this.total + (score);
-    } else if (pesoIngresado >= 1500 && pesoIngresado < 2000) {
-      this.categoriaPeso = 'peso4';
-      score = 15;
-      this.total = this.total + (score);
-    } else if (pesoIngresado >= 2000 && pesoIngresado < 2500) {
-      this.categoriaPeso = 'peso5';
-      score = 14;
-      this.total = this.total + (score);
-    } else if (pesoIngresado >= 2500 && pesoIngresado < 4000) {
-      this.categoriaPeso = 'peso6';
-      score = 11;
-      this.total = this.total + (score);
-    } else if (pesoIngresado > 4000) {
-      this.categoriaPeso = 'peso7';
-      score = 12;
-      this.total = this.total + (score);
-    }
-
-    switch (this.scoreBebeTest.get('centil').value) {
-      case 'centil1':
-      score = 15;
-      this.total = this.total + (score);
-      break;
-      case 'centil2':
-      score = 17;
-      this.total = this.total + (score);
-      break;
-      case 'centil3':
-      score = 14;
-      this.total = this.total + (score);
-      break;
-      default:
-      break;
-    }
-
-    switch (this.scoreBebeTest.get('apgar').value) {
-      case 'apgar1':
-      score = 15;
-      this.total = this.total + (score);
-      break;
-      case 'apgar2':
-      score = 19;
-      this.total = this.total + (score);
-      break;
-      case 'apgar3':
-      score = 35;
-      this.total = this.total + (score);
-      break;
-      default:
-      break;
-
-    }
-
-    switch (this.scoreBebeTest.get('parto').value) {
-      case 'parto1':
-      score = 15;
-      this.total = this.total + (score);
-      break;
-      case 'parto2':
-      score = 15;
-      this.total = this.total + (score);
-      break;
-      case 'parto3':
-      score = 19;
-      this.total = this.total + (score);
-      break;
-      default:
-      break;
-    }
-
-    if (this.scoreBebeTest.get('comor').value) {
-      this.total = this.total + 0;
+    if (this.authService.isTokenExpired()) {
+      this.authService.logoutUser();
     } else {
-      for (let i = 0; i < this.getScoreComorbilidades().length; i++) {
-        this.total = this.total + this.getScoreComorbilidades()[i];
+      let score = 0;
+      const decimal = this.scoreBebeTest.get('edadGestionalDecimal').value;
+      const entero = this.scoreBebeTest.get('edadGestionalEntero').value;
+      const edadIngresadaString = entero + '.' + decimal;
+      this.edadGestionalTotal = parseFloat(edadIngresadaString);
+      if (this.edadGestionalTotal < 28) {
+        this.categoriaEdad = 'edad1';
+        score = 17;
+        this.total = score;
+      } else if (this.edadGestionalTotal >= 28 && this.edadGestionalTotal < 32) {
+        this.categoriaEdad = 'edad2';
+        score = 16;
+        this.total = score;
+      } else if (this.edadGestionalTotal >= 32 && this.edadGestionalTotal < 35) {
+        this.categoriaEdad = 'edad3';
+        score = 15;
+        this.total = score;
+      } else if (this.edadGestionalTotal >= 35 && this.edadGestionalTotal < 37) {
+        this.categoriaEdad = 'edad4';
+        score = 14;
+        this.total = score;
+      } else if (this.edadGestionalTotal >= 37 && this.edadGestionalTotal < 38) {
+        this.categoriaEdad = 'edad5';
+        score = 11;
+        this.total = score;
+      } else if (this.edadGestionalTotal >= 38 && this.edadGestionalTotal < 41) {
+        this.categoriaEdad = 'edad6';
+        score = 11;
+        this.total = score;
+      } else if (this.edadGestionalTotal >= 41) {
+        this.categoriaEdad = 'edad7';
+        score = 14;
+        this.total = score;
       }
-    }
 
-    if (this.total >= 77) {
-      this.categoria = 'A';
-      this.descripcion = 'Riesgo alto (<=77 puntos)';
-    } else if (this.total >= 72) {
-      this.categoria = 'B';
-      this.descripcion = 'Riesgo moderado (72 a <77 puntos)';
-    } else if (this.total >= 68) {
-      this.categoria = 'C';
-      this.descripcion = 'Riesgo bajo (68 a <72 puntos)';
-    } else {
-      this.categoria = 'D';
-      this.descripcion = 'Riesgo muy bajo (<68 puntos)';
-    }
-    this.crearNeonato();
+      const pesoIngresado = this.scoreBebeTest.get('pesoNacimiento').value;
+      if (pesoIngresado < 750) {
+        this.categoriaPeso = 'peso1';
+        score = 18;
+        this.total = this.total + (score);
+      } else if (pesoIngresado >= 750 && pesoIngresado < 1000) {
+        this.categoriaPeso = 'peso2';
+        score = 17;
+        this.total = this.total + (score);
+      } else if (pesoIngresado >= 1000 && pesoIngresado < 1500) {
+        this.categoriaPeso = 'peso3';
+        score = 16;
+        this.total = this.total + (score);
+      } else if (pesoIngresado >= 1500 && pesoIngresado < 2000) {
+        this.categoriaPeso = 'peso4';
+        score = 15;
+        this.total = this.total + (score);
+      } else if (pesoIngresado >= 2000 && pesoIngresado < 2500) {
+        this.categoriaPeso = 'peso5';
+        score = 14;
+        this.total = this.total + (score);
+      } else if (pesoIngresado >= 2500 && pesoIngresado < 4000) {
+        this.categoriaPeso = 'peso6';
+        score = 11;
+        this.total = this.total + (score);
+      } else if (pesoIngresado > 4000) {
+        this.categoriaPeso = 'peso7';
+        score = 12;
+        this.total = this.total + (score);
+      }
+
+      switch (this.scoreBebeTest.get('centil').value) {
+        case 'centil1':
+        score = 15;
+        this.total = this.total + (score);
+        break;
+        case 'centil2':
+        score = 17;
+        this.total = this.total + (score);
+        break;
+        case 'centil3':
+        score = 14;
+        this.total = this.total + (score);
+        break;
+        default:
+        break;
+      }
+
+      switch (this.scoreBebeTest.get('apgar').value) {
+        case 'apgar1':
+        score = 15;
+        this.total = this.total + (score);
+        break;
+        case 'apgar2':
+        score = 19;
+        this.total = this.total + (score);
+        break;
+        case 'apgar3':
+        score = 35;
+        this.total = this.total + (score);
+        break;
+        default:
+        break;
+
+      }
+
+      switch (this.scoreBebeTest.get('parto').value) {
+        case 'parto1':
+        score = 15;
+        this.total = this.total + (score);
+        break;
+        case 'parto2':
+        score = 15;
+        this.total = this.total + (score);
+        break;
+        case 'parto3':
+        score = 19;
+        this.total = this.total + (score);
+        break;
+        default:
+        break;
+      }
+
+      if (this.scoreBebeTest.get('comor').value) {
+        this.total = this.total + 0;
+      } else {
+        for (let i = 0; i < this.getScoreComorbilidades().length; i++) {
+          this.total = this.total + this.getScoreComorbilidades()[i];
+        }
+      }
+
+      if (this.total >= 77) {
+        this.categoria = 'A';
+        this.descripcion = 'Riesgo alto (<=77 puntos)';
+      } else if (this.total >= 72) {
+        this.categoria = 'B';
+        this.descripcion = 'Riesgo moderado (72 a <77 puntos)';
+      } else if (this.total >= 68) {
+        this.categoria = 'C';
+        this.descripcion = 'Riesgo bajo (68 a <72 puntos)';
+      } else {
+        this.categoria = 'D';
+        this.descripcion = 'Riesgo muy bajo (<68 puntos)';
+      }
+      this.crearNeonato();
+      }
   }
 
   getNombreCentil(centil) {
@@ -572,12 +629,25 @@ export class NeonatoComponent implements OnInit {
     return todaystring;
   }
 
+  openDialogDiagnosticos() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.height = '600px';
+    dialogConfig.width = '600px';
+    this.dialog.open(DialogCie10Component, dialogConfig);
+  }
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.height = '200px';
     dialogConfig.width = '400px';
+    const decimal = this.scoreBebeTest.get('edadGestionalDecimal').value;
+    const entero = this.scoreBebeTest.get('edadGestionalEntero').value;
+    const edadIngresadaString = entero + '.' + decimal;
+    this.edadGestionalTotal = parseFloat(edadIngresadaString);
     dialogConfig.data = {
       categoria: this.categoria,
       id: this.neonatoID,
@@ -628,6 +698,10 @@ export class NeonatoComponent implements OnInit {
   }
 
   crearNeonato() {
+    const decimal = this.scoreBebeTest.get('edadGestionalDecimal').value;
+    const entero = this.scoreBebeTest.get('edadGestionalEntero').value;
+    const edadIngresadaString = entero + '.' + decimal;
+    this.edadGestionalTotal = parseFloat(edadIngresadaString);
     this.neonato = {
       nombreApellido: this.scoreBebeTest.get('nombreApellido').value,
       fechaCalculo: this.getCurrentDate(),
@@ -659,17 +733,41 @@ export class NeonatoComponent implements OnInit {
   }
 
   getFactoresRiesgoIncrementa() {
-    const factoresRiesgoSeleccionados = this.scoreBebeTest.get('factorRiesgoIncrementa').value
-    .map((v, i) => v ? this.factoresRiesgoAumenta[i].value : null)
-    .filter(v => v !== null);
+    const factoresRiesgoSeleccionados = [];
+    const selecciones = this.scoreBebeTest.get('factorRiesgoIncrementa').value;
+    for (let i = 0; i < selecciones.length; i++) {
+      if (Array.isArray(selecciones[i])) {
+        for (let j = 0; j < selecciones[i].length; j++) {
+          if (selecciones[i][j]) {
+            factoresRiesgoSeleccionados.push(this.factoresRiesgoAumenta[i].value + ' ' + this.factoresRiesgoAumenta[i].opciones[j]);
+          }
+        }
+      } else {
+        if (selecciones[i]) {
+          factoresRiesgoSeleccionados.push(this.factoresRiesgoAumenta[i].value);
+        }
+      }
+    }
 
    return factoresRiesgoSeleccionados;
   }
 
   getFactoresRiesgoInmintente() {
-    const factoresRiesgoSeleccionados = this.scoreBebeTest.get('factorRiesgoInminente').value
-    .map((v, i) => v ? this.factoresRiesgoInminente[i].value : null)
-    .filter(v => v !== null);
+    const factoresRiesgoSeleccionados = [];
+    const selecciones = this.scoreBebeTest.get('factorRiesgoInminente').value;
+    for (let i = 0; i < selecciones.length; i++) {
+      if (Array.isArray(selecciones[i])) {
+        for (let j = 0; j < selecciones[i].length; j++) {
+          if (selecciones[i][j]) {
+            factoresRiesgoSeleccionados.push(this.factoresRiesgoInminente[i].value + ' ' + this.factoresRiesgoInminente[i].opciones[j]);
+          }
+        }
+      } else {
+        if (selecciones[i]) {
+          factoresRiesgoSeleccionados.push(this.factoresRiesgoInminente[i].value);
+        }
+      }
+    }
 
     return factoresRiesgoSeleccionados;
   }
@@ -699,18 +797,41 @@ export class NeonatoComponent implements OnInit {
   }
 
   getIDBaseFactoresInminente() {
-    const factoresInminente = this.scoreBebeTest.get('factorRiesgoInminente').value
-    .map((v, i) => v ? this.factoresRiesgoInminente[i].idbase : null)
-    .filter(v => v !== null);
+    const factoresInminente = [];
+    const selecciones = this.scoreBebeTest.get('factorRiesgoInminente').value;
+    for (let i = 0; i < selecciones.length; i++) {
+      if (Array.isArray(selecciones[i])) {
+        for (let j = 0; j < selecciones[i].length; j++) {
+          if (selecciones[i][j]) {
+            factoresInminente.push(this.factoresRiesgoInminente[i].idbase[j]);
+          }
+        }
+      } else {
+        if (selecciones[i]) {
+          factoresInminente.push(this.factoresRiesgoInminente[i].idbase);
+        }
+      }
+    }
 
     return factoresInminente;
   }
 
   getIDBaseFactoresAumenta() {
-    const factoresAumenta = this.scoreBebeTest.get('factorRiesgoIncrementa').value
-    .map((v, i) => v ? this.factoresRiesgoAumenta[i].idbase : null)
-    .filter(v => v !== null);
-
+    const factoresAumenta = [];
+    const selecciones = this.scoreBebeTest.get('factorRiesgoIncrementa').value;
+    for (let i = 0; i < selecciones.length; i++) {
+      if (Array.isArray(selecciones[i])) {
+        for (let j = 0; j < selecciones[i].length; j++) {
+          if (selecciones[i][j]) {
+            factoresAumenta.push(this.factoresRiesgoAumenta[i].idbase[j]);
+          }
+        }
+      } else {
+        if (selecciones[i]) {
+          factoresAumenta.push(this.factoresRiesgoAumenta[i].idbase);
+        }
+      }
+    }
     return factoresAumenta;
   }
 
@@ -733,9 +854,18 @@ export class NeonatoComponent implements OnInit {
   getTrueorFalse(factoresDeRiesgo) {
     let resultado = false;
     for (let i = 0; i < factoresDeRiesgo.length; i++) {
-      if (factoresDeRiesgo[i] === true ) {
-        resultado = true;
-        break;
+      if (Array.isArray(factoresDeRiesgo[i])) {
+        for (let j = 0; j < factoresDeRiesgo[i].length; j++) {
+          if (factoresDeRiesgo[i][j]) {
+            resultado = true;
+            return resultado;
+          }
+        }
+      } else {
+        if (factoresDeRiesgo[i] === true ) {
+          resultado = true;
+          return resultado;
+        }
       }
     }
     return resultado;
@@ -755,5 +885,55 @@ export class NeonatoComponent implements OnInit {
     return mensaje;
   }
 
+  enviarIDsDiagnostico() {
+    let ids = [];
+    let idsGrupo = [];
+    const valueTextArea = this.scoreBebeTest.get('codigosComor').value;
+    ids = valueTextArea.toUpperCase().replace(/\s/g, '').split(',');
+    this.neonatoService.getIDGruposComorbilidades(ids)
+    .subscribe(
+      (data) => {
+        if (data.length > 0) {
+          for (let i = 0; i < data.length; i++) {
+            if (!idsGrupo.includes(data[i].grupo)) {
+              idsGrupo.push(data[i].grupo);
+            }
+          }
+        }
+        const arrayAux = [false, false, false, false, false];
+        for (let j = 0; j < idsGrupo.length; j++) {
+          for (let k = 0; k < this.comorbilidades.length; k++) {
+            if (this.comorbilidades[k].idbase === idsGrupo[j]) {
+              arrayAux[k] = true;
+              this.comorbilidadData().setValue(arrayAux);
+            }
+          }
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  isTextAreaValid() {
+    return this.scoreBebeTest.get('codigosComor').value === '' || this.scoreBebeTest.get('codigosComor').value === null;
+  }
+
+  openCuadros(){
+    this.mostrarCuadros = true;
+  }
+  hideCuadros() {
+    this.mostrarCuadros = false;
+  }
+
+  mostrarDownes() {
+    this.showDownes = true;
+    this.showSilverman = false;
+  }
+  mostrarSilverman() {
+    this.showDownes = false;
+    this.showSilverman = true;
+  }
 
 }

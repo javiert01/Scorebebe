@@ -103,8 +103,8 @@ export class CourseDialogComponent implements OnInit {
     doc.text('un peso de '+ this.pesoNacimiento +' gramos, lo que equivale a un '+ this.centil +' de peso para la edad gestacional.', 15, inicioTexto += 5);
     doc.text('Al momento de elaborar este informe, el neonato tiene '+ this.daysBetween(this.fechaNacimiento, this.horaNacimiento), 15, inicioTexto += 5);
     if (!this.factorRiesgoInminente) {
-    doc.text('- Nace por '+ this.parto, 15, inicioTexto += 10);
-    doc.text('- Con un Apgar '+ this.apgar +' a los 5 minutos', 15, inicioTexto += 5);
+    doc.text('- Nace por ' + this.parto, 15, inicioTexto += 10);
+    doc.text('- Con un Apgar ' + this.apgar + ' a los 5 minutos', 15, inicioTexto += 5);
     doc.text('- Y desarrolla la(s) siguiente(s) comorbilidad(es): ', 15, inicioTexto += 5);
     if (this.comor) {
       doc.text('- Sin comorbilidades', 25, inicioTexto += 5);

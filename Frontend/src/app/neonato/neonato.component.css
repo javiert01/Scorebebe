@@ -323,7 +323,23 @@ line-height: 1;
 }
 
 .div-cambio-password {
-  color: #0f5992;;
+  color: #0f5992;
   font-size: small;
+  font-family: 'Montserrat', sans-serif;
   padding: 20px;
 }
+
+textarea {
+  height: 90px !important;
+  width: 100%;
+}
+
+.btn-valid {
+  cursor: pointer;
+}
+
+.btn-invalid {
+  cursor: not-allowed !important;
+  background-color: gray !important;
+}
+

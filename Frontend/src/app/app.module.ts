@@ -35,6 +35,8 @@ import { CambioPasswordDialogComponent } from './cambio-password-dialog/cambio-p
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { CambioPasswordComponent } from './auth/cambio-password/cambio-password.component';
 import { NuevoPasswordDialogComponent } from './nuevo-password-dialog/nuevo-password-dialog.component';
+import { InfoGruposCieComponent } from './info-grupos-cie/info-grupos-cie.component';
+import { DialogCie10Component } from './dialog-cie10/dialog-cie10.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { NuevoPasswordDialogComponent } from './nuevo-password-dialog/nuevo-pass
     ReestablecerPasswordComponent,
     CambioPasswordDialogComponent,
     CambioPasswordComponent,
-    NuevoPasswordDialogComponent
+    NuevoPasswordDialogComponent,
+    InfoGruposCieComponent,
+    DialogCie10Component
   ],
   imports: [
     BrowserModule,
@@ -82,6 +86,6 @@ import { NuevoPasswordDialogComponent } from './nuevo-password-dialog/nuevo-pass
   }],
   bootstrap: [AppComponent],
   entryComponents: [CourseDialogComponent, RegisterDialogComponent, DisclaimerDialogComponent,
-  CambioPasswordDialogComponent, NuevoPasswordDialogComponent]
+  CambioPasswordDialogComponent, NuevoPasswordDialogComponent, DialogCie10Component]
 })
 export class AppModule { }

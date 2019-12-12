@@ -79,13 +79,13 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 <div>
   <div class="container div-cambio-password">
     <div class="row">
-      <div class="col-md-3 offset-md-9 offset-sm-1" style="display: inline-block;" [routerLink]="['/cambio-password/'+ userID]" style="cursor: pointer;">
+      <div class="col-md-4 col-sm-12 col-xs-12 offset-md-8 offset-sm-1" style="display: inline-block;" [routerLink]="['/cambio-password/'+ userID]" style="cursor: pointer;">
         <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-2 col-sm-1 col-xs-1">
               <i class="fa fa-key" aria-hidden="true"></i>
           </div>
-          <div class="col-md-10">
-              <p>Haga click aquí para cambiar su contraseña</p>
+          <div class="col-md-10 col-sm-6 col-xs-6">
+              <span>Haga click aquí para cambiar su contraseña</span>
           </div>
         </div>
       </div>
@@ -129,12 +129,24 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <p class="bottom"> . </p>
                 <input type="number" style="width: 17%" class="form-control" formControlName="edadGestionalDecimal" name="edadGestionalDecimal"><br>
                 </div>
-                <p>Nivel de atención:</p>
+                <p>Apgar a los 5':</p>
+                <select class="form-control" id="exampleFormControlSelect2" formControlName="apgar">
+                  <option value="apgar1">Tranquilizante (7 a 10), n (%)</option>
+                  <option value="apgar2">Moderado (4 a 6), n (%)</option>
+                  <option value="apgar3">Bajo (0 a 3), n (%)</option>
+                </select><br>
+                <p>Tipo de parto:</p>
+                <select class="form-control" id="exampleFormControlSelect3" formControlName="parto">
+                    <option value="parto1">Cesárea</option>
+                    <option value="parto2">Parto vaginal eutócico</option>
+                    <option value="parto3">Parto distócico vaginal</option>
+                  </select><br>
+                <!-- <p>Nivel de atención:</p>
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="nivelAtencion">
                   <option  value="primer">Primer Nivel de Atención</option>
                   <option  value="segundo">Segundo Nivel de Atención</option>
                   <option  value="tercer">Tercer Nivel de Atención</option>
-                </select>
+                </select> -->
               </div>
             </div><br>
             <span *ngIf="!scoreBebeTest.valid" class="help-block">Recuerde llenar todos los campos para continuar</span>
@@ -154,7 +166,6 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </div>
               </div>-->
 
-
       </div><!-- col-md-8 -->
     </div><!-- row -->
   </div><!-- container -->
@@ -172,11 +183,40 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
             <div class="form-group">
               <h5>Factores de riesgo inminente para el neonato que requieren estabilización inmediata y/o transferencia urgente:</h5><br>
                 <div class="form-check" formArrayName="factorRiesgoInminente" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoInminente.controls; let i = index">
+                  <div *ngIf="factoresRiesgoInminente[i].opciones === undefined">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoInminente[i].id">
                   <label class="form-check-label" [for]="factoresRiesgoInminente[i].id" >
                   {{factoresRiesgoInminente[i].value}}
                   </label>
+                  <div *ngIf="i === 0">
+                    <i class="fas fa-plus"
+                    *ngIf="!mostrarCuadros"
+                    (click)="openCuadros()"
+                    style="margin-left: 10px; float: right;">   Ver Cuadros</i>
+                    <i class="fas fa-minus"
+                    *ngIf="mostrarCuadros"
+                    (click)="hideCuadros()"
+                    style="margin-left: 10px; float: right;">   Ocultar Cuadros</i>
+                    <div *ngIf="mostrarCuadros">
+                      <div class="container" style="display: flex;">
+                        <button class="btn" type="button" (click)="mostrarDownes()">Downes</button>
+                        <button class="btn" type="button" (click)="mostrarSilverman()">Silverman Anderson</button>
+                      </div>
+                      <img src="assets/img/downes.jpg" *ngIf="showDownes">
+                      <img src="assets/img/Silverman.jpg" *ngIf="showSilverman">
+                    </div>
                 </div>
+              </div>
+                <div *ngIf="factoresRiesgoInminente[i].opciones !== undefined" style="padding-bottom: 5px; padding-top: 30px;">
+                  <span style="color: black !important">{{factoresRiesgoInminente[i].value}}</span>
+                  <div class="form-check" [formArrayName]="i" *ngFor="let opcion of factoresRiesgoInminente[i].opciones; let j = index">
+                      <input class="form-check-input" type="checkbox" [formControlName]="j" [id]="'opcionesInminente'+i+j">
+                      <label class="form-check-label" [for]="'opcionesInminente'+i+j" >
+                        {{factoresRiesgoInminente[i].opciones[j]}}
+                        </label>
+                  </div>
+                </div>
+              </div>
             </div>
             <p style="text-align: center; padding: 10px; color:black">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar" *ngIf="!terminado">
@@ -199,22 +239,30 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
 <!-- antes de empezar dos -->
 
-
   <div class="formulario-sb" *ngIf="showFormulario[2]" >
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8 antesde">
-
             <div class="form-group">
               <h5>Factores que podrí­an incrementar el riesgo:</h5><br>
               <p style="color: red">SI NO TIENE ALGUNA DE ESTAS CARACTERÍSTICAS PRESIONE CONTINUAR</p>
                 <div class="form-check" formArrayName="factorRiesgoIncrementa" *ngFor="let factor of scoreBebeTest.controls.factorRiesgoIncrementa.controls; let i = index">
+                  <div *ngIf="factoresRiesgoAumenta[i].opciones === undefined">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="factoresRiesgoAumenta[i].id">
                   <label class="form-check-label" [for]="factoresRiesgoAumenta[i].id">
                      {{factoresRiesgoAumenta[i].value}}
                   </label>
                 </div>
-
+                <div *ngIf="factoresRiesgoAumenta[i].opciones !== undefined" style="padding-bottom: 5px;">
+                    <span style="color: black !important">{{factoresRiesgoAumenta[i].value}}</span>
+                    <div class="form-check" [formArrayName]="i" *ngFor="let opcion of factoresRiesgoAumenta[i].opciones; let j = index">
+                        <input class="form-check-input" type="checkbox" [formControlName]="j" [id]="'opcionesAumenta'+i+j">
+                        <label class="form-check-label" [for]="'opcionesAumenta'+i+j" >
+                          {{factoresRiesgoAumenta[i].opciones[j]}}
+                          </label>
+                    </div>
+                  </div>
+                </div>
                 </div><!-- form group -->
                 <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
@@ -223,7 +271,6 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <div class="continuar">
                   <a (click)="returnFormulario(2)">PREGUNTA ANTERIOR</a>
                 </div>
-
         </div><!-- col-md-8 -->
       </div><!-- row -->
     </div><!-- container -->
@@ -295,7 +342,6 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                     Percentil 5 al 95
                   </label>
                 </div>
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="centil" id="centil2" value="centil2" formControlName="centil">
                   <label class="form-check-label" for="centil2">
@@ -330,7 +376,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
 
 <!-- pregunta numero cuatro -->
 
-<div class="formulario-sb"  *ngIf="showFormulario[5]">
+<!-- <div class="formulario-sb"  *ngIf="showFormulario[5]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
@@ -359,7 +405,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   </label>
                 </div>
 
-                </div><!-- form group -->
+                </div>
                 <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
                 <div class="continuar">
                   <a (click)="continueFormulario(5)">continuar</a>
@@ -368,13 +414,13 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <a (click)="returnFormulario(5)">PREGUNTA ANTERIOR</a>
                 </div>
 
-        </div><!-- col-md-8 -->
-      </div><!-- row -->
-    </div><!-- container -->
-  </div><!-- container-form -->
+        </div>
+      </div>
+    </div>
+  </div> -->
 
 <!-- fin pregunta numero cuatro -->
-
+<!--
 <div class="formulario-sb"  *ngIf="showFormulario[6]">
   <div class="container">
     <div class="row justify-content-md-center">
@@ -404,28 +450,52 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 </label>
               </div>
               </div>
-              <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p><!-- form group -->
+              <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
    <div class="continuar">
                 <a (click)="continueFormulario(6)">continuar</a>
               </div>
               <div class="continuar">
                 <a (click)="returnFormulario(6)">PREGUNTA ANTERIOR</a>
               </div>
-      </div><!-- col-md-8 -->
-    </div><!-- row -->
-  </div><!-- container -->
-</div><!-- container-form -->
+      </div>
+    </div>
+  </div>
+</div> -->
 
 
 
 
 <!-- pregunta numero cinco -->
 
-<div class="formulario-sb"  *ngIf="showFormulario[7]">
+<div class="formulario-sb"  *ngIf="showFormulario[5]">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-8">
             <h3>Comorbilidades</h3>
+            <p>Ingrese los códigos de acuerdo al CIE10 (Separe cada código con una COMA)</p>
+            <P>Por ejemplo: P24,P241,P48</P>
+            <div class="row">
+              <div class="col-md-8 offset-md-2">
+                  <textarea name="codigosComor" id="codigosComor" formControlName="codigosComor"></textarea>
+              </div>
+            </div>
+            <div style="display: flex;">
+              <button
+              class="btn btn-primary"
+              type="button"
+              (click)="enviarIDsDiagnostico()"
+              [ngClass]="{ 'btn-valid': !isTextAreaValid(), 'btn-invalid': isTextAreaValid()}"
+              [disabled]="isTextAreaValid()">
+              ACEPTAR
+            </button>
+                <button
+                class="btn btn-primary"
+                type="button"
+                (click)="openDialogDiagnosticos()">
+                <a>Ver lista de códigos CIE10</a>
+              </button>
+            </div>
+            <p>O elija el grupo de comorbibilidades neonatales a continuación:</p>
             <div class="form-group">
                 <div class="form-check" formArrayName="comorbilidades" *ngFor="let factor of scoreBebeTest.controls.comorbilidades.controls; let i = index">
                   <input class="form-check-input" type="checkbox" [formControlName]="i" [id]="comorbilidades[i].id">
@@ -443,7 +513,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
             <p style="text-align: center; padding: 10px">PREGUNTA {{currentQuestionIndex}} de {{showFormulario.length - 1}}</p>
       <button type="submit" class="btn btn-primary" [disabled]="!scoreBebeTest.valid">ver resultado</button>
       <div class="continuar">
-        <a (click)="returnFormulario(7)">PREGUNTA ANTERIOR</a>
+        <a (click)="returnFormulario(5)">PREGUNTA ANTERIOR</a>
       </div>
       <div class="continuar">
         <a (click)="reiniciarTest()">Nueva evaluación</a>

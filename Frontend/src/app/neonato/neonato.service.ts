@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class NeonatoService {
     urlServidor = 'https://scorebbtest.herokuapp.com/';
-    
+
     // urlServidor = 'https://scorebebe.herokuapp.com/';
     // tslint:disable-next-line: comment-format
     //urlServidor = 'http://localhost:1337/'
@@ -54,5 +54,12 @@ export class NeonatoService {
           })
         };
         return this.http.get<any>(this.urlServidor + 'neonato/neonatousuario/' + id.toString(), httpOptions);
+      }
+
+      getIDGruposComorbilidades(idDiagnosticos: string[]) {
+        const ids = {
+          'params': idDiagnosticos
+        };
+        return this.http.post<any>(this.urlServidor + 'ciediez/grupo', ids);
       }
 }

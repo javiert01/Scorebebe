@@ -12,6 +12,7 @@ import { ResultadosTestComponent } from "./resultados-test/resultados-test.compo
 import { AdminpageComponent } from "./adminpage/adminpage.component";
 import { ReestablecerPasswordComponent } from './auth/reestablecer-password/reestablecer-password.component';
 import { CambioPasswordComponent } from './auth/cambio-password/cambio-password.component';
+import { InfoGruposCieComponent } from './info-grupos-cie/info-grupos-cie.component';
 
 
 const appRoutes: Routes = [
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
     { path: 'reestablecer-password' , component: ReestablecerPasswordComponent, canActivate: [NoLoginGuard]},
     { path: 'test', canActivate: [AuthGuard], component: NeonatoComponent},
     { path: 'cambio-password/:id', canActivate: [AuthGuard], component: CambioPasswordComponent},
+    { path: 'info-grupos-cie', component: InfoGruposCieComponent},
     { path: 'admin-page', component: AdminpageComponent, canActivate: [AdminGuard]},
     { path: 'activar-usuarios', component: ActivarUsuariosComponent, canActivate: [AdminGuard]},
     { path: 'resultados-test', component: ResultadosTestComponent, canActivate: [AdminGuard]}
