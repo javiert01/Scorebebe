@@ -41,6 +41,9 @@ import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 import { ErrorCodigosDialogComponent } from './error-codigos-dialog/error-codigos-dialog.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ToastrModule } from 'ngx-toastr';
+import { LandingComponent } from './landing/landing.component';
+import { DialogAdroidComponent } from './landing/dialog-adroid/dialog-adroid.component';
+import { DialogIosComponent } from './landing/dialog-ios/dialog-ios.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { ToastrModule } from 'ngx-toastr';
     InfoGruposCieComponent,
     DialogCie10Component,
     ImageDialogComponent,
-    ErrorCodigosDialogComponent
+    ErrorCodigosDialogComponent,
+    LandingComponent,
+    DialogAdroidComponent,
+    DialogIosComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +101,6 @@ import { ToastrModule } from 'ngx-toastr';
   bootstrap: [AppComponent],
   entryComponents: [CourseDialogComponent, RegisterDialogComponent, DisclaimerDialogComponent,
   CambioPasswordDialogComponent, NuevoPasswordDialogComponent, DialogCie10Component, ImageDialogComponent,
-  ErrorCodigosDialogComponent]
+  ErrorCodigosDialogComponent, DialogAdroidComponent, DialogIosComponent]
 })
 export class AppModule { }

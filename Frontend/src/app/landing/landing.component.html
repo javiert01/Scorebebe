@@ -1,0 +1,44 @@
+<!--INICIO LOGO-->
+<!--<div class="cont-logos" *ngIf="mostrarLogo">-->
+<div class="cont-logos">
+    <div class="container">
+        <div class="col-md-12">
+            <img src="http://scorebebe.com/assets/img/logos-header.jpg" (click)="onGotoInicioInstr()"
+                style="cursor: pointer;">
+        </div>
+    </div>
+</div>
+<!--FIN LOGO-->
+<!-- INCIO INSTRUCCIONES-->
+<div class="instrucciones" #instrucciones id="instrucciones">
+    <div class="container">
+        <div class="row">
+            <div class="col"><img src="./../../assets/img/celulares.png" alt="" style="width: 100%; height:auto;">
+            </div>
+            <div class="col">
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <div class="row"><br></div>
+                <h2 style="color: #fff;">Score Bebé Mobile</h2 >
+                <h4 style="color: #fff;">Las funcionalidades de Score Bebé optimizadas para tu telèfono móvil.</h4>
+                <p> Selecciona tu sistema operativo: </p>
+                <div class="row">
+                    <div class="col-md-1"><i class="fab fa-android fa-2x" style="color: #ffffff;"></i> </div>
+                    <div class="col-md-3"><a (click)="openDialogAndroid()"
+                            style="cursor:pointer; margin: 0px; width: 50px;">Android</a></div>
+                    <div class="col-md-1"><i class="fab fa-apple fa-2x " style="color: #ffffff;"></i></div>
+                    <div class="col-md-3"><a (click)="openDialogIos()" class="px-20 mx-20"
+                            style="cursor:pointer; margin: 0px; width:50px">Ios</a></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FIN INSTRUCCIONES-->
