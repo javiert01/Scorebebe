@@ -406,7 +406,7 @@ input[type=radio]:checked + label:before {
 
     .formulario-sb{
     width: 100%!important;
-    height: 280vh!important;
+    height: 350vh!important;
     position: absolute!important;
     z-index: 1!important;
     padding-top: 105px!important;

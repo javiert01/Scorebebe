@@ -343,3 +343,7 @@ textarea {
   background-color: gray !important;
 }
 
+.btn-inactive {
+  background-color: gray !important;
+}
+

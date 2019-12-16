@@ -1,0 +1,11 @@
+  <div *ngIf="mensaje !== 'OK'">
+      <h2 mat-dialog-title>Ha ocurrido un error!</h2>
+      <mat-dialog-content>
+          <p>{{mensaje_err}}</p>
+          <p><strong>¿Desea verificar los códigos CIE10?</strong></p>
+      </mat-dialog-content>
+      <mat-dialog-actions>
+        <button class="mat-raised-button" (click)="openCodeList()"> Aceptar</button>
+          <button class="mat-raised-button"(click)="close()">Cerrar</button>
+      </mat-dialog-actions>
+  </div>

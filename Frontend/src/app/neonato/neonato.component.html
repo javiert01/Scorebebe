@@ -10,7 +10,6 @@
     </ul>
   </div>
 </nav>
-
 <div class="cont-logos" *ngIf="mostrarLogo">
     <div class="container">
       <div class="col-md-12">
@@ -76,12 +75,12 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
   </div>
 </div>
 
-<div>
+<div *ngIf="mostrarInstrucciones">
   <div class="container div-cambio-password">
     <div class="row">
       <div class="col-md-4 col-sm-12 col-xs-12 offset-md-8 offset-sm-1" style="display: inline-block;" [routerLink]="['/cambio-password/'+ userID]" style="cursor: pointer;">
         <div class="row">
-          <div class="col-md-2 col-sm-1 col-xs-1">
+          <div class="col-md-1 col-sm-1 col-xs-1">
               <i class="fa fa-key" aria-hidden="true"></i>
           </div>
           <div class="col-md-10 col-sm-6 col-xs-6">
@@ -110,11 +109,11 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   <option value="femenino">Femenino</option>
                   <option value="masculino">Masculino</option>
                 </select><br>
-                <p>Fecha de Nacimiento:</p>
-                  <input matInput [matDatepicker]="picker" placeholder="Seleccione la fecha de nacimiento" formControlName = "fechaNacimiento" disabled>
+                <p>Seleccione la fecha de nacimiento:</p>
+                  <input matInput [matDatepicker]="picker" formControlName = "fechaNacimiento" disabled>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker disabled="false" #picker></mat-datepicker>
-                <p>Hora de Nacimiento: (ingrese en formato de 24 horas)</p>
+                <p>Hora de Nacimiento: (ingrese o seleccione en formato de 24 horas)</p>
                 <div class="ngx-timepicker-field-example">
                   <ngx-timepicker-field [format]="24"
                   [defaultTime]="'00:00'"
@@ -153,7 +152,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
             <div class="continuar-invalid" *ngIf="!scoreBebeTest.valid">
                 <a>continuar</a>
               </div>
-              <div class="continuar" *ngIf="scoreBebeTest.valid">
+              <div class="continuar" *ngIf="!scoreBebeTest.valid">
                 <a (click)="continueFormulario(0)"  >continuar</a>
               </div>
               <div class="continuar">
@@ -189,21 +188,33 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                   {{factoresRiesgoInminente[i].value}}
                   </label>
                   <div *ngIf="i === 0">
-                    <i class="fas fa-plus"
-                    *ngIf="!mostrarCuadros"
-                    (click)="openCuadros()"
-                    style="margin-left: 10px; float: right;">   Ver Cuadros</i>
+                    <div class="container" *ngIf="!mostrarCuadros"
+                    (click)="openCuadros()">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12">
+                      <i class="fas fa-plus"
+                    style="margin-left: 10px; float: right; cursor: pointer;">   Ver Referencia</i>
+                  </div>
+                  </div>
+                  </div>
                     <i class="fas fa-minus"
                     *ngIf="mostrarCuadros"
                     (click)="hideCuadros()"
-                    style="margin-left: 10px; float: right;">   Ocultar Cuadros</i>
+                    style="margin-left: 10px; float: right; cursor: pointer;">   Ocultar Referencia</i>
                     <div *ngIf="mostrarCuadros">
                       <div class="container" style="display: flex;">
-                        <button class="btn" type="button" (click)="mostrarDownes()">Downes</button>
-                        <button class="btn" type="button" (click)="mostrarSilverman()">Silverman Anderson</button>
+                        <button class="btn btn-primary"
+                        type="button"
+                        [ngClass]="{ 'btn-valid': showDownes, 'btn-inactive': !showDownes}"
+                        (click)="mostrarDownes()">Downes</button>
+                        <button
+                        class="btn btn-primary"
+                        type="button"
+                        [ngClass]="{ 'btn-valid': showSilverman, 'btn-inactive': !showSilverman}"
+                        (click)="mostrarSilverman()">Silverman</button>
                       </div>
-                      <img src="assets/img/downes.jpg" *ngIf="showDownes">
-                      <img src="assets/img/Silverman.jpg" *ngIf="showSilverman">
+                      <img src="assets/img/downes.jpg" *ngIf="showDownes" (click)="openDialogImg('downes')">
+                      <img src="assets/img/Silverman.jpg" *ngIf="showSilverman" (click)="openDialogImg('silverman')">
                     </div>
                 </div>
               </div>

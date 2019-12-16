@@ -37,6 +37,10 @@ import { CambioPasswordComponent } from './auth/cambio-password/cambio-password.
 import { NuevoPasswordDialogComponent } from './nuevo-password-dialog/nuevo-password-dialog.component';
 import { InfoGruposCieComponent } from './info-grupos-cie/info-grupos-cie.component';
 import { DialogCie10Component } from './dialog-cie10/dialog-cie10.component';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
+import { ErrorCodigosDialogComponent } from './error-codigos-dialog/error-codigos-dialog.component';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,9 @@ import { DialogCie10Component } from './dialog-cie10/dialog-cie10.component';
     CambioPasswordComponent,
     NuevoPasswordDialogComponent,
     InfoGruposCieComponent,
-    DialogCie10Component
+    DialogCie10Component,
+    ImageDialogComponent,
+    ErrorCodigosDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -71,10 +77,12 @@ import { DialogCie10Component } from './dialog-cie10/dialog-cie10.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    RecaptchaModule,
     NgxMaterialTimepickerModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    ToastrModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
   ],
@@ -86,6 +94,7 @@ import { DialogCie10Component } from './dialog-cie10/dialog-cie10.component';
   }],
   bootstrap: [AppComponent],
   entryComponents: [CourseDialogComponent, RegisterDialogComponent, DisclaimerDialogComponent,
-  CambioPasswordDialogComponent, NuevoPasswordDialogComponent, DialogCie10Component]
+  CambioPasswordDialogComponent, NuevoPasswordDialogComponent, DialogCie10Component, ImageDialogComponent,
+  ErrorCodigosDialogComponent]
 })
 export class AppModule { }

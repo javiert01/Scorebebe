@@ -6,8 +6,10 @@ import { NeonatoService } from './neonato.service';
 import { Neonato } from './neonato.model';
 import { AuthService } from '../auth/auth.service';
 import { formularioStateTrigger } from './neonato-animations';
-import * as jsPDF from 'jspdf';
 import { DialogCie10Component } from '../dialog-cie10/dialog-cie10.component';
+import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
+import { ErrorCodigosDialogComponent } from '../error-codigos-dialog/error-codigos-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-neonato',
@@ -21,16 +23,18 @@ import { DialogCie10Component } from '../dialog-cie10/dialog-cie10.component';
 export class NeonatoComponent implements OnInit {
 
   scoreBebeTest: FormGroup;
+  mensaje_err;
   contador = 0;
-  showDownes = false;
+  showDownes = true;
   showSilverman = false;
   mostrarCuadros = false;
+  isMobileView;
   categoriaEdad;
   categoriaPeso;
   edadGestionalTotal;
   currentQuestionIndex = 1;
   factoresRiesgoInminente = [
-    {id: 'factorRiesgoInminente1', idbase: 1, value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman en las páginas 48 y 49 del AIEPI Clínico)'},
+    {id: 'factorRiesgoInminente1', idbase: 1, value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman o Downes según la referencia)'},
     {id: 'factorRiesgoInminente2', idbase: [11, 21], value: 'Porcentaje de saturación', opciones: ['Menor a 92%', 'Mayor a 92%']},
     {id: 'factorRiesgoInminente3', idbase: 31, value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)'},
     {id: 'factorRiesgoInminente4', idbase: 41, value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)'},
@@ -62,8 +66,8 @@ export class NeonatoComponent implements OnInit {
   ];
   factoresRiesgoReduce = [
     {id: 'factorRiesgoReduce1', idbase: 1, value: 'Es prematuro y recibió dosis completa de maduración pulmonar'},
-    {id: 'factorRiesgoReduce2', idbase: 11, value: 'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'},
-    {id: 'factorRiesgoReduce3', idbase: 21, value: 'Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio'}
+    {id: 'factorRiesgoReduce2', idbase: 11, value: 'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'}
+    // {id: 'factorRiesgoReduce3', idbase: 21, value: 'Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio'}
   ];
 
   comorbilidades = [
@@ -126,7 +130,6 @@ export class NeonatoComponent implements OnInit {
         this.formControlsAumenta.push(new FormControl(false));
       }
     }
-    console.log(this.formControlsInminente);
     this.scoreBebeTest = this.fb.group({
       'sexo': new FormControl('masculino'),
       'fechaNacimiento': new FormControl(null , Validators.required),
@@ -270,8 +273,6 @@ export class NeonatoComponent implements OnInit {
       this.showFormulario[index + 1] = true;
       window.scroll(0, 0);
     }
-    console.log('valores inminentes', this.scoreBebeTest.get('factorRiesgoInminente').value);
-    console.log('valores inminentes seleccionados', this.getFactoresRiesgoInmintente());
 
   }
 
@@ -635,7 +636,51 @@ export class NeonatoComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.height = '600px';
     dialogConfig.width = '600px';
+    dialogConfig.position = {
+      top : '60'
+    };
     this.dialog.open(DialogCie10Component, dialogConfig);
+  }
+
+  openDialogImg(mensaje) {
+    const newWindowWidth = window.innerWidth;
+    if ( newWindowWidth > 600) {
+        this.isMobileView = false;
+    } else {
+        this.isMobileView = true;
+    }
+    if (this.isMobileView) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = '300px';
+      dialogConfig.width = '600px';
+      dialogConfig.data = {
+        img: mensaje
+      };
+      this.dialog.open(ImageDialogComponent, dialogConfig);
+    }
+
+  }
+
+  openDialogErrorCodigo(mensaje) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.height = '450px';
+    dialogConfig.width = '400px';
+    dialogConfig.data = {
+      mensaje: mensaje,
+      mensaje_err: this.mensaje_err
+    };
+    const dialogRef = this.dialog.open(ErrorCodigosDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data === 'abrir') {
+          this.openDialogDiagnosticos();
+        }
+      }
+    );
   }
 
   openDialog() {
@@ -911,7 +956,8 @@ export class NeonatoComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        this.mensaje_err = err.error.err;
+        this.openDialogErrorCodigo('ERROR');
       }
     );
   }

@@ -32,6 +32,7 @@ export class CambioPasswordComponent implements OnInit {
       'passwordNuevo': new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),
       'passwordNuevoConfirma': new FormControl(null, Validators.required, this.equalPasswords.bind(this))
     });
+
   }
 
   cambiarPassword() {

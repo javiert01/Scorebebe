@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { CambioPasswordDialogComponent } from 'src/app/cambio-password-dialog/cambio-password-dialog.component';
+import { Subscription } from 'rxjs';
 
 
 
@@ -11,14 +12,16 @@ import { CambioPasswordDialogComponent } from 'src/app/cambio-password-dialog/ca
   templateUrl: './reestablecer-password.component.html',
   styleUrls: ['./reestablecer-password.component.css']
 })
-export class ReestablecerPasswordComponent implements OnInit {
+export class ReestablecerPasswordComponent implements OnInit, OnDestroy {
 
-  @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
+ //  @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
   @ViewChild('reestablecerButton', {static: true}) reestablecerBtn: ElementRef;
   reestablecerForm: FormGroup;
   activated;
   usuarioExiste = false;
   continuarCaptcha = false;
+  captchaSubscription: Subscription;
+  formChangesSubscription: Subscription;
   mensaje_err = '';
   constructor(private authService: AuthService, private dialog: MatDialog) { }
 
@@ -27,7 +30,12 @@ export class ReestablecerPasswordComponent implements OnInit {
     this.reestablecerForm = new FormGroup({
       'username': new FormControl(null, Validators.required)
     });
-    this.addRecaptchaScript();
+    this.formChangesSubscription = this.reestablecerForm.get('username').valueChanges
+    .subscribe(
+      (value) => {
+        this.validarUsuario(value);
+      }
+    );
 
   }
 
@@ -51,8 +59,25 @@ export class ReestablecerPasswordComponent implements OnInit {
     );
   }
 
-  addRecaptchaScript() {
+  resolved(captchaResponse: string) {
+    if (captchaResponse) {
+      const token = {
+        token: captchaResponse
+      };
+      this.captchaSubscription = this.authService.postAPIkey(token)
+      .subscribe(
+        data => {
+          this.activated = data['success'];
+          if (this.activated) {
+            this.reestablecerBtn.nativeElement.className = 'btn btn-success enviar-btn-ok';
+            this.reestablecerBtn.nativeElement.disabled = false;
+          }
+        });
+    }
+}
 
+/*  addRecaptchaScript() {
+    console.log('adding script');
     window['grecaptchaCallback'] = () => {
       this.renderReCaptcha();
     }
@@ -68,13 +93,14 @@ export class ReestablecerPasswordComponent implements OnInit {
   }
 
   renderReCaptcha() {
+    console.log('rendering recaptcha');
     window['grecaptcha'].render(this.recaptchaElement.nativeElement, {
       'sitekey' : '6LceVsUUAAAAAF4pC59ByZgrCPwC8uscNEUhPNI9',
       'callback': (response) => {
         const token = {
           token: response
         };
-        this.authService.postAPIkey(token)
+        this.captchaSubscription = this.authService.postAPIkey(token)
         .subscribe(data => {
           this.activated = data['success'];
           if (this.activated) {
@@ -84,7 +110,7 @@ export class ReestablecerPasswordComponent implements OnInit {
         });
       }
     });
-  }
+  }*/
 
   validarUsuario(username) {
     const param = {
@@ -111,6 +137,15 @@ export class ReestablecerPasswordComponent implements OnInit {
       mensaje_err: this.mensaje_err
     };
     this.dialog.open(CambioPasswordDialogComponent, dialogConfig);
+  }
+
+  ngOnDestroy() {
+    if (this.captchaSubscription) {
+      this.captchaSubscription.unsubscribe();
+    }
+    if(this.formChangesSubscription) {
+      this.formChangesSubscription.unsubscribe();
+    }
   }
 
 
