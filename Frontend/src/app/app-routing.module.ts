@@ -13,6 +13,7 @@ import { AdminpageComponent } from "./adminpage/adminpage.component";
 import { ReestablecerPasswordComponent } from './auth/reestablecer-password/reestablecer-password.component';
 import { CambioPasswordComponent } from './auth/cambio-password/cambio-password.component';
 import { InfoGruposCieComponent } from './info-grupos-cie/info-grupos-cie.component';
+import { LandingComponent } from './landing/landing.component';
 
 
 const appRoutes: Routes = [
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
     { path: 'info-grupos-cie', component: InfoGruposCieComponent},
     { path: 'admin-page', component: AdminpageComponent, canActivate: [AdminGuard]},
     { path: 'activar-usuarios', component: ActivarUsuariosComponent, canActivate: [AdminGuard]},
-    { path: 'resultados-test', component: ResultadosTestComponent, canActivate: [AdminGuard]}
+    { path: 'resultados-test', component: ResultadosTestComponent, canActivate: [AdminGuard]},
+    { path: 'landing', component: LandingComponent}
 ];
 
 @NgModule({
