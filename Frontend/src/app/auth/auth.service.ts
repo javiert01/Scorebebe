@@ -5,9 +5,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
-  private urlServidor = 'https://scorebbtest.herokuapp.com/'
-  // private urlServidor = 'https://scorebebe.herokuapp.com/';
-    // private urlServidor = 'http://localhost:1337/'
+  // private urlServidor = 'https://scorebbtest.herokuapp.com/'
+  private urlServidor = 'https://scorebebe.herokuapp.com/';
   private _registerUrl = this.urlServidor + 'usuario/signup';
   private _loginUrl = this.urlServidor + 'usuario/login';
   helper = new JwtHelperService();

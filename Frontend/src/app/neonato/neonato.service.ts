@@ -7,9 +7,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class NeonatoService {
-    urlServidor = 'https://scorebbtest.herokuapp.com/';
+    // urlServidor = 'https://scorebbtest.herokuapp.com/';
 
-    // urlServidor = 'https://scorebebe.herokuapp.com/';
+    urlServidor = 'https://scorebebe.herokuapp.com/';
     // tslint:disable-next-line: comment-format
     //urlServidor = 'http://localhost:1337/'
     constructor(private http: HttpClient) {

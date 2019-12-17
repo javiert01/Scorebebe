@@ -15,27 +15,25 @@ export class LandingComponent implements OnInit {
   ngOnInit() {}
 
   openDialogAndroid() {
-    console.log("Testendo");
-    let configuracionDialog = new MatDialogConfig();
+    const configuracionDialog = new MatDialogConfig();
     configuracionDialog.disableClose = true;
     configuracionDialog.autoFocus = true;
-    configuracionDialog.height = "390px";
-    configuracionDialog.width = "700px";
+    configuracionDialog.height = '390px';
+    configuracionDialog.width = '700px';
     configuracionDialog.data = {
-      data: "data"
+      data: 'data'
     };
     this.dialog.open(DialogAdroidComponent, configuracionDialog);
   }
 
   openDialogIos() {
-    console.log("Testendo IOS");
-    let configuracionDialog = new MatDialogConfig();
+    const configuracionDialog = new MatDialogConfig();
     configuracionDialog.disableClose = true;
     configuracionDialog.autoFocus = true;
-    configuracionDialog.height = "290px";
-    configuracionDialog.width = "700px";
+    configuracionDialog.height = '290px';
+    configuracionDialog.width = '700px';
     configuracionDialog.data = {
-      data: "data"
+      data: 'data'
     };
     this.dialog.open(DialogIosComponent, configuracionDialog);
   }
