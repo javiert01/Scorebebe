@@ -152,11 +152,11 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
             <div class="continuar-invalid" *ngIf="!scoreBebeTest.valid">
                 <a>continuar</a>
               </div>
-              <div class="continuar" *ngIf="!scoreBebeTest.valid">
+              <div class="continuar" *ngIf="scoreBebeTest.valid">
                 <a (click)="continueFormulario(0)"  >continuar</a>
               </div>
               <div class="continuar">
-                <a (click)="showInstrucciones()"  >Regresar a Instrucciones</a>
+                <a (click)="showInstrucciones()">Regresar a Instrucciones</a>
               </div>
               <!-- <div class="row">
                 <div class="col-md-12">
@@ -221,7 +221,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <div *ngIf="factoresRiesgoInminente[i].opciones !== undefined" style="padding-bottom: 5px; padding-top: 30px;">
                   <span style="color: black !important">{{factoresRiesgoInminente[i].value}}</span>
                   <div class="form-check" [formArrayName]="i" *ngFor="let opcion of factoresRiesgoInminente[i].opciones; let j = index">
-                      <input class="form-check-input" type="checkbox" [formControlName]="j" [id]="'opcionesInminente'+i+j">
+                      <input class="form-check-input" type="checkbox" [name]="'control'+i" [formControlName]="j" [id]="'opcionesInminente'+i+j">
                       <label class="form-check-label" [for]="'opcionesInminente'+i+j" >
                         {{factoresRiesgoInminente[i].opciones[j]}}
                         </label>
@@ -267,7 +267,7 @@ El personal de salud debe manejar a los neonatos tal y como señalan las normas 
                 <div *ngIf="factoresRiesgoAumenta[i].opciones !== undefined" style="padding-bottom: 5px;">
                     <span style="color: black !important">{{factoresRiesgoAumenta[i].value}}</span>
                     <div class="form-check" [formArrayName]="i" *ngFor="let opcion of factoresRiesgoAumenta[i].opciones; let j = index">
-                        <input class="form-check-input" type="checkbox" [formControlName]="j" [id]="'opcionesAumenta'+i+j">
+                        <input class="form-check-input" type="checkbox" [formControlName]="j" [id]="'opcionesAumenta'+i+j" [name]="'aumenta'+i">
                         <label class="form-check-label" [for]="'opcionesAumenta'+i+j" >
                           {{factoresRiesgoAumenta[i].opciones[j]}}
                           </label>

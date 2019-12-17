@@ -34,18 +34,57 @@ export class NeonatoComponent implements OnInit {
   edadGestionalTotal;
   currentQuestionIndex = 1;
   factoresRiesgoInminente = [
-    {id: 'factorRiesgoInminente1', idbase: 1, value: 'El niño respira débilmente o tiene dificultad respiratoria severa (utilizar la escala de Silverman o Downes según la referencia)'},
-    {id: 'factorRiesgoInminente2', idbase: [11, 21], value: 'Porcentaje de saturación', opciones: ['Menor a 92%', 'Mayor a 92%']},
-    {id: 'factorRiesgoInminente3', idbase: 31, value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)'},
-    {id: 'factorRiesgoInminente4', idbase: 41, value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)'},
-    {id: 'factorRiesgoInminente5', idbase: [51], value: 'Se encuentra hipotónico:', opciones:['Presencia de convulsiones']},
-    {id: 'factorRiesgoInminente6', idbase: 61, value: 'Se encuentra ictérico antes de las 24 horas o después del cuarto día de vida.'},
-    {id: 'factorRiesgoInminente7', idbase: 71, value: 'Hipoglucemia (<50mg/dL)'},
-    {id: 'factorRiesgoInminente8', idbase: 81, value: 'Tiene succión débil'},
-    {id: 'factorRiesgoInminente9', idbase: 91, value: 'Madre tuvo hidrorrea mayor a 18 horas'},
-    {id: 'factorRiesgoInminente10', idbase: 101, value: 'Fue necesario reanimación básica o avanzada'},
-    {id: 'factorRiesgoInminente11', idbase: 111, value: 'Malformaciones severas'},
-    {id: 'factorRiesgoInminente12', idbase: 121, value: 'Lesiones severas debidas al parto'}
+    {id: 'factorRiesgoInminente1',
+    idbase: 1,
+    value: 'El niño respira débilmente o tiene dificultad respiratoria severa' +
+    '(utilizar la escala de Silverman o Downes según la referencia)',
+    tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente2',
+    idbase: [11, 21],
+    value: 'Porcentaje de saturación',
+    opciones: ['Menor a 92%', 'Mayor a 92%'],
+    tipo: 'radio'},
+    {id: 'factorRiesgoInminente3',
+     idbase: 31,
+     value: 'Tiene alguna alteración de su frecuencia respiratoria (<40 o >60 rpm)',
+     tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente4',
+    idbase: 41,
+    value: 'Tiene alguna alteración de su temperatura rectal (<36.6 o >38 °C) o temperatura axilar (<36.0 o >37.5 °C)',
+    tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente5',
+    idbase: [51],
+    value: 'Se encuentra hipotónico:',
+    opciones: ['Presencia de convulsiones'],
+    tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente6',
+    idbase: 61,
+    value: 'Se encuentra ictérico antes de las 24 horas o después del cuarto día de vida.',
+    tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente7',
+    idbase: 71,
+    value: 'Hipoglucemia (<50mg/dL)',
+    tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente8',
+    idbase: 81,
+    value: 'Tiene succión débil',
+    tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente9',
+     idbase: 91,
+     value: 'Madre tuvo hidrorrea mayor a 18 horas',
+     tipo: 'checkbox'},
+    {id: 'factorRiesgoInminente10',
+     idbase: 101,
+     value: 'Fue necesario reanimación básica o avanzada',
+     tipo: 'checkbox'},
+    { id: 'factorRiesgoInminente11',
+      idbase: 111,
+      value: 'Malformaciones severas',
+      tipo: 'checkbox'},
+    { id: 'factorRiesgoInminente12',
+      idbase: 121,
+      value: 'Lesiones severas debidas al parto',
+      tipo: 'checkbox'}
 
   ];
   factoresRiesgoAumenta = [
@@ -55,18 +94,37 @@ export class NeonatoComponent implements OnInit {
     {id: 'factorRiesgoAumenta4' , idbase: 31, value: 'Madre fallece posterior al parto'},
     {id: 'factorRiesgoAumenta5' , idbase: 41, value: 'Madre tuvo IVU en el embarazo'},
     {id: 'factorRiesgoAumenta6' , idbase: 51, value: 'Madre tuvo cultivo positivo para Streptococcus'},
-    {id: 'factorRiesgoAumenta7' , idbase: [61, 71], value: 'Edad de la madre:', opciones: ['Menor de 15 años', 'Mayor de 40 años']},
-    {id: 'factorRiesgoAumenta8' , idbase: [81, 91], value: 'Madre con adicciones:', opciones: ['Alcohol', 'Cocaína']},
+    {id: 'factorRiesgoAumenta7' ,
+    idbase: [61, 71],
+    value: 'Edad de la madre:',
+    opciones: ['Menor de 15 años', 'Mayor de 40 años'],
+    tipo: 'radio'},
+    {id: 'factorRiesgoAumenta8' ,
+    idbase: [81, 91],
+    value: 'Madre con adicciones:',
+    opciones: ['Alcohol', 'Cocaína'],
+    tipo: 'checkbox'},
     {id: 'factorRiesgoAumenta9' , idbase: 101, value: 'Niño de sexo masculino'},
-    {id: 'factorRiesgoAumenta10' , idbase: 111, value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
-    {id: 'factorRiesgoAumenta11' , idbase: [121, 131, 141, 151], value: 'Madre presenta:', opciones: ['VIH', 'Sífilis', 'Tuberculosis', 'Discapacidades']},
+    {id: 'factorRiesgoAumenta10' ,
+    idbase: 111,
+    // tslint:disable-next-line: max-line-length
+    value: 'Madre con riesgo social (analfabetismo, adicciones, violencia doméstica, vivienda muy lejana a un establecimiento de salud, etc.)'},
+    {id: 'factorRiesgoAumenta11' ,
+    idbase: [121, 131, 141, 151],
+    value: 'Madre presenta:',
+    opciones: ['VIH', 'Sífilis', 'Tuberculosis', 'Discapacidades'],
+    tipo: 'checkbox'
+    },
     {id: 'factorRiesgoAumenta12' , idbase: 161, value: 'Parto en domicilio o por personal no entrenado'},
     {id: 'factorRiesgoAumenta13' , idbase: 171, value: 'Ningún control prenatal'},
     {id: 'factorRiesgoAumenta15' , idbase: 181, value: 'Es embarazo múltiple'}
   ];
   factoresRiesgoReduce = [
     {id: 'factorRiesgoReduce1', idbase: 1, value: 'Es prematuro y recibió dosis completa de maduración pulmonar'},
-    {id: 'factorRiesgoReduce2', idbase: 11, value: 'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'}
+    {id: 'factorRiesgoReduce2',
+     idbase: 11,
+     value: 'Es prematuro, pero recibió tratamiento de uteroinhibición hasta alcanzar maduración pulmonar'}
+    // tslint:disable-next-line: max-line-length
     // {id: 'factorRiesgoReduce3', idbase: 21, value: 'Madre con trastorno hipertensivo del embarazo sí­ recibió antihipertensivo y sulfato de magnesio'}
   ];
 
@@ -104,7 +162,8 @@ export class NeonatoComponent implements OnInit {
   @ViewChild('picker', {static: false}) picker: MatDatepicker<Date>;
 
   constructor(private dialog: MatDialog, private neonatoService: NeonatoService,
-    public authService: AuthService, private fb: FormBuilder) {
+    public authService: AuthService, private fb: FormBuilder,
+    private toastr: ToastrService) {
    }
 
   ngOnInit() {
@@ -171,6 +230,7 @@ export class NeonatoComponent implements OnInit {
     this.formData().valueChanges
     .subscribe(
       (data) => {
+        console.log(this.formData());
         this.terminado = false;
         for (const value of data) {
           if (Array.isArray(value)) {
@@ -190,42 +250,6 @@ export class NeonatoComponent implements OnInit {
       }
     );
 
-    /*this.scoreBebeTest.get('pesoNacimiento').valueChanges
-    .subscribe(
-      (value) => {
-        switch (true) {
-          case (value < 750):
-          this.scoreBebeTest.get('peso').setValue('peso1');
-          this.scoreBebeTest.get('peso').disable();
-          break;
-          case (value < 1000):
-          this.scoreBebeTest.get('peso').setValue('peso2');
-          this.scoreBebeTest.get('peso').disable();
-          break;
-          case (value < 1500):
-          this.scoreBebeTest.get('peso').setValue('peso3');
-          this.scoreBebeTest.get('peso').disable();
-          break;
-          case (value < 2000):
-          this.scoreBebeTest.get('peso').setValue('peso4');
-          this.scoreBebeTest.get('peso').disable();
-          break;
-          case (value < 2500):
-          this.scoreBebeTest.get('peso').setValue('peso5');
-          this.scoreBebeTest.get('peso').disable();
-          break;
-          case (value < 4000):
-          this.scoreBebeTest.get('peso').setValue('peso6');
-          this.scoreBebeTest.get('peso').disable();
-          break;
-          case (value >= 4000):
-          this.scoreBebeTest.get('peso').setValue('peso7');
-          this.scoreBebeTest.get('peso').disable();
-          break;
-        }
-
-      }
-    );*/
 
     this.scoreBebeTest.get('comor').valueChanges
     .subscribe(
@@ -355,6 +379,11 @@ export class NeonatoComponent implements OnInit {
   formData() {
     return <FormArray>this.scoreBebeTest.get('factorRiesgoInminente');
   }
+
+  saturacionData() {
+    return <FormArray>this.scoreBebeTest.get('factorRiesgoInminente').get('1');
+  }
+
 
   comorbilidadData() {
     return <FormArray>this.scoreBebeTest.get('comorbilidades');
@@ -966,7 +995,16 @@ export class NeonatoComponent implements OnInit {
     return this.scoreBebeTest.get('codigosComor').value === '' || this.scoreBebeTest.get('codigosComor').value === null;
   }
 
-  openCuadros(){
+  openCuadros() {
+    const newWindowWidth = window.innerWidth;
+    if ( newWindowWidth > 600) {
+        this.isMobileView = false;
+    } else {
+        this.isMobileView = true;
+    }
+    if (this.isMobileView) {
+      this.toastr.info('Haga click en la imagen para hacer zoom', 'Información!');
+    }
     this.mostrarCuadros = true;
   }
   hideCuadros() {
