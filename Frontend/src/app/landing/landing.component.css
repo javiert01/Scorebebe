@@ -5,6 +5,7 @@ instrucciones_landing
     padding-top: 0px !important;
     padding-bottom: 20px !important;
     background-color: #0a94fd !important;
+    height: 700px;
   }
 
   .instrucciones_landing h3 {
@@ -29,6 +30,7 @@ instrucciones_landing
 
   .instrucciones_landing a {
     background: #fff;
+    color: #0a94fd;
     padding: 10px 20px;
     margin-top: 20px;
     position: relative;
@@ -37,5 +39,15 @@ instrucciones_landing
     font-size: 14px;
     font-weight: 600;
     border-radius: 2px;
+  }
+
+  .iconos-mobil {
+    padding-top: 100px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .iconos-mobil {
+      padding-top: 3px !important;
+    }
   }
 

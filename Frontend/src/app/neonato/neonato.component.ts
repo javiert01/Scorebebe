@@ -226,6 +226,7 @@ export class NeonatoComponent implements OnInit {
     for (let i = 1; i < 6; i++) {
       this.showFormulario[i] = false;
     }
+    
 
     this.formData().valueChanges
     .subscribe(
@@ -276,7 +277,7 @@ export class NeonatoComponent implements OnInit {
     this.mostrarInstrucciones = true;
     this.mostrarFormulario = false;
     this.showFormulario[0] = true;
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 6; i++) {
       this.showFormulario[i] = false;
     }
     this.scoreBebeTest.reset();
@@ -329,7 +330,7 @@ export class NeonatoComponent implements OnInit {
     this.mostrarInstrucciones = false;
     this.mostrarFormulario = true;
     this.showFormulario[0] = true;
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 6; i++) {
       this.showFormulario[i] = false;
     }
     window.scroll(0, 0);
