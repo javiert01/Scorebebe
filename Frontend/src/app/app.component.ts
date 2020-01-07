@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
       const token = localStorage.getItem('token');
       if (token !== null) {
         if (this.helper.isTokenExpired(token)) {
-          console.log('token expirado');
           this.authService.logoutUser();
         } else {
           console.log('token válido');

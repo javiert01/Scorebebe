@@ -79,7 +79,7 @@ BANNER
 #####################################*/
 
 .banner {
-    background: url(http://scorebebe.com/assets/img/banner.jpg)top center;
+    background: url(https://scorebebe.com/assets/img/banner.jpg)top center;
     background-position: 70% center;
     background-size: cover;
     padding: 160px 0px 200px 0px;
@@ -132,11 +132,11 @@ BANNER
 
 
 .cont-login{
-	background: url(http://scorebebe.com/assets/img/banner-login.jpg)center center no-repeat;
+	background: url(https://scorebebe.com/assets/img/banner-login.jpg)center center no-repeat;
 }
 .cont-registro{
 	/* background: url(http://scorebebe.com/assets/img/banner-registro.jpg)center center no-repeat;*/
-	background: url(http://scorebebe.com/assets/img/banner-registro.jpg)center center no-repeat;
+	background: url(https://scorebebe.com/assets/img/banner-registro.jpg)center center no-repeat;
 }
 
 .cont-registro h2, .cont-login h2{

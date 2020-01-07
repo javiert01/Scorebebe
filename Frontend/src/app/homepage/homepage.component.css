@@ -14,21 +14,19 @@
   }
 
   .p-landing {
+    padding-left: 10px;
+    margin: 0px !important;
     cursor: pointer;
-    font-size: 18px;
-    padding-left: 15px;
-    padding-top: 5px;
   }
 
   .link-landing {
     cursor: pointer;
     font-size: 18px;
     padding-left: 15px;
-    padding-top: 5px;
+    padding-top: 2px;
 
   }
 
-  .link-landing:hover {
+  .p-landing:hover {
     text-decoration: underline;
-    color: blue;
   }
